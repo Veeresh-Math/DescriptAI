@@ -1,0 +1,26 @@
+﻿
+> descriptai@0.1.0 lint
+> eslint
+
+
+C:\Users\Veeresh Math\.gemini\antigravity\scratch\descriptai\app\api\generate\route.ts
+  43:18  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Veeresh Math\.gemini\antigravity\scratch\descriptai\app\api\history\route.ts
+  35:27  warning  'req' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Veeresh Math\.gemini\antigravity\scratch\descriptai\app\generate\page.tsx
+    7:70  warning  'productName' is defined but never used                                                                           @typescript-eslint/no-unused-vars
+    7:83  warning  'features' is defined but never used                                                                              @typescript-eslint/no-unused-vars
+  171:8   warning  React Hook useEffect has a missing dependency: 'fetchUserData'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\Veeresh Math\.gemini\antigravity\scratch\descriptai\app\pricing\page.tsx
+  4:10  warning  'SignedIn' is defined but never used   @typescript-eslint/no-unused-vars
+  4:20  warning  'SignedOut' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Veeresh Math\.gemini\antigravity\scratch\descriptai\extension\popup.js
+  27:14  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+  89:30  warning  'i' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 9 problems (0 errors, 9 warnings)
+

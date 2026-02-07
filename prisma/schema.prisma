@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Generation {
+  id          String   @id @default(uuid())
+  userId      String
+  productName String
+  features    String
+  tone        String
+  variants    String
+  createdAt   DateTime @default(now())
+  imageUrls   String?
+
+  @@index([userId])
+}
+
+model User {
+  id            String         @id
+  email         String         @unique
+  tier          String         @default("free")
+  shortCredits  Int            @default(3)
+  mediumCredits Int            @default(2)
+  referralCode  String         @unique @default(cuid())
+  referredById  String?
+  lastResetDate DateTime       @default(now())
+  createdAt     DateTime       @default(now())
+  presets       BrandPreset[]
+}
+
+model Referral {
+  id          String   @id @default(uuid())
+  referrerId  String
+  referredId  String   @unique
+  status      String   @default("pending") // pending, rewarded
+  createdAt   DateTime @default(now())
+
+  @@index([referrerId])
+}
+
+model BrandPreset {
+  id           String   @id @default(uuid())
+  userId       String
+  name         String
+  instructions String
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model KnowledgeSync {
+  id          String   @id @default(uuid())
+  sourceUrl   String
+  category    String
+  title       String
+  content     String
+  tags        String
+  createdAt   DateTime @default(now())
+
+  @@index([tags])
+}

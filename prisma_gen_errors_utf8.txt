@@ -1,0 +1,28 @@
+﻿Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma
+node.exe : Error: 
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (E  
+  rror: :String) [], Re   
+ moteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+EPERM: operation not 
+permitted, unlink 
+'C:\Users\Veeresh Math\.ge
+mini\antigravity\scratch\d
+escriptai\node_modules\.pr
+isma\client\query_engine-w
+indows.dll.node'
+
+

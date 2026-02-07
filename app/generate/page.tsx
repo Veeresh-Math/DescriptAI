@@ -1,0 +1,775 @@
+"use client";
+
+import { useState, useEffect, useRef, useMemo } from "react";
+import Link from "next/link";
+import { generateCSV, downloadCSV, CSVFormat } from "@/lib/csv-utils";
+
+// Sub-component for individual generation results
+const VariantCard = ({ variant, index, copyToClipboard, copiedIndex, tier, customKeywords }: {
+    variant: string,
+    index: number,
+    copyToClipboard: (text: string, index: number) => void,
+    copiedIndex: number | null,
+    tier: string,
+    customKeywords: string
+}) => {
+
+    const [activeTab, setActiveTab] = useState('Description');
+    const isPro = tier === 'pro' || tier === 'agency';
+
+    const parseContent = () => {
+        const sections: Record<string, string> = {
+            'Description': variant,
+            'Instagram': '',
+            'Twitter': '',
+            'Facebook Ad': ''
+        };
+
+        console.log('🔍 RAW VARIANT:', variant);
+
+        // Look for Social Media Kit section with various possible headers
+        const socialKitMatch = variant.match(/(?:Social\s*Media\s*Kit|Social\s*Kit|SOCIAL\s*MEDIA\s*KIT)[\s\S]*/i);
+        
+        if (socialKitMatch) {
+            const fullText = socialKitMatch[0];
+            // Extract description (everything before Social Media Kit)
+            const descMatch = variant.match(/^([\s\S]*?)(?=Social\s*Media\s*Kit|Social\s*Kit|SOCIAL\s*MEDIA\s*KIT)/i);
+            if (descMatch) {
+                sections['Description'] = descMatch[1].trim();
+            }
+
+            console.log('📦 SOCIAL KIT SECTION FOUND:', fullText.substring(0, 200));
+
+            // Extract Instagram - look for various patterns
+            const instaPatterns = [
+                /(?:📸\s*)?Instagram\s*Caption:?\s*([\s\S]*?)(?=🐦|Twitter|📘|Facebook|$)/i,
+                /Instagram[:\s]+([\s\S]*?)(?=Twitter|Facebook|$)/i,
+                /📸\s*([\s\S]*?)(?=🐦|📘|$)/i
+            ];
+            
+            for (const pattern of instaPatterns) {
+                const match = fullText.match(pattern);
+                if (match && match[1].trim().length > 10) {
+                    sections['Instagram'] = match[1].trim();
+                    console.log('📸 Instagram extracted:', sections['Instagram'].substring(0, 100));
+                    break;
+                }
+            }
+
+            // Extract Twitter - look for various patterns
+            const twitterPatterns = [
+                /(?:🐦\s*)?Twitter\s*Post:?\s*([\s\S]*?)(?=📸|Instagram|📘|Facebook|$)/i,
+                /Twitter[:\s]+([\s\S]*?)(?=Instagram|Facebook|$)/i,
+                /🐦\s*([\s\S]*?)(?=📸|📘|$)/i
+            ];
+            
+            for (const pattern of twitterPatterns) {
+                const match = fullText.match(pattern);
+                if (match && match[1].trim().length > 10) {
+                    sections['Twitter'] = match[1].trim();
+                    console.log('🐦 Twitter extracted:', sections['Twitter'].substring(0, 100));
+                    break;
+                }
+            }
+
+            // Extract Facebook - look for various patterns
+            const fbPatterns = [
+                /(?:📘\s*)?Facebook\s*(?:Post|Ad\s*Hook)?:?\s*([\s\S]*?)(?=📸|Instagram|🐦|Twitter|$)/i,
+                /Facebook[:\s]+([\s\S]*?)(?=Instagram|Twitter|$)/i,
+                /📘\s*([\s\S]*?)(?=📸|🐦|$)/i
+            ];
+            
+            for (const pattern of fbPatterns) {
+                const match = fullText.match(pattern);
+                if (match && match[1].trim().length > 10) {
+                    sections['Facebook Ad'] = match[1].trim();
+                    console.log('📘 Facebook extracted:', sections['Facebook Ad'].substring(0, 100));
+                    break;
+                }
+            }
+        }
+
+        console.log('✅ FINAL SECTIONS:', {
+            Description: sections['Description'].substring(0, 100) + '...',
+            Instagram: sections['Instagram'].substring(0, 50) + '...',
+            Twitter: sections['Twitter'].substring(0, 50) + '...',
+            Facebook: sections['Facebook Ad'].substring(0, 50) + '...'
+        });
+        return sections;
+    };
+
+
+    const sections = parseContent();
+    const currentContent = sections[activeTab] || sections['Description'];
+
+    // Calculate SEO Score (Deterministic based on content)
+    const seoScore = useMemo(() => {
+        const base = 85;
+        // Use a simple hash of the variant instead of Math.random() to be "pure"
+        const hash = variant.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        const bonus = hash % 10; // 0-9
+        const lengthBonus = variant.length > 500 ? 5 : 0;
+        return Math.min(99, base + bonus + lengthBonus);
+    }, [variant]);
+
+    const highlightKeywords = (text: string) => {
+        if (!isPro) return text; // Heatmap locked for Free
+
+        // Agency Tier Exclusive: Custom Keyword Highlighting
+        const userKws = (customKeywords || "").split(',').map((k: string) => k.trim()).filter(Boolean);
+        const baseKeywords = ['premium', 'professional', 'analytics', 'strategy', 'results', 'growth', 'guarantee', 'limited', 'exclusive'];
+
+        const keywords = [...new Set([...userKws, ...baseKeywords])];
+
+        let highlighted = text;
+        keywords.forEach(kw => {
+            const regex = new RegExp(`\\b(${kw})\\b`, 'gi');
+            const isUserKw = userKws.includes(kw);
+            // Highlight user keywords in a different color (Teal) for Agency tier
+            highlighted = highlighted.replace(regex, `<span class="${isUserKw ? "bg-teal-200" : "bg-yellow-200"} font-bold px-1 rounded">$1</span>`);
+        });
+        return highlighted;
+    };
+
+    // seoScore is already calculated above via useMemo
+
+    return (
+        <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-purple-100 transition group">
+            <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                    <h3 className="text-lg font-bold text-gray-900">Variant {index + 1}</h3>
+                    <div className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${seoScore > 80 ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"} flex items-center gap-1`}>
+                        {seoScore > 90 ? "💎" : "✨"} SEO Score: {seoScore}
+                    </div>
+                </div>
+                <button
+                    onClick={() => copyToClipboard(currentContent, index)}
+                    className={`px-4 py-2 rounded-lg font-semibold transition ${copiedIndex === index ? "bg-green-500 text-white" : "bg-purple-100 text-purple-700 hover:bg-purple-200"}`}
+                >
+                    {copiedIndex === index ? "✓ Copied!" : "📋 Copy"}
+                </button>
+            </div>
+
+            <div className="mb-6 border-b border-gray-100">
+                <div className="flex gap-4 overflow-x-auto pb-2">
+                    {['Description', 'Instagram', 'Twitter', 'Facebook Ad'].map((tab) => (
+                        <button
+                            key={tab}
+                            onClick={() => setActiveTab(tab)}
+                            className={`px-3 py-1 text-sm font-bold whitespace-nowrap transition relative ${activeTab === tab ? "text-purple-600 border-b-2 border-purple-600" : "text-gray-400 hover:text-gray-600"}`}
+                        >
+                            {tab !== 'Description' && !isPro && <span className="mr-1">🔒</span>}
+                            {tab}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            <div className="relative min-h-[200px]">
+                {activeTab !== 'Description' && !isPro ? (
+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/60 backdrop-blur-md rounded-xl p-6 text-center border border-purple-200">
+                        <div className="text-4xl mb-2">🚀</div>
+                        <h4 className="font-bold text-gray-900 uppercase tracking-tighter">Social Kit Locked</h4>
+                        <p className="text-xs text-gray-500 mb-4">Upgrade to Pro to instantly generate social media captions!</p>
+                        <Link href="/pricing" className="bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-lg">Upgrade Now</Link>
+                    </div>
+                ) : (
+                    <>
+                        {!isPro && (
+                            <div className="absolute top-0 right-0 z-20">
+                                <Link
+                                    href="/pricing"
+                                    className="bg-white/90 backdrop-blur-sm border border-purple-100 shadow-sm px-2 py-1 rounded-lg text-[9px] font-bold text-purple-600 flex items-center gap-1 hover:bg-purple-50 transition"
+                                >
+                                    🔒 UNLOCK EXPERT FEEDBACK
+                                </Link>
+                            </div>
+                        )}
+                        <div className="prose prose-purple max-w-none">
+                            <div className={`text-gray-800 leading-relaxed whitespace-pre-wrap text-sm ${!isPro ? "blur-[0.5px] select-none pointer-events-none" : ""}`}
+                                dangerouslySetInnerHTML={{ __html: highlightKeywords(currentContent) }} />
+                        </div>
+                        {!isPro && (
+                            <div className="mt-4 p-3 bg-blue-50 rounded-xl border border-blue-100 flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-lg">💡</span>
+                                    <p className="text-[10px] text-blue-700 font-bold leading-tight">Your SEO Score is {seoScore}. <br />Unlock the <span className="underline">Keyword Heatmap</span> to see how to hit 99+.</p>
+                                </div>
+                                <Link href="/pricing" className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase shadow-md hover:bg-blue-700 transition">Show Me</Link>
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default function GeneratePage() {
+    const [productName, setProductName] = useState("");
+    const [features, setFeatures] = useState("");
+    const [tone, setTone] = useState("professional");
+    const [length, setLength] = useState("medium");
+    const [profession, setProfession] = useState("Co-founder");
+    const [variants, setVariants] = useState<string[]>([]);
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [error, setError] = useState("");
+    const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+    const [userData, setUserData] = useState<{ tier: string, shortCredits: number, mediumCredits: number, referralCode?: string } | null>(null);
+    const [customKeywords, setCustomKeywords] = useState("");
+    const [isSuggestingKeywords, setIsSuggestingKeywords] = useState(false);
+    const [brandVoice, setBrandVoice] = useState("Balanced");
+    const [platform, setPlatform] = useState("amazon");
+    interface BrandPreset {
+        id: string;
+        name: string;
+        instructions: string;
+    }
+
+    const [savedPresets, setSavedPresets] = useState<BrandPreset[]>([]);
+    const [newPresetName, setNewPresetName] = useState("");
+    const [isSavingPreset, setIsSavingPreset] = useState(false);
+    const [isExporting, setIsExporting] = useState(false);
+    const resultsRef = useRef<HTMLDivElement>(null);
+
+    const handleExport = (format: CSVFormat) => {
+        const item = {
+            productName,
+            features,
+            tone,
+            variants,
+            createdAt: new Date().toISOString()
+        };
+        const content = generateCSV([item], format);
+        downloadCSV(content, `descriptai_${productName.toLowerCase().replace(/\s+/g, '_')}_${format}.csv`);
+        setIsExporting(false);
+    };
+    const isPro = userData?.tier === 'pro';
+    const isAgency = userData?.tier === 'agency';
+    const isPremium = isPro || isAgency;
+
+
+    const fetchUserData = async () => {
+        const res = await fetch("/api/user");
+        if (res.ok) {
+            const data = await res.json();
+            setUserData(data);
+            if (data.tier === 'agency') fetchPresets();
+        }
+    };
+
+    const fetchPresets = async () => {
+        const res = await fetch("/api/presets");
+        if (res.ok) setSavedPresets(await res.json());
+    };
+
+    useEffect(() => {
+        fetchUserData();
+        localStorage.removeItem("hf_api_key");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleGenerate = async () => {
+        if (!productName || !features) {
+            setError("Fill in the fields first!");
+            return;
+        }
+        setIsGenerating(true);
+        setError("");
+        try {
+            const res = await fetch("/api/generate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    productName,
+                    features,
+                    tone,
+                    length,
+                    profession,
+                    platform,
+                    // Agency exclusive parameters
+                    customKeywords: userData?.tier === 'agency' ? customKeywords : null,
+                    brandVoice: userData?.tier === 'agency' ? brandVoice : null
+                }),
+
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || "Failed");
+
+            // Increased resilience for splitting variants: fallback to ---, Variant X:, Description X:
+            const content = data.generated_text || "";
+            const newVariants = content
+                .split(/\[\[NEXT_VARIANT\]\]|---|Variant \d+:|Description \d+:/gi)
+                .map((v: string) => v.trim())
+                .filter((v: string) => v.length > 10) // Lowered threshold slightly
+                .slice(0, 3);
+
+            setVariants(newVariants);
+            fetchUserData();
+
+            await fetch("/api/history", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productName, features, tone, variants: newVariants }),
+            });
+            setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
+            setError(errorMessage);
+        } finally {
+            setIsGenerating(false);
+        }
+    };
+
+    const copyToClipboard = (text: string, index: number) => {
+        navigator.clipboard.writeText(text);
+        setCopiedIndex(index);
+        setTimeout(() => setCopiedIndex(null), 2000);
+    };
+
+    const suggestKeywords = async () => {
+        if (!productName || !features) {
+            setError("Enter product details first to get recommendations!");
+            return;
+        }
+        setIsSuggestingKeywords(true);
+        try {
+            const res = await fetch("/api/keywords", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productName, features }),
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setCustomKeywords(data.keywords);
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsSuggestingKeywords(false);
+        }
+    };
+
+    const savePreset = async () => {
+        if (!newPresetName) {
+            setError("Please name your preset!");
+            return;
+        }
+        setIsSavingPreset(true);
+        try {
+            const res = await fetch("/api/presets", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: newPresetName, instructions: brandVoice }),
+            });
+            if (res.ok) {
+                setNewPresetName("");
+                fetchPresets();
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsSavingPreset(false);
+        }
+    };
+
+    const deletePreset = async (id: string) => {
+        try {
+            const res = await fetch("/api/presets", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id }),
+            });
+            if (res.ok) fetchPresets();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    return (
+        <div className="min-h-screen bg-gray-50 flex flex-col">
+            <header className="bg-white border-b border-purple-100 py-4 px-6 sticky top-0 z-50">
+                <div className="max-w-7xl mx-auto flex justify-between items-center">
+                    <Link href="/" className="text-xl font-black gradient-text">⚡ DescriptAI</Link>
+                    <div className="flex gap-6 items-center">
+                        <Link href="/history" className="text-sm font-bold text-gray-600 hover:text-purple-600 transition">History</Link>
+                        <Link href="/pricing" className="text-sm font-bold text-gray-600 hover:text-purple-600 transition">⭐ Pricing</Link>
+                        {userData && (
+                            <div className="flex gap-2 text-[10px] font-black">
+                                <span className={`px-2 py-1 rounded-full ${userData.shortCredits > 0 ? "bg-purple-100 text-purple-700" : "bg-red-100 text-red-600"}`}>Short: {userData.shortCredits}</span>
+                                <span className={`px-2 py-1 rounded-full ${userData.mediumCredits > 0 ? "bg-teal-100 text-teal-700" : "bg-red-100 text-red-600"}`}>Medium: {userData.mediumCredits}</span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </header>
+
+            <main className="flex-1 max-w-7xl mx-auto w-full p-6 grid lg:grid-cols-2 gap-8">
+                <div className="bg-white rounded-3xl shadow-xl p-8 h-fit border border-purple-50">
+                    <h1 className="text-3xl font-black mb-6 tracking-tight">Generate <span className="text-purple-600">Pure Copy</span></h1>
+                    {error && <div className="mb-4 bg-red-50 text-red-700 p-4 rounded-xl text-sm font-bold border border-red-200">{error}</div>}
+
+                    <div className="space-y-6">
+                        <div>
+                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Product Name</label>
+                            <input value={productName} onChange={e => setProductName(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition" placeholder="e.g. Arabica Coffee Beans" />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Key Features</label>
+                            <textarea value={features} onChange={e => setFeatures(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition h-32" placeholder="e.g. Organic, strong aroma, fair trade..." />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Target Length</label>
+                                <div className="flex flex-wrap gap-2">
+                                    {[
+                                        { id: 'micro', label: '50', words: '50w', premium: false },
+                                        { id: 'tiny', label: '100', words: '100w', premium: false },
+                                        { id: 'short', label: '120', words: '120w', premium: false },
+                                        { id: 'mini', label: '150', words: '150w', premium: true },
+                                        { id: 'medium', label: '250', words: '250w', premium: true },
+                                        { id: 'long', label: '500', words: '500w', premium: true }
+                                    ].map(l => {
+
+                                        const isLocked = l.premium && !isPremium;
+                                        return (
+                                            <button
+                                                key={l.id}
+                                                onClick={() => !isLocked && setLength(l.id)}
+                                                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition ${length === l.id ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
+                                            >
+                                                {isLocked && '🔒 '}{l.label}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Voice Tone</label>
+                                <div className="flex gap-2">
+                                    {[
+                                        { id: 'professional', label: 'PRO', premium: true },
+                                        { id: 'casual', label: 'CASUAL', premium: false },
+                                        { id: 'enthusiastic', label: 'BOLD', premium: true }
+                                    ].map(t => {
+                                        const isLocked = t.premium && !isPremium;
+                                        return (
+                                            <button
+                                                key={t.id}
+                                                onClick={() => !isLocked && setTone(t.id)}
+                                                className={`flex-1 py-1.5 rounded-lg text-[10px] font-black transition ${tone === t.id ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
+                                            >
+                                                {isLocked && '🔒 '}{t.label}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Platform Selector - SOCIAL + E-COMMERCE MODES */}
+                        <div>
+                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Target Platform 🎯</label>
+                            
+                            {/* Social Media Mode - Pro & Agency */}
+                            <div className="mb-3">
+                                <p className="text-[10px] font-bold text-purple-600 uppercase mb-2">📱 Social Media Mode {isPro && <span className="text-purple-400">(Pro)</span>}{isAgency && <span className="text-teal-400">(Agency)</span>}</p>
+                                <div className="grid grid-cols-5 gap-2">
+                                    {[
+                                        { id: 'tiktok', label: '🎵 TikTok', desc: 'Viral 80w', tier: 'pro' },
+                                        { id: 'twitter', label: '🐦 X/Twitter', desc: 'Punchy 100w', tier: 'pro' },
+                                        { id: 'instagram', label: '📸 IG', desc: 'Visual 150w', tier: 'pro' },
+                                        { id: 'linkedin', label: '💼 LinkedIn', desc: 'B2B 300w', tier: 'agency' },
+                                        { id: 'facebook', label: '📘 Facebook', desc: 'Social 150w', tier: 'pro' }
+                                    ].map(p => {
+                                        const isLocked = (p.tier === 'pro' && !isPremium) || (p.tier === 'agency' && !isAgency);
+                                        return (
+                                            <button
+                                                key={p.id}
+                                                onClick={() => !isLocked && setPlatform(p.id)}
+                                                disabled={isLocked}
+                                                className={`flex flex-col items-center p-2 rounded-xl border-2 transition relative ${platform === p.id ? "border-purple-600 bg-purple-50" : "border-gray-100 hover:border-purple-200"} ${isLocked ? "cursor-not-allowed opacity-60 bg-gray-50" : ""}`}
+                                            >
+                                                {isLocked && (
+                                                    <div className={`absolute -top-1 -right-1 text-white text-[7px] font-black px-1 py-0.5 rounded-full shadow-sm ${p.tier === 'agency' ? 'bg-teal-600' : 'bg-purple-600'}`}>
+                                                        {p.tier === 'agency' ? 'AGENCY' : 'PRO'}
+                                                    </div>
+                                                )}
+                                                <span className="text-lg mb-1">{p.label.split(' ')[0]}</span>
+                                                <span className="text-[9px] font-bold text-gray-700">{p.label.split(' ')[1]}</span>
+                                                <span className="text-[7px] text-gray-400 mt-1">{p.desc}</span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            {/* E-Commerce Mode */}
+                            <div>
+                                <p className="text-[10px] font-bold text-teal-600 uppercase mb-2">🛒 E-Commerce Mode</p>
+                                <div className="grid grid-cols-4 gap-2">
+                                    {[
+                                        { id: 'amazon', label: '📦 Amazon', desc: 'SEO 120w', tier: 'free' },
+                                        { id: 'shopify', label: '🛒 Shopify', desc: 'Brand 250w', tier: 'free' },
+                                        { id: 'etsy', label: '🎨 Etsy', desc: 'Handmade 150w', tier: 'pro' },
+                                        { id: 'ebay', label: '💰 eBay', desc: 'Direct 120w', tier: 'pro' }
+                                    ].map(p => {
+                                        const isLocked = (p.tier === 'pro' && !isPremium) || (p.tier === 'agency' && !isAgency);
+                                        return (
+                                            <button
+                                                key={p.id}
+                                                onClick={() => !isLocked && setPlatform(p.id)}
+                                                disabled={isLocked}
+                                                className={`flex flex-col items-center p-3 rounded-xl border-2 transition relative ${platform === p.id ? "border-purple-600 bg-purple-50" : "border-gray-100 hover:border-purple-200"} ${isLocked ? "cursor-not-allowed opacity-60 bg-gray-50" : ""}`}
+                                            >
+                                                {isLocked && (
+                                                    <div className={`absolute -top-1 -right-1 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full shadow-sm ${p.tier === 'agency' ? 'bg-teal-600' : 'bg-purple-600'}`}>
+                                                        {p.tier === 'agency' ? 'AGENCY' : 'PRO'}
+                                                    </div>
+                                                )}
+                                                <span className="text-lg mb-1">{p.label.split(' ')[0]}</span>
+                                                <span className="text-[10px] font-bold text-gray-700">{p.label.split(' ')[1]}</span>
+                                                <span className="text-[8px] text-gray-400 mt-1">{p.desc}</span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            {!isPremium && (
+                                <div className="mt-2 flex items-center gap-2 text-[10px] text-purple-600 font-bold bg-purple-50 px-3 py-2 rounded-lg border border-purple-100">
+                                    <span>🔒</span>
+                                    <span>Upgrade to Pro for Social Media + All E-Commerce platforms!</span>
+                                    <Link href="/pricing" className="ml-auto text-[9px] bg-purple-600 text-white px-2 py-1 rounded hover:bg-purple-700 transition">
+                                        Upgrade
+                                    </Link>
+                                </div>
+                            )}
+                            {isPro && !isAgency && (
+                                <div className="mt-2 flex items-center gap-2 text-[10px] text-teal-600 font-bold bg-teal-50 px-3 py-2 rounded-lg border border-teal-100">
+                                    <span>👑</span>
+                                    <span>Upgrade to Agency for LinkedIn B2B + Advanced Features!</span>
+                                    <Link href="/pricing" className="ml-auto text-[9px] bg-teal-600 text-white px-2 py-1 rounded hover:bg-teal-700 transition">
+                                        Go Agency
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+
+                        <div>
+                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">AI Persona (Your Role)</label>
+                            <div className="flex flex-wrap gap-2">
+                                {[
+                                    { id: 'Co-founder', label: 'General', tier: 'free' },
+                                    { id: 'SEO Expert', label: 'SEO Expert', tier: 'pro' },
+                                    { id: 'Ad Specialist', label: 'Ads Expert', tier: 'agency' },
+                                    { id: 'Copywriter', label: 'Pro Copywriter', tier: 'agency' }
+                                ].map(p => {
+                                    const isLocked = (p.tier === 'pro' && !isPremium) || (p.tier === 'agency' && !isAgency);
+                                    return (
+                                        <button
+                                            key={p.id}
+                                            onClick={() => !isLocked && setProfession(p.id)}
+                                            className={`px-4 py-2 rounded-lg text-xs font-bold transition ${profession === p.id ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
+                                        >
+                                            {isLocked && <span className="mr-1">{p.tier === 'agency' ? '👑' : '🔒'}</span>}{p.label}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        {/* Agency Tier - Exclusive Inputs */}
+
+                        {userData?.tier === 'agency' && (
+                            <div className="space-y-6 pt-6 border-t border-purple-100">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-xl">🏆</span>
+                                    <h3 className="font-black text-purple-900 uppercase text-xs tracking-widest">Agency Command Suite</h3>
+                                </div>
+                                <div>
+                                    <div className="flex justify-between items-center mb-2">
+                                        <label className="block text-xs font-bold text-gray-500 uppercase">Target SEO Keywords (Comma separated)</label>
+                                        <button
+                                            onClick={suggestKeywords}
+                                            disabled={isSuggestingKeywords}
+                                            className="text-[10px] font-black text-teal-600 hover:text-teal-800 transition flex items-center gap-1 bg-teal-50 px-2 py-1 rounded-full border border-teal-200"
+                                        >
+                                            {isSuggestingKeywords ? "🪄 Thinking..." : "🪄 Recommend Keywords"}
+                                        </button>
+                                    </div>
+                                    <input
+                                        value={customKeywords}
+                                        onChange={e => setCustomKeywords(e.target.value)}
+                                        className="w-full px-4 py-3 rounded-xl border-2 border-teal-100 focus:border-teal-500 outline-none transition bg-teal-50/30 font-medium"
+                                        placeholder="e.g. Arabica, Organic, Fair Trade"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Brand Voice Preset</label>
+                                    <div className="flex gap-2 mb-2">
+                                        <select
+                                            value={brandVoice}
+                                            onChange={e => setBrandVoice(e.target.value)}
+                                            className="flex-1 px-4 py-3 rounded-xl border-2 border-teal-100 focus:border-teal-500 outline-none transition bg-teal-50/30 text-sm font-bold"
+                                        >
+                                            <option>Balanced</option>
+                                            <option>Apple (Minimalist)</option>
+                                            <option>Nike (Inspirational)</option>
+                                            <option>Red Bull (Extreme)</option>
+                                            <option disabled>──────────</option>
+                                            <option disabled>SAVED PRESETS</option>
+                                            {savedPresets.map(p => (
+                                                <option key={p.id} value={p.instructions}>{p.name}</option>
+                                            ))}
+                                            <option>Default Professional</option>
+                                        </select>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <input
+                                            value={newPresetName}
+                                            onChange={e => setNewPresetName(e.target.value)}
+                                            className="flex-1 px-3 py-2 text-xs rounded-lg border border-teal-100 outline-none focus:border-teal-400"
+                                            placeholder="Name this brand voice..."
+                                        />
+                                        <button
+                                            onClick={savePreset}
+                                            disabled={isSavingPreset || !newPresetName}
+                                            className="px-4 py-2 bg-teal-600 text-white text-[10px] font-black rounded-lg hover:bg-teal-700 transition"
+                                        >
+                                            {isSavingPreset ? "Saving..." : "💾 Save Library"}
+                                        </button>
+                                    </div>
+                                    {savedPresets.length > 0 && (
+                                        <div className="mt-4 space-y-2">
+                                            <label className="block text-[10px] font-bold text-gray-400 uppercase">Manage Library</label>
+                                            <div className="flex flex-wrap gap-2">
+                                                {savedPresets.map(p => (
+                                                    <div key={p.id} className="flex items-center gap-1 bg-white border border-teal-100 px-2 py-1 rounded-md text-[10px] font-bold text-teal-700">
+                                                        {p.name}
+                                                        <button onClick={() => deletePreset(p.id)} className="text-red-400 hover:text-red-600">×</button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                        <button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-purple-600 to-teal-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:scale-[1.02] transition disabled:opacity-50">
+                            {isGenerating ? "Waking up AI..." : "⚡ Generate 3 Variants"}
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    {!isPremium && (
+                        <div className="bg-gradient-to-br from-purple-600 to-indigo-700 rounded-3xl p-6 mb-8 text-white shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition duration-500">
+                                <span className="text-8xl">⭐</span>
+                            </div>
+                            <h3 className="text-xl font-black mb-2 relative z-10">Go Pro</h3>
+                            <p className="text-purple-100 text-xs mb-4 relative z-10">Unlock Social Kits, SEO Heatmaps, and 500-word deep content. The ultimate tool for growing sellers.</p>
+                            <Link href="/pricing" className="bg-white text-purple-700 px-6 py-3 rounded-xl font-black text-sm inline-block shadow-lg hover:bg-purple-50 transition relative z-10">✨ UPGRADE TO PRO</Link>
+                        </div>
+                    )}
+                    {isPro && !isAgency && (
+                        <div className="bg-gradient-to-br from-teal-600 to-emerald-700 rounded-3xl p-6 mb-8 text-white shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition duration-500">
+                                <span className="text-8xl">👑</span>
+                            </div>
+                            <h3 className="text-xl font-black mb-2 relative z-10">Go Agency</h3>
+                            <p className="text-teal-100 text-xs mb-4 relative z-10">Unlock LinkedIn B2B, Advanced Personas, Brand Voice Library & Custom Keywords. For professional agencies.</p>
+                            <Link href="/pricing" className="bg-white text-teal-700 px-6 py-3 rounded-xl font-black text-sm inline-block shadow-lg hover:bg-teal-50 transition relative z-10">👑 UPGRADE TO AGENCY</Link>
+                        </div>
+                    )}
+
+
+                    <div className="bg-white rounded-3xl p-6 border border-purple-100 shadow-sm mb-8">
+                        <div className="flex items-center gap-2 mb-4">
+                            <span className="text-2xl">🎁</span>
+                            <h3 className="font-black text-xs text-purple-900 uppercase tracking-widest">Invite & Earn</h3>
+                        </div>
+                        <p className="text-[10px] text-gray-500 mb-4 leading-relaxed">
+                            Share your link with a friend. When they sign up, we&apos;ll credit your account with **5 Premium Credits**!
+                        </p>
+
+                        <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 flex items-center justify-between mb-4">
+                            <code className="text-[10px] font-mono text-purple-600 truncate mr-2">
+                                {`dai.sh/${userData?.referralCode || '...'}`}
+                            </code>
+                            <button
+                                onClick={() => {
+                                    navigator.clipboard.writeText(`https://descriptai.com/ref=${userData?.referralCode}`);
+                                    alert("Link copied to clipboard!");
+                                }}
+                                className="bg-purple-100 text-purple-700 p-2 rounded-lg hover:bg-purple-200 transition"
+                            >
+                                📋
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                            <div className="bg-purple-50 p-2 rounded-xl text-center">
+                                <p className="text-[10px] text-purple-400 font-bold uppercase">Invites</p>
+                                <p className="text-lg font-black text-purple-700">0</p>
+                            </div>
+                            <div className="bg-teal-50 p-2 rounded-xl text-center">
+                                <p className="text-[10px] text-teal-400 font-bold uppercase">Earned</p>
+                                <p className="text-lg font-black text-teal-700">+0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ref={resultsRef} className="space-y-6">
+                        {variants.length === 0 ? (
+                            <div className="bg-purple-50 rounded-3xl p-12 text-center border-2 border-dashed border-purple-200 h-full flex flex-col justify-center">
+                                <div className="text-5xl mb-4 opacity-50">✍️</div>
+                                <h3 className="text-xl font-bold text-purple-900">Your variants will appear here</h3>
+                                <p className="text-purple-400 text-sm">Enter your product details to get started.</p>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="flex justify-between items-center mb-2 px-2 relative">
+                                    <h2 className="text-sm font-black text-purple-900 uppercase tracking-widest">Generation Results</h2>
+                                    <div className="relative">
+                                        <button
+                                            onClick={() => setIsExporting(!isExporting)}
+                                            className="text-[10px] font-black bg-green-100 text-green-700 px-3 py-1.5 rounded-full border border-green-200 hover:bg-green-200 transition flex items-center gap-1"
+                                        >
+                                            📥 Export All to CSV
+                                        </button>
+                                        {isExporting && (
+                                            <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 z-[60] py-2 overflow-hidden">
+                                                <button onClick={() => handleExport('general')} className="w-full text-left px-4 py-2 text-[10px] font-bold text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition">📋 General View</button>
+
+                                                <button
+                                                    disabled={!isPremium}
+                                                    onClick={() => isPremium && handleExport('shopify')}
+                                                    className={`w-full text-left px-4 py-2 text-[10px] font-bold transition flex items-center justify-between ${isPremium ? "text-gray-700 hover:bg-purple-50 hover:text-purple-600" : "text-gray-300 cursor-not-allowed"}`}
+                                                >
+                                                    <span>🚢 Shopify Import</span>
+                                                    {!isPremium && <span>🔒</span>}
+                                                </button>
+
+                                                <button
+                                                    disabled={!isPremium}
+                                                    onClick={() => isPremium && handleExport('amazon')}
+                                                    className={`w-full text-left px-4 py-2 text-[10px] font-bold transition flex items-center justify-between ${isPremium ? "text-gray-700 hover:bg-purple-50 hover:text-purple-600" : "text-gray-300 cursor-not-allowed"}`}
+                                                >
+                                                    <span>📦 Amazon Sellers</span>
+                                                    {!isPremium && <span>🔒</span>}
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                                {variants.map((v, i) => <VariantCard key={i} variant={v} index={i} tier={userData?.tier || 'free'} copyToClipboard={copyToClipboard} copiedIndex={copiedIndex} customKeywords={customKeywords} />)}
+
+                            </>
+                        )}
+                    </div>
+                </div>
+            </main>
+        </div>
+    );
+}
