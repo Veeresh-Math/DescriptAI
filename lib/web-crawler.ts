@@ -282,8 +282,11 @@ async function saveToCache(query: string, results: SearchResult[]): Promise<void
     // Save to local cache (LRU eviction)
     if (localCache.size >= MAX_LOCAL_CACHE) {
         const oldestKey = localCache.keys().next().value;
-        localCache.delete(oldestKey);
+        if (oldestKey) {
+            localCache.delete(oldestKey);
+        }
     }
+
     localCache.set(cacheKey, entry);
 }
 
