@@ -638,23 +638,10 @@ export const ComprehensiveProductDatabase: Record<string, ProductIntelligence> =
         cta: ['Cook like a chef', 'Master your kitchen'],
         emotionalTriggers: ['mastery', 'creativity', 'pride'],
         powerWords: ['chef-grade', 'Michelin-tested', 'professional kitchen']
-      },
-      {
-        tier: 'agency',
-        structure: 'culinary_heritage + craftsmanship + performance + customization + chef_service + guarantee',
-        wordCount: 300,
-        hooks: [
-          'The cookware that graces {michelinRestaurant} kitchen',
-          'Forged by the same artisans who supply {famousChef}',
-          'Join {number} professional chefs in the {brand} culinary circle'
-        ],
-        bodyTemplate: 'Handcrafted in {forgeLocation} using {traditionalMethod}, {productName} features {material}, {construction}, and {finish}. {heatDistribution}. {durabilityTest}. {customizationOptions}. {chefConcierge}. {professionalNetwork}. {lifetimeWarranty}.',
-        cta: ['Join the culinary elite', 'Chef consultation'],
-        emotionalTriggers: ['mastery', 'exclusivity', 'professional pride'],
-        powerWords: ['Michelin-grade', 'artisanal', 'professional', 'heirloom']
       }
     ],
     features: ['professional grade', 'oven safe', 'dishwasher safe', 'non-stick', 'induction compatible', 'heat resistant', 'ergonomic handle', 'lifetime warranty'],
+
     benefits: ['professional results', 'lasting quality', 'easy cooking', 'inspiration', 'pride'],
     painPoints: ['uneven heating', 'sticks', 'heavy', 'hard to clean', 'wears out'],
     keywords: ['cookware', 'pan', 'pot', 'chef knife', 'kitchen tools', 'professional'],
