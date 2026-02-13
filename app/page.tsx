@@ -1,7 +1,25 @@
+"use client";
+
 import Link from "next/link";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  const [isIndia, setIsIndia] = useState(false);
+
+  // Detect user's country on mount
+  useEffect(() => {
+    const detectCountry = async () => {
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        const data = await res.json();
+        setIsIndia(data.country_code === "IN");
+      } catch {
+        setIsIndia(false);
+      }
+    };
+    detectCountry();
+  }, []);
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-white to-teal-100">
       {/* Header */}
@@ -566,7 +584,9 @@ export default function Home() {
                 </span>
               </div>
               <div className="text-2xl font-bold mb-2 text-gray-900">Pro</div>
-              <div className="text-4xl font-bold mb-4 text-gray-900">$19<span className="text-lg text-gray-500">/mo</span></div>
+              <div className="text-4xl font-bold mb-4 text-gray-900">
+                {isIndia ? "₹1,599" : "$19"}<span className="text-lg text-gray-500">/mo</span>
+              </div>
               <p className="text-gray-600 mb-6">For serious sellers</p>
               <ul className="space-y-3 text-sm mb-8 text-gray-700">
                 <li className="flex items-center"><span className="text-green-500 mr-2">✓</span> Unlimited generations</li>
@@ -583,7 +603,9 @@ export default function Home() {
             {/* Agency */}
             <div className="bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-2xl p-8 border-2 border-purple-400 shadow-2xl">
               <div className="text-2xl font-bold mb-2">Agency</div>
-              <div className="text-4xl font-bold mb-4">$49<span className="text-lg text-purple-200">/mo</span></div>
+              <div className="text-4xl font-bold mb-4">
+                {isIndia ? "₹3,999" : "$49"}<span className="text-lg text-purple-200">/mo</span>
+              </div>
               <p className="text-purple-200 mb-6">For marketing agencies</p>
               <ul className="space-y-3 text-sm mb-8">
                 <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> Everything in Pro</li>
