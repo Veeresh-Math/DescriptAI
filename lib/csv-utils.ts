@@ -25,9 +25,10 @@ export const generateCSV = (data: CSVData[], format: CSVFormat = 'general'): str
                     `"${item.productName.toLowerCase().replace(/\s+/g, '-')}-v${i + 1}"`,
                     `"${item.productName.replace(/"/g, '""')} (Variant ${i + 1})"`,
                     `"Variant ${i + 1} of 3"`,
-                    `"${v.replace(/"/g, '""')}"`,
+                    `"${v.replace(/"/g, '""').replace(/\n/g, ' ')}"`,
                     `"DescriptAI"`,
                     `"AI Generated"`,
+
                     `"${item.tone.replace(/"/g, '""')}, AI-Copy"`,
                     `"TRUE"`
                 ])
@@ -41,8 +42,9 @@ export const generateCSV = (data: CSVData[], format: CSVFormat = 'general'): str
                     `"DAI-${item.productName.substring(0, 3).toUpperCase()}-V${i + 1}"`,
                     `"${item.productName.replace(/"/g, '""')} (Variant ${i + 1})"`,
                     `"Variant ${i + 1} of 3"`,
-                    `"${v.replace(/"/g, '""')}"`,
+                    `"${v.replace(/"/g, '""').replace(/\n/g, ' ')}"`,
                     `"${item.features.replace(/"/g, '""')}"`,
+
                     `"DescriptAI"`
                 ])
             );
@@ -56,7 +58,8 @@ export const generateCSV = (data: CSVData[], format: CSVFormat = 'general'): str
                     `"${new Date(item.createdAt).toLocaleDateString().replace(/"/g, '""')}"`,
                     `"${item.productName.replace(/"/g, '""')}"`,
                     `"[[ VARIANT ${i + 1} ]]"`,
-                    `"--- START VARIANT ${i + 1} ---\n\n${v.replace(/"/g, '""')}\n\n--- END ---"`,
+                    `"--- START VARIANT ${i + 1} --- ${v.replace(/"/g, '""').replace(/\n/g, ' ')} --- END ---"`,
+
                     `"${item.tone.replace(/"/g, '""')}"`,
                     `"${item.features.replace(/"/g, '""')}"`
                 ])

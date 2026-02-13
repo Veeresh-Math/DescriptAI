@@ -1,19 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
+import { PRICING, detectPaymentGateway } from "@/lib/payments";
 
-
-
-const pricingTiers = [
+// Pricing display configuration
+const getPricingTiers = (isIndia: boolean) => [
     {
         name: "Free",
-        price: "$0",
+        price: isIndia ? "₹0" : "$0",
         description: "Perfect for testing the waters",
         features: [
             "3 Short (120 words) / 2 Medium (250 words) Credits",
-
             "Amazon & Shopify Platforms Only",
             "Casual Tone & General Persona",
             "📋 Standard CSV Export",
@@ -28,20 +27,18 @@ const pricingTiers = [
     },
     {
         name: "Pro",
-        price: "$19",
+        price: isIndia ? `₹${PRICING.pro.inr}` : `$${PRICING.pro.usd}`,
         period: "/mo",
         description: "For serious e-commerce sellers",
         features: [
             "Unlimited Generations",
             "All 4 Platforms (Amazon/Shopify/Etsy/eBay)",
             "All 3 Lengths (Short/Medium/Long 500 words)",
-
             "All Tones & Expert Personas",
             "⚡ Full Social Media Kit (IG/Twitter/FB)",
             "🔥 Advanced SEO Heatmap",
             "📥 Platform-Specific Exports",
             "🚀 99.9% Uptime Guarantee"
-
         ],
         buttonText: "Upgrade to Pro",
         highlight: true,
@@ -49,7 +46,7 @@ const pricingTiers = [
     },
     {
         name: "Agency",
-        price: "$49",
+        price: isIndia ? `₹${PRICING.agency.inr}` : `$${PRICING.agency.usd}`,
         period: "/mo",
         description: "For high-volume marketing teams",
         features: [
@@ -66,6 +63,7 @@ const pricingTiers = [
         buttonClass: "bg-gray-900 text-white hover:bg-black"
     }
 ];
+
 
 const comparisonFeatures = [
     { feature: "Unlimited Generations", free: "3 Short + 2 Medium", pro: "✅ Unlimited", agency: "✅ Unlimited" },
@@ -88,28 +86,85 @@ const comparisonFeatures = [
 
 export default function PricingPage() {
     const [loadingTier, setLoadingTier] = useState<string | null>(null);
+    const [isIndia, setIsIndia] = useState(false);
+    const [paymentGateway, setPaymentGateway] = useState<string>("");
     const { isSignedIn } = useUser();
+
+    // Detect user's country on mount
+    useEffect(() => {
+        const detectCountry = async () => {
+            try {
+                const res = await fetch("https://ipapi.co/json/");
+                const data = await res.json();
+                const india = data.country_code === "IN";
+                setIsIndia(india);
+                setPaymentGateway(india ? "Razorpay" : "Stripe");
+            } catch {
+                // Default to Stripe if detection fails
+                setIsIndia(false);
+                setPaymentGateway("Stripe");
+            }
+        };
+        detectCountry();
+    }, []);
 
     const handleUpgrade = async (tierName: string) => {
         if (tierName === "Free") return;
 
         // Check if user is signed in
         if (!isSignedIn) {
-            // Redirect to sign-in page with return URL
             window.location.href = `/sign-in?redirect_url=${encodeURIComponent(window.location.href)}`;
             return;
         }
 
         setLoadingTier(tierName);
         try {
-            const res = await fetch("/api/checkout", {
+            // Use appropriate gateway based on country
+            const endpoint = isIndia ? "/api/checkout/razorpay" : "/api/checkout/stripe";
+            
+            const res = await fetch(endpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ tier: tierName.toLowerCase() }),
             });
+            
             const data = await res.json();
+            
             if (data.url) {
+                // Stripe redirect
                 window.location.href = data.url;
+            } else if (data.orderId) {
+                // Razorpay checkout
+                const options = {
+                    key: data.keyId,
+                    amount: data.amount,
+                    currency: data.currency,
+                    name: "DescriptAI",
+                    description: `${data.planName} Plan`,
+                    order_id: data.orderId,
+                    handler: function (response: unknown) {
+                        alert("Payment successful! Your account has been upgraded.");
+                        window.location.href = "/generate";
+                    },
+                    prefill: {
+                        name: "",
+                        email: "",
+                        contact: ""
+                    },
+                    theme: {
+                        color: "#7c3aed"
+                    }
+                };
+                
+                // Load Razorpay script dynamically
+                const script = document.createElement("script");
+                script.src = "https://checkout.razorpay.com/v1/checkout.js";
+                script.onload = () => {
+                    // @ts-expect-error Razorpay is loaded from external script
+                    const rzp = new window.Razorpay(options);
+                    rzp.open();
+                };
+                document.body.appendChild(script);
             } else {
                 alert(data.error || "Failed to initiate checkout");
             }
@@ -121,9 +176,12 @@ export default function PricingPage() {
         }
     };
 
+    const pricingTiers = getPricingTiers(isIndia);
+
+
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-100 via-white to-teal-100">
+        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50">
             {/* Header */}
             <header className="container mx-auto px-4 py-6 backdrop-blur-sm bg-white/50 sticky top-0 z-50 border-b border-purple-100">
                 <nav className="flex items-center justify-between">
@@ -156,9 +214,20 @@ export default function PricingPage() {
                     </p>
                 </div>
 
+                {/* Payment Gateway Badge */}
+                {paymentGateway && (
+                    <div className="text-center mb-8">
+                        <span className="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm font-medium">
+                            {isIndia ? "🇮🇳 Razorpay (India)" : "🌍 Stripe (Worldwide)"}
+                            {isIndia && <span className="ml-2 text-xs">UPI • Cards • NetBanking</span>}
+                        </span>
+                    </div>
+                )}
+
                 {/* Pricing Cards */}
                 <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
                     {pricingTiers.map((tier, index) => (
+
                         <div
                             key={index}
                             className={`relative bg-white rounded-3xl p-8 shadow-xl border-2 transition-all duration-300 flex flex-col ${tier.highlight ? "border-purple-600 scale-105 z-10" : "border-gray-50 hover:border-purple-200"

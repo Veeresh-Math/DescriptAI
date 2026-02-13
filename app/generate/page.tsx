@@ -260,8 +260,13 @@ export default function GeneratePage() {
 
     const fetchPresets = async () => {
         const res = await fetch("/api/presets");
-        if (res.ok) setSavedPresets(await res.json());
+        if (res.ok) {
+            const data = await res.json();
+            // Handle both {presets: []} and [] response formats
+            setSavedPresets(data.presets || data || []);
+        }
     };
+
 
     useEffect(() => {
         fetchUserData();

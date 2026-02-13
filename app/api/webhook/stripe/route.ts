@@ -1,49 +1,84 @@
-import { NextResponse } from "next/server";
-import { headers } from "next/headers";
-import { stripe } from "@/lib/stripe";
-import { db } from "@/lib/db";
+import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
 import Stripe from "stripe";
-export const dynamic = "force-dynamic";
 
-export async function POST(req: Request) {
-    const body = await req.text();
-    const signature = (await headers()).get("Stripe-Signature") as string;
+const prisma = new PrismaClient();
+
+// Lazy initialization - only create Stripe instance when needed
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) {
+    throw new Error("STRIPE_SECRET_KEY not configured");
+  }
+  return new Stripe(key, {
+    apiVersion: "2026-01-28.clover",
+  });
+}
+
+function getWebhookSecret() {
+  const secret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!secret) {
+    throw new Error("STRIPE_WEBHOOK_SECRET not configured");
+  }
+  return secret;
+}
+
+
+export async function POST(req: NextRequest) {
+  try {
+    const payload = await req.text();
+    const signature = req.headers.get("stripe-signature") || "";
 
     let event: Stripe.Event;
 
     try {
-        event = stripe.webhooks.constructEvent(
-            body,
-            signature,
-            process.env.STRIPE_WEBHOOK_SECRET || ""
-        );
-    } catch (error: unknown) {
-        const message = error instanceof Error ? error.message : "Unknown error";
-        return new NextResponse(`Webhook Error: ${message}`, { status: 400 });
+      const stripe = getStripe();
+      const webhookSecret = getWebhookSecret();
+      event = stripe.webhooks.constructEvent(payload, signature, webhookSecret);
+
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Unknown error";
+      console.error("Webhook signature verification failed:", errorMessage);
+      return NextResponse.json(
+        { error: "Invalid signature" },
+        { status: 400 }
+      );
     }
 
-    const session = event.data.object as Stripe.Checkout.Session;
+    console.log("Stripe webhook received:", event.type);
 
+    // Handle checkout session completed
     if (event.type === "checkout.session.completed") {
-        const userId = session.metadata?.userId;
-        const tier = session.metadata?.tier;
+      const session = event.data.object as Stripe.Checkout.Session;
+      const { userId, tier } = session.metadata || {};
 
-        if (!userId || !tier) {
-            return new NextResponse("Webhook Error: Missing metadata", { status: 400 });
-        }
+      if (userId && tier) {
+        // Update user tier in database
+        await prisma.user.upsert({
+          where: { id: userId },
+          update: {
+            tier: tier
+          },
+          create: {
+            id: userId,
+            email: session.customer_details?.email || "",
+            tier: tier,
+            shortCredits: tier === "agency" ? 999 : 100,
+            mediumCredits: tier === "agency" ? 999 : 50
+          }
+        });
 
-        // Upgrade user in Database
-        try {
-            await db.user.update({
-                where: { id: userId },
-                data: { tier: tier.toLowerCase() }
-            });
-            console.log(`[STRIPE_WEBHOOK] User ${userId} upgraded to ${tier}`);
-        } catch (dbError) {
-            console.error("[STRIPE_WEBHOOK_DB_ERROR]", dbError);
-            return new NextResponse("Webhook Error: Database update failed", { status: 500 });
-        }
+        console.log(`✅ User ${userId} upgraded to ${tier} via Stripe`);
+      }
     }
 
-    return new NextResponse(null, { status: 200 });
+    return NextResponse.json({ received: true });
+
+  } catch (error) {
+    console.error("Stripe webhook error:", error);
+    return NextResponse.json(
+      { error: "Webhook processing failed" },
+      { status: 500 }
+    );
+  }
 }
