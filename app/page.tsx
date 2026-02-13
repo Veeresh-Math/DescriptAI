@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [isIndia, setIsIndia] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Detect user's country on mount
   useEffect(() => {
@@ -66,7 +67,51 @@ export default function Home() {
               <UserButton afterSignOutUrl="/" />
             </SignedIn>
           </div>
+          <div className="md:hidden">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            </button>
+          </div>
         </nav>
+        {isMenuOpen && (
+          <div className="md:hidden mt-4">
+            <div className="flex flex-col space-y-4">
+              <a href="#features" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                Features
+              </a>
+              <a href="#how-it-works" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                How It Works
+              </a>
+              <Link href="/pricing" className="text-gray-700 hover:text-purple-600 font-bold transition">
+                ⭐ Pricing
+              </Link>
+
+              <SignedOut>
+                <Link href="/sign-in" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                  Log In
+                </Link>
+                <Link
+                  href="/sign-up"
+                  className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-6 py-2 rounded-lg hover:from-purple-700 hover:to-purple-800 transition shadow-md hover:shadow-lg font-semibold"
+                >
+                  Sign Up Free
+                </Link>
+              </SignedOut>
+
+              <SignedIn>
+                <Link
+                  href="/generate"
+                  className="text-gray-700 hover:text-purple-600 font-medium transition mr-4"
+                >
+                  Dashboard
+                </Link>
+                <UserButton afterSignOutUrl="/" />
+              </SignedIn>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
@@ -90,12 +135,15 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="/generate"
-              className="bg-gradient-to-r from-purple-600 via-purple-700 to-pink-600 text-white px-10 py-5 rounded-xl text-lg font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
-            >
-              Generate Now (Free) →
-            </a>
+            <div className="flex flex-col items-center">
+              <a
+                href="/generate"
+                className="bg-gradient-to-r from-purple-600 via-purple-700 to-pink-600 text-white px-10 py-5 rounded-xl text-lg font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
+              >
+                Generate Now (Free) →
+              </a>
+              <p className="text-xs text-gray-500 mt-2">3 free generations per month</p>
+            </div>
             <a
               href="#how-it-works"
               className="border-2 border-purple-300 px-10 py-5 rounded-xl text-lg font-bold text-purple-700 hover:bg-purple-50 hover:border-purple-500 transition-all duration-300 w-full sm:w-auto"
@@ -463,7 +511,7 @@ export default function Home() {
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition">🎁</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">Referral Rewards</h3>
               <p className="text-gray-600 leading-relaxed">
-                Invite friends, earn 5 premium credits per signup. Free users can earn Pro features just by sharing.
+                Invite friends and earn 5 premium credits for each signup. Each credit can be used for one premium generation. Accumulate credits to unlock Pro features for free.
               </p>
             </div>
 
@@ -479,9 +527,9 @@ export default function Home() {
             {/* Feature 9 - Intelligence */}
             <div className="group p-8 border-2 border-yellow-100 rounded-2xl hover:border-yellow-400 hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-yellow-50">
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition">🧠</div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">Global Intelligence</h3>
+              <h3 className="text-2xl font-bold mb-3 text-gray-900">Personalized Intelligence</h3>
               <p className="text-gray-600 leading-relaxed">
-                Autonomous web mining for latest marketing trends. Knowledge vault with conversion secrets. Always ahead.
+                Our AI learns from your most successful descriptions, identifying patterns and keywords that lead to higher conversions for your specific products.
               </p>
             </div>
           </div>
@@ -609,11 +657,11 @@ export default function Home() {
               <p className="text-purple-200 mb-6">For marketing agencies</p>
               <ul className="space-y-3 text-sm mb-8">
                 <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> Everything in Pro</li>
-                <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> Custom keywords</li>
-                <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> Brand voice presets</li>
-                <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> White-label preview</li>
-                <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> Team collaboration</li>
-                <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> API access</li>
+                <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> Custom keywords: <span className="text-purple-300 ml-1">Ensure your most important keywords are always included.</span></li>
+                <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> Brand voice presets: <span className="text-purple-300 ml-1">Maintain a consistent brand voice across all descriptions.</span></li>
+                <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> White-label preview: <span className="text-purple-300 ml-1">Share descriptions with clients under your own brand.</span></li>
+                <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> Team collaboration: <span className="text-purple-300 ml-1">Invite team members to collaborate on projects.</span></li>
+                <li className="flex items-center"><span className="text-green-300 mr-2">✓</span> API access: <span className="text-purple-300 ml-1">Integrate DescriptAI into your own applications.</span></li>
               </ul>
               <Link href="/pricing" className="block w-full text-center bg-white text-purple-700 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
                 Go Agency
@@ -649,7 +697,7 @@ export default function Home() {
             <div className="text-center md:text-left">
               <div className="text-2xl font-bold text-white mb-2">⚡ DescriptAI</div>
               <p className="text-sm">
-                © 2026 DescriptAI. The Professional AI Marketing Laboratory.
+                © {new Date().getFullYear()} DescriptAI. The Professional AI Marketing Laboratory.
               </p>
             </div>
             <div className="flex space-x-6">
@@ -661,9 +709,6 @@ export default function Home() {
               </a>
               <a href="#" className="text-gray-400 hover:text-purple-400 transition">
                 Support
-              </a>
-              <a href="#" className="text-gray-400 hover:text-purple-400 transition">
-                GitHub
               </a>
             </div>
           </div>
