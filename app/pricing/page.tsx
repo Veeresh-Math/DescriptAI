@@ -7,20 +7,23 @@ import { PRICING, detectPaymentGateway } from "@/lib/payments";
 
 interface PricingTier {
   name: string;
-  price: string;
+  priceMonthly: string;
+  priceYearly: string;
   period?: string;
   description: string;
   features: string[];
   buttonText: string;
   highlight: boolean;
   buttonClass: string;
+  savings?: string;
 }
 
-// Pricing display configuration
-const getPricingTiers = (isIndia: boolean): PricingTier[] => [
+// Pricing display configuration with annual discount (20% off)
+const getPricingTiers = (isIndia: boolean, isAnnual: boolean): PricingTier[] => [
     {
         name: "Free",
-        price: isIndia ? "₹0" : "$0",
+        priceMonthly: isIndia ? "₹0" : "$0",
+        priceYearly: isIndia ? "₹0" : "$0",
         description: "Perfect for testing the waters",
         features: [
             "🚀 5 Free AI Generations/Month",
@@ -29,20 +32,16 @@ const getPricingTiers = (isIndia: boolean): PricingTier[] => [
             "🛍️ One Platform (Amazon OR Shopify)",
             "🔧 Basic Tools (Automotive only)",
             "📄 Standard CSV Export",
-            "🎁 Referral Rewards (+3 bonus generations)",
-            "⚡ AI-Powered Description Engine",
-            "❌ No Bulk Generation",
-            "❌ No Etsy/eBay Platforms",
-            "❌ No Long (500 words) Mode",
-            "❌ No Social Kit / SEO Heatmap"
+            "🎁 Referral Rewards (+3 bonus generations)"
         ],
-        buttonText: "Current Plan",
+        buttonText: "Start Free",
         highlight: false,
-        buttonClass: "bg-gray-100 text-gray-400 cursor-default"
+        buttonClass: "bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:shadow-lg transform hover:scale-105"
     },
     {
         name: "Pro",
-        price: isIndia ? `₹${PRICING.pro.inr}` : `${PRICING.pro.usd}`,
+        priceMonthly: isIndia ? `₹${PRICING.pro.inr}` : `$${PRICING.pro.usd}`,
+        priceYearly: isIndia ? `₹${Math.round(PRICING.pro.inr * 12 * 0.8)}` : `$${Math.round(PRICING.pro.usd * 12 * 0.8)}`,
         period: "/mo",
         description: "For serious e-commerce sellers",
         features: [
@@ -50,47 +49,38 @@ const getPricingTiers = (isIndia: boolean): PricingTier[] => [
             "📊 Bulk Generation (50 descriptions)",
             "🌍 All Languages (25+)",
             "🛍️ All 4 Platforms (Amazon/Shopify/Etsy/eBay)",
-            "🔗 Direct Shopify Product Sync",
-            "🔧 Advanced Tools Ecosystem (All Categories)",
-            "📏 All 3 Lengths (Short/Medium/Long 500 words)",
-            "🎭 All Tones & Expert Personas",
-            "⚡ Full Social Media Kit (IG/Twitter/FB/LinkedIn)",
-            "🔥 Advanced SEO Heatmap & Keywords",
+            "📏 All 3 Lengths (Short/Medium/Long)",
+            "⚡ Full Social Media Kit",
+            "🔥 Advanced SEO Heatmap",
             "📥 Platform-Specific Exports",
-            "🚀 Priority Support & 99.9% Uptime"
+            "🚀 Priority Support"
         ],
         buttonText: "Upgrade to Pro",
         highlight: true,
-        buttonClass: "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-xl transform hover:scale-105"
+        buttonClass: "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-xl transform hover:scale-105",
+        savings: isAnnual ? (isIndia ? "Save ₹3,838/yr" : "Save $46/yr") : undefined
     },
     {
         name: "Agency",
-        price: isIndia ? `₹${PRICING.agency.inr}` : `${PRICING.agency.usd}`,
+        priceMonthly: isIndia ? `₹${PRICING.agency.inr}` : `$${PRICING.agency.usd}`,
+        priceYearly: isIndia ? `₹${Math.round(PRICING.agency.inr * 12 * 0.8)}` : `$${Math.round(PRICING.agency.usd * 12 * 0.8)}`,
         period: "/mo",
-        description: "For high-volume marketing teams & agencies",
+        description: "For agencies & high-volume teams",
         features: [
-            "♾️ Unlimited AI Generations (No limits ever)",
-            "📊 Bulk Generation (1000+ descriptions at once)",
-            "🌍 50+ Languages (Including regional Indian languages)",
-            "✅ Everything in Pro PLUS:",
-            "🛡️ Triple-Shield Resilience (Zero Downtime)",
-            "🏆 Agency Command Suite (Manage 50+ clients)",
-            "🎯 Advanced SEO Keyword Targeting (Unlimited keywords)",
-            "🎨 Custom Brand Voice Presets (Create unlimited presets)",
-            "📚 Unlimited Brand Asset Storage (100GB+)",
-            "🏷️ Full White-label (Your logo, your domain)",
-            "📊 Advanced Analytics & Reporting (Custom dashboards)",
-            "👥 Team Collaboration (50 team members)",
-            "🎁 Client Portal (Self-serve for clients)",
-            "📞 Dedicated Account Manager (24/7 priority support)",
-            "⚡ Priority API Access (10x faster processing)",
-            "💰 White-label Invoicing (Your billing)",
-            "🔐 SSO & Enterprise Security",
-            "🎓 Free Training & Onboarding"
+            "♾️ Unlimited AI Generations",
+            "📊 Bulk Generation (1000+ at once)",
+            "🏆 Agency Command Suite",
+            "🎨 Custom Brand Voice Presets",
+            "🏷️ Full White-label",
+            "👥 Team Collaboration (50 seats)",
+            "📞 Dedicated Account Manager",
+            "⚡ Priority API Access",
+            "🔐 SSO & Enterprise Security"
         ],
         buttonText: "Go Agency",
         highlight: true,
-        buttonClass: "bg-gradient-to-r from-gray-800 to-gray-900 text-white hover:shadow-2xl transform hover:scale-105 border-2 border-yellow-400"
+        buttonClass: "bg-gradient-to-r from-gray-800 to-gray-900 text-white hover:shadow-2xl transform hover:scale-105 border-2 border-yellow-400",
+        savings: isAnnual ? (isIndia ? "Save ₹9,598/yr" : "Save $118/yr") : undefined
     }
 ];
 
@@ -116,14 +106,14 @@ const comparisonFeatures = [
     { feature: "Priority Support", free: "Standard", pro: "✅ Priority support", agency: "✅ Dedicated account manager" },
     { feature: "API Access", free: "❌", pro: "❌", agency: "✅ Full API access" },
     { feature: "Referral Program", free: "✅ +3 bonus generations", pro: "✅ +5 credits/signup", agency: "✅ Custom referral rewards" }
-
 ];
 
 export default function PricingPage() {
     const [loadingTier, setLoadingTier] = useState<string | null>(null);
     const [isIndia, setIsIndia] = useState(false);
     const [paymentGateway, setPaymentGateway] = useState<string>("");
-    const { isSignedIn } = useUser();
+    const [isAnnual, setIsAnnual] = useState(false);
+    const { isSignedIn, user } = useUser();
 
     // Detect user's country on mount
     useEffect(() => {
@@ -144,7 +134,11 @@ export default function PricingPage() {
     }, []);
 
     const handleUpgrade = async (tierName: string) => {
-        if (tierName === "Free") return;
+        if (tierName === "Free") {
+            // Redirect to sign-up for free tier
+            window.location.href = "/sign-up";
+            return;
+        }
 
         // Check if user is signed in
         if (!isSignedIn) {
@@ -160,7 +154,10 @@ export default function PricingPage() {
             const res = await fetch(endpoint, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ tier: tierName.toLowerCase() }),
+                body: JSON.stringify({ 
+                    tier: tierName.toLowerCase(),
+                    billingCycle: isAnnual ? "annual" : "monthly"
+                }),
             });
             
             const data = await res.json();
@@ -177,13 +174,13 @@ export default function PricingPage() {
                     name: "DescriptAI",
                     description: `${data.planName} Plan`,
                     order_id: data.orderId,
-                    handler: function (response: any) {
+                    handler: function (response: unknown) {
                         alert("Payment successful! Your account has been upgraded.");
                         window.location.href = "/generate";
                     },
                     prefill: {
-                        name: "",
-                        email: "",
+                        name: user?.firstName || "",
+                        email: user?.emailAddresses?.[0]?.emailAddress || "",
                         contact: ""
                     },
                     theme: {
@@ -211,9 +208,12 @@ export default function PricingPage() {
         }
     };
 
-    const pricingTiers = getPricingTiers(isIndia);
+    const pricingTiers = getPricingTiers(isIndia, isAnnual);
 
-
+    // Calculate daily price
+    const getDailyPrice = (monthlyPrice: number) => {
+        return (monthlyPrice / 30).toFixed(2);
+    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50">
@@ -222,7 +222,7 @@ export default function PricingPage() {
                 <nav className="flex items-center justify-between">
                     <Link href="/" className="flex items-center space-x-2">
                         <div className="text-2xl font-bold gradient-text">
-                            ⚡ DescriptAI
+                            DescriptAI
                         </div>
                     </Link>
                     <div className="flex items-center space-x-6">
@@ -240,13 +240,41 @@ export default function PricingPage() {
             </header>
 
             <div className="container mx-auto px-4 py-20">
-                <div className="text-center mb-16">
+                <div className="text-center mb-12">
                     <h1 className="text-5xl font-extrabold text-gray-900 mb-4">
                         Simple, <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Transparent</span> Pricing
                     </h1>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto">
                         Choose the plan that fits your growth. Scale your product descriptions with the power of Elite AI Engines.
                     </p>
+                </div>
+
+                {/* Trust Signals */}
+                <div className="max-w-4xl mx-auto mb-12">
+                    <div className="bg-white rounded-2xl shadow-lg p-6 border border-purple-100">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                            <div className="flex flex-col items-center">
+                                <div className="text-3xl mb-2">🔒</div>
+                                <div className="text-sm font-bold text-gray-700">256-bit SSL</div>
+                                <div className="text-xs text-gray-500">Secure Payment</div>
+                            </div>
+                            <div className="flex flex-col items-center">
+                                <div className="text-3xl mb-2">💰</div>
+                                <div className="text-sm font-bold text-gray-700">30-Day Guarantee</div>
+                                <div className="text-xs text-gray-500">Money Back</div>
+                            </div>
+                            <div className="flex flex-col items-center">
+                                <div className="text-3xl mb-2">🚫</div>
+                                <div className="text-sm font-bold text-gray-700">No Hidden Fees</div>
+                                <div className="text-xs text-gray-500">Cancel Anytime</div>
+                            </div>
+                            <div className="flex flex-col items-center">
+                                <div className="text-3xl mb-2">⚡</div>
+                                <div className="text-sm font-bold text-gray-700">99.9% Uptime</div>
+                                <div className="text-xs text-gray-500">Reliable Service</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Payment Gateway Badge */}
@@ -259,43 +287,99 @@ export default function PricingPage() {
                     </div>
                 )}
 
+                {/* Billing Toggle */}
+                <div className="flex justify-center mb-12">
+                    <div className="bg-white rounded-full p-1 shadow-lg border border-purple-100 inline-flex items-center">
+                        <button
+                            onClick={() => setIsAnnual(false)}
+                            className={`px-6 py-3 rounded-full font-bold transition-all ${
+                                !isAnnual 
+                                    ? "bg-purple-600 text-white shadow-md" 
+                                    : "text-gray-600 hover:text-purple-600"
+                            }`}
+                        >
+                            Monthly
+                        </button>
+                        <button
+                            onClick={() => setIsAnnual(true)}
+                            className={`px-6 py-3 rounded-full font-bold transition-all flex items-center gap-2 ${
+                                isAnnual 
+                                    ? "bg-purple-600 text-white shadow-md" 
+                                    : "text-gray-600 hover:text-purple-600"
+                            }`}
+                        >
+                            Annual
+                            <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">Save 20%</span>
+                        </button>
+                    </div>
+                </div>
+
                 {/* Pricing Cards */}
                 <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
                     {pricingTiers.map((tier, index) => (
-
                         <div
                             key={index}
-                            className={`relative bg-white rounded-3xl p-8 shadow-xl border-2 transition-all duration-300 flex flex-col ${tier.highlight ? "border-purple-600 scale-105 z-10" : "border-gray-50 hover:border-purple-200"
-                                }`}
+                            className={`relative bg-white rounded-3xl p-8 shadow-xl border-2 transition-all duration-300 flex flex-col ${
+                                tier.highlight 
+                                    ? "border-purple-600 scale-105 z-10" 
+                                    : "border-gray-50 hover:border-purple-200"
+                            }`}
                         >
-                            {tier.highlight && (
+                            {tier.name === "Pro" && (
                                 <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase">
                                     Most Popular
                                 </div>
                             )}
 
-                            <div className="mb-8">
+                            {tier.name === "Agency" && (
+                                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase">
+                                    Best Value
+                                </div>
+                            )}
+
+                            <div className="mb-6">
                                 <h3 className="text-2xl font-bold text-gray-900 mb-2">{tier.name}</h3>
                                 <p className="text-gray-500 text-sm">{tier.description}</p>
                             </div>
 
-                            <div className="mb-8 flex items-baseline">
-                                <span className="text-5xl font-extrabold text-gray-900">{tier.price}</span>
-                                {tier.period && <span className="text-gray-500 ml-1">{tier.period}</span>}
+                            <div className="mb-6">
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-5xl font-extrabold text-gray-900">
+                                        {isAnnual ? tier.priceYearly : tier.priceMonthly}
+                                    </span>
+                                    {tier.period && (
+                                        <span className="text-gray-500">
+                                            {isAnnual ? "/yr" : tier.period}
+                                        </span>
+                                    )}
+                                </div>
+                                {tier.savings && (
+                                    <div className="mt-2 text-green-600 font-bold text-sm">
+                                        {tier.savings}
+                                    </div>
+                                )}
+                                {tier.name !== "Free" && (
+                                    <div className="text-gray-400 text-xs mt-1">
+                                        Just {isIndia ? "₹" : "$"}{getDailyPrice(isAnnual ? 
+                                            (tier.name === "Pro" ? PRICING.pro.usd * 12 * 0.8 / 12 : PRICING.agency.usd * 12 * 0.8 / 12) :
+                                            (tier.name === "Pro" ? PRICING.pro.usd : PRICING.agency.usd)
+                                        )}/day
+                                    </div>
+                                )}
                             </div>
 
-                            <ul className="space-y-4 mb-10 flex-1">
+                            <ul className="space-y-3 mb-8 flex-1">
                                 {tier.features.map((feature, fIndex) => (
-                                    <li key={fIndex} className="flex items-center text-gray-600">
-                                        <span className="text-green-500 mr-2 font-bold text-xl">✓</span>
-                                        <span className="text-sm">{feature}</span>
+                                    <li key={fIndex} className="flex items-start text-gray-600 text-sm">
+                                        <span className="text-green-500 mr-2 font-bold">✓</span>
+                                        <span>{feature}</span>
                                     </li>
                                 ))}
                             </ul>
 
                             <button
                                 onClick={() => handleUpgrade(tier.name)}
-                                disabled={loadingTier === tier.name || tier.name === "Free"}
+                                disabled={loadingTier === tier.name}
                                 className={`w-full py-4 rounded-xl font-bold transition-all duration-300 ${tier.buttonClass} disabled:opacity-50 disabled:cursor-not-allowed`}
                             >
                                 {loadingTier === tier.name ? "Processing..." : tier.buttonText}
@@ -304,17 +388,27 @@ export default function PricingPage() {
                     ))}
                 </div>
 
+                {/* Money Back Guarantee Banner */}
+                <div className="max-w-4xl mx-auto mb-20">
+                    <div className="bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl p-8 border-2 border-green-200 text-center">
+                        <div className="text-4xl mb-4">💯</div>
+                        <h3 className="text-2xl font-bold text-green-800 mb-2">30-Day Money-Back Guarantee</h3>
+                        <p className="text-green-700 mb-4">
+                            Not satisfied? Get a full refund within 30 days. No questions asked.
+                        </p>
+                        <Link href="/refund" className="text-green-600 hover:underline font-bold">
+                            View Refund Policy →
+                        </Link>
+                    </div>
+                </div>
+
                 {/* Pro vs Agency Comparison Table */}
                 <div className="max-w-5xl mx-auto mb-20">
                     <h2 className="text-3xl font-bold text-center mb-8">
                         <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                            Pro vs Agency: What&apos;s the Difference?
-
+                            Compare All Features
                         </span>
                     </h2>
-                    <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
-                        Both plans give you unlimited power. Agency adds advanced tools for managing multiple clients and brands.
-                    </p>
 
                     <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-purple-100">
                         <div className="overflow-x-auto">
@@ -323,8 +417,8 @@ export default function PricingPage() {
                                     <tr className="bg-gradient-to-r from-purple-600 to-pink-600 text-white">
                                         <th className="px-6 py-4 text-left font-bold">Feature</th>
                                         <th className="px-6 py-4 text-center font-bold">Free</th>
-                                        <th className="px-6 py-4 text-center font-bold bg-purple-700">Pro ($19)</th>
-                                        <th className="px-6 py-4 text-center font-bold bg-gray-900">Agency ($49)</th>
+                                        <th className="px-6 py-4 text-center font-bold bg-purple-700">Pro</th>
+                                        <th className="px-6 py-4 text-center font-bold bg-gray-900">Agency</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -344,25 +438,30 @@ export default function PricingPage() {
                     {/* Quick Summary */}
                     <div className="grid md:grid-cols-2 gap-8 mt-12">
                         <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl border-2 border-purple-200">
-                            <h3 className="text-2xl font-bold text-purple-800 mb-4">🔥 Pro ($19/mo)</h3>
-                            <p className="text-gray-700 mb-4">Best for individual sellers, small stores, dropshippers</p>
+                            <h3 className="text-2xl font-bold text-purple-800 mb-4">Pro - Best for Sellers</h3>
+                            <p className="text-gray-700 mb-4">Perfect for Amazon FBA, Shopify stores, Etsy shops</p>
                             <ul className="space-y-2 text-sm text-gray-600">
-                                <li>✅ Everything to sell products effectively</li>
+                                <li>✅ 100 generations/month</li>
                                 <li>✅ All platforms + all lengths</li>
                                 <li>✅ Social media kit + SEO heatmap</li>
-                                <li>✅ Unlimited generations</li>
+                                <li>✅ Priority support</li>
                             </ul>
+                            <div className="mt-4 text-purple-600 font-bold">
+                                {isIndia ? "₹1,599" : "$19"}/mo • Just {isIndia ? "₹53" : "$0.63"}/day
+                            </div>
                         </div>
                         <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-8 rounded-2xl border-2 border-gray-300">
-                            <h3 className="text-2xl font-bold text-gray-800 mb-4">🏆 Agency ($49/mo)</h3>
-                            <p className="text-gray-700 mb-4">Best for marketing agencies, large teams, power users</p>
+                            <h3 className="text-2xl font-bold text-gray-800 mb-4">Agency - Best for Teams</h3>
+                            <p className="text-gray-700 mb-4">For marketing agencies, large teams, power users</p>
                             <ul className="space-y-2 text-sm text-gray-600">
-                                <li>✅ Everything in Pro, plus:</li>
-                                <li>✅ Custom SEO keywords input</li>
-                                <li>✅ Brand voice presets & library</li>
-                                <li>✅ Triple-shield resilience (zero downtime)</li>
-                                <li>✅ Agency command suite + white-label</li>
+                                <li>✅ Unlimited generations</li>
+                                <li>✅ White-label + team seats</li>
+                                <li>✅ API access + custom branding</li>
+                                <li>✅ Dedicated account manager</li>
                             </ul>
+                            <div className="mt-4 text-gray-600 font-bold">
+                                {isIndia ? "₹3,999" : "$49"}/mo • Just {isIndia ? "₹133" : "$1.63"}/day
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -370,22 +469,38 @@ export default function PricingPage() {
                 {/* FAQ Section */}
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-                    <div className="grid md:grid-cols-2 gap-8">
-                        <div>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">Can I cancel anytime?</h4>
                             <p className="text-gray-600 text-sm">Yes, you can cancel your subscription at any time from your settings page. No questions asked.</p>
                         </div>
-                        <div>
+                        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">How do credits work?</h4>
-                            <p className="text-gray-600 text-sm">On the free tier, you get 3 short and 2 medium generation credits per month. Pro and Agency users get unlimited access.</p>
+                            <p className="text-gray-600 text-sm">Free tier: 5 generations/month. Pro: 100/month. Agency: Unlimited. Credits reset monthly.</p>
                         </div>
-                        <div>
+                        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">What happens to my history if I cancel?</h4>
                             <p className="text-gray-600 text-sm">Your generation history is yours to keep. We will never delete your past work even if you downgrade.</p>
                         </div>
-                        <div>
+                        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                            <h4 className="font-bold text-gray-900 mb-2">Do you offer refunds?</h4>
+                            <p className="text-gray-600 text-sm">Yes! We offer a 30-day money-back guarantee on all paid plans. <Link href="/refund" className="text-purple-600 hover:underline">Learn more</Link></p>
+                        </div>
+                        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                            <h4 className="font-bold text-gray-900 mb-2">Can I upgrade/downgrade?</h4>
+                            <p className="text-gray-600 text-sm">Yes! Upgrade anytime with prorated billing. Downgrades take effect at the end of your billing period.</p>
+                        </div>
+                        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                            <h4 className="font-bold text-gray-900 mb-2">What payment methods?</h4>
+                            <p className="text-gray-600 text-sm">India: UPI, Cards, NetBanking via Razorpay. International: Cards via Stripe.</p>
+                        </div>
+                        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">Do you offer discounts for non-profits?</h4>
-                            <p className="text-gray-600 text-sm">We love supporting good causes. Contact our support team for specialized pricing for charities and non-profits.</p>
+                            <p className="text-gray-600 text-sm">We love supporting good causes. Contact <a href="mailto:support@descriptai.com" className="text-purple-600 hover:underline">support@descriptai.com</a> for special pricing.</p>
+                        </div>
+                        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                            <h4 className="font-bold text-gray-900 mb-2">Is there a free trial?</h4>
+                            <p className="text-gray-600 text-sm">Our Free tier gives you 5 generations/month forever. No credit card required to start.</p>
                         </div>
                     </div>
                 </div>
@@ -393,9 +508,40 @@ export default function PricingPage() {
 
             {/* Footer */}
             <footer className="bg-gray-900 text-gray-400 py-12 mt-20">
-                <div className="container mx-auto px-4 text-center">
-                    <div className="text-2xl font-bold text-white mb-2">⚡ DescriptAI</div>
-                    <p className="text-sm">Scale your business with AI-powered copy. Built for the modern merchant.</p>
+                <div className="container mx-auto px-4">
+                    <div className="grid md:grid-cols-4 gap-8 mb-8">
+                        <div>
+                            <div className="text-2xl font-bold text-white mb-4">DescriptAI</div>
+                            <p className="text-sm">Scale your business with AI-powered copy. Built for the modern merchant.</p>
+                        </div>
+                        <div>
+                            <h4 className="text-white font-bold mb-4">Product</h4>
+                            <ul className="space-y-2 text-sm">
+                                <li><Link href="/pricing" className="hover:text-purple-400 transition">Pricing</Link></li>
+                                <li><Link href="/generate" className="hover:text-purple-400 transition">Dashboard</Link></li>
+                                <li><Link href="/history" className="hover:text-purple-400 transition">History</Link></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="text-white font-bold mb-4">Legal</h4>
+                            <ul className="space-y-2 text-sm">
+                                <li><Link href="/privacy" className="hover:text-purple-400 transition">Privacy Policy</Link></li>
+                                <li><Link href="/terms" className="hover:text-purple-400 transition">Terms of Service</Link></li>
+                                <li><Link href="/refund" className="hover:text-purple-400 transition">Refund Policy</Link></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="text-white font-bold mb-4">Contact</h4>
+                            <ul className="space-y-2 text-sm">
+                                <li><a href="mailto:support@descriptai.com" className="hover:text-purple-400 transition">support@descriptai.com</a></li>
+                                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 transition">Twitter</a></li>
+                                <li><a href="https://linkedin.com/company/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 transition">LinkedIn</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="border-t border-gray-800 pt-8 text-center text-sm">
+                        <p>© {new Date().getFullYear()} DescriptAI. All rights reserved.</p>
+                    </div>
                 </div>
             </footer>
         </div>

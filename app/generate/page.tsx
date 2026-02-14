@@ -205,6 +205,89 @@ const VariantCard = ({ variant, index, copyToClipboard, copiedIndex, tier, custo
     );
 };
 
+// Onboarding Modal Component
+const OnboardingModal = ({ isOpen, onClose, currentStep, onNext, onSkip }: {
+    isOpen: boolean,
+    onClose: () => void,
+    currentStep: number,
+    onNext: () => void,
+    onSkip: () => void
+}) => {
+    if (!isOpen) return null;
+
+    const steps = [
+        {
+            title: "Welcome to DescriptAI! 🎉",
+            description: "Let's create your first AI-powered product description in under 30 seconds.",
+            icon: "🚀"
+        },
+        {
+            title: "Enter Product Details",
+            description: "Type your product name and key features. Be specific for better results!",
+            icon: "📝",
+            tip: "Tip: Include unique selling points like 'organic', 'handmade', 'wireless'"
+        },
+        {
+            title: "Choose Your Platform",
+            description: "Select where you'll sell - Amazon, Shopify, Etsy, or eBay. Each gets optimized formatting!",
+            icon: "🛒"
+        },
+        {
+            title: "Generate & Export",
+            description: "Click Generate to get 3 AI variants. Copy, export to CSV, or use the Social Media Kit!",
+            icon: "✨"
+        }
+    ];
+
+    const step = steps[currentStep];
+    const isLastStep = currentStep === steps.length - 1;
+
+    return (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+            <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl border border-purple-100">
+                <div className="text-center">
+                    <div className="text-6xl mb-4">{step.icon}</div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">{step.title}</h2>
+                    <p className="text-gray-600 mb-4">{step.description}</p>
+                    {step.tip && (
+                        <div className="bg-purple-50 rounded-xl p-3 mb-4 border border-purple-100">
+                            <p className="text-sm text-purple-700">{step.tip}</p>
+                        </div>
+                    )}
+                    
+                    {/* Progress Dots */}
+                    <div className="flex justify-center gap-2 mb-6">
+                        {steps.map((_, i) => (
+                            <div 
+                                key={i} 
+                                className={`w-2 h-2 rounded-full transition ${
+                                    i === currentStep ? "bg-purple-600 w-6" : 
+                                    i < currentStep ? "bg-purple-400" : "bg-gray-300"
+                                }`} 
+                            />
+                        ))}
+                    </div>
+
+                    <div className="flex gap-3">
+                        <button
+                            onClick={onSkip}
+                            className="flex-1 py-3 rounded-xl font-bold text-gray-500 hover:bg-gray-100 transition"
+                        >
+                            Skip Tour
+                        </button>
+                        <button
+                            onClick={isLastStep ? onClose : onNext}
+                            className="flex-1 py-3 rounded-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg transition"
+                        >
+                            {isLastStep ? "Start Creating!" : "Next →"}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 export default function GeneratePage() {
     const [productName, setProductName] = useState("");
     const [features, setFeatures] = useState("");
@@ -231,6 +314,10 @@ export default function GeneratePage() {
     const [isSavingPreset, setIsSavingPreset] = useState(false);
     const [isExporting, setIsExporting] = useState(false);
     const resultsRef = useRef<HTMLDivElement>(null);
+    
+    // Onboarding state
+    const [showOnboarding, setShowOnboarding] = useState(false);
+    const [onboardingStep, setOnboardingStep] = useState(0);
 
     const handleExport = (format: CSVFormat) => {
         const item = {
@@ -271,8 +358,28 @@ export default function GeneratePage() {
     useEffect(() => {
         fetchUserData();
         localStorage.removeItem("hf_api_key");
+        
+        // Check if first-time user - show onboarding
+        const hasSeenOnboarding = localStorage.getItem("descriptai_onboarding_complete");
+        if (!hasSeenOnboarding) {
+            setShowOnboarding(true);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const closeOnboarding = () => {
+        setShowOnboarding(false);
+        localStorage.setItem("descriptai_onboarding_complete", "true");
+    };
+
+    const nextOnboardingStep = () => {
+        setOnboardingStep(prev => prev + 1);
+    };
+
+    const skipOnboarding = () => {
+        setShowOnboarding(false);
+        localStorage.setItem("descriptai_onboarding_complete", "true");
+    };
 
     const handleGenerate = async () => {
         if (!productName || !features) {
@@ -393,17 +500,27 @@ export default function GeneratePage() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col pb-20 lg:pb-0">
+            {/* Onboarding Modal */}
+            <OnboardingModal 
+                isOpen={showOnboarding}
+                onClose={closeOnboarding}
+                currentStep={onboardingStep}
+                onNext={nextOnboardingStep}
+                onSkip={skipOnboarding}
+            />
+            
             {/* Mobile-First Header */}
             <header className="bg-white border-b border-purple-100 py-3 px-4 sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
                     <Link href="/" className="text-lg font-black gradient-text">⚡ DescriptAI</Link>
                     <div className="flex gap-3 items-center">
+                        <Link href="/help" className="text-xs font-bold text-gray-600 hover:text-purple-600 transition p-2">Help</Link>
                         <Link href="/history" className="text-xs font-bold text-gray-600 hover:text-purple-600 transition p-2">History</Link>
                         <Link href="/pricing" className="text-xs font-bold text-gray-600 hover:text-purple-600 transition p-2">⭐ Pricing</Link>
                         {userData && (
                             <div className="hidden sm:flex gap-1 text-[9px] font-black">
-                                <span className={`px-2 py-1 rounded-full ${userData.shortCredits > 0 ? "bg-purple-100 text-purple-700" : "bg-red-100 text-red-600"}`}>S:{userData.shortCredits}</span>
-                                <span className={`px-2 py-1 rounded-full ${userData.mediumCredits > 0 ? "bg-teal-100 text-teal-700" : "bg-red-100 text-red-600"}`}>M:{userData.mediumCredits}</span>
+                                <span className={`px-2 py-1 rounded-full ${userData.shortCredits > 0 ? "bg-purple-100 text-purple-700" : "bg-red-100 text-red-600"}`} title="Short Credits">S:{userData.shortCredits}</span>
+                                <span className={`px-2 py-1 rounded-full ${userData.mediumCredits > 0 ? "bg-teal-100 text-teal-700" : "bg-red-100 text-red-600"}`} title="Medium Credits">M:{userData.mediumCredits}</span>
                             </div>
                         )}
                     </div>
