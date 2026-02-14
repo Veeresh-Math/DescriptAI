@@ -250,7 +250,7 @@ export default function PricingPage() {
                     <h1 className="text-5xl font-extrabold text-gray-900 mb-4">
                         Simple, <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Transparent</span> Pricing
                     </h1>
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-xl text-gray-800 max-w-2xl mx-auto">
                         Choose the plan that fits your growth. Scale your product descriptions with the power of Elite AI Engines.
                     </p>
                 </div>
@@ -262,22 +262,22 @@ export default function PricingPage() {
                             <div className="flex flex-col items-center">
                                 <div className="text-3xl mb-2">🔒</div>
                                 <div className="text-sm font-bold text-gray-700">256-bit SSL</div>
-                                <div className="text-xs text-gray-500">Secure Payment</div>
+                                <div className="text-xs text-gray-700">Secure Payment</div>
                             </div>
                             <div className="flex flex-col items-center">
                                 <div className="text-3xl mb-2">💰</div>
                                 <div className="text-sm font-bold text-gray-700">30-Day Guarantee</div>
-                                <div className="text-xs text-gray-500">Money Back</div>
+                                <div className="text-xs text-gray-700">Money Back</div>
                             </div>
                             <div className="flex flex-col items-center">
                                 <div className="text-3xl mb-2">🚫</div>
                                 <div className="text-sm font-bold text-gray-700">No Hidden Fees</div>
-                                <div className="text-xs text-gray-500">Cancel Anytime</div>
+                                <div className="text-xs text-gray-700">Cancel Anytime</div>
                             </div>
                             <div className="flex flex-col items-center">
                                 <div className="text-3xl mb-2">⚡</div>
                                 <div className="text-sm font-bold text-gray-700">99.9% Uptime</div>
-                                <div className="text-xs text-gray-500">Reliable Service</div>
+                                <div className="text-xs text-gray-700">Reliable Service</div>
                             </div>
                         </div>
                     </div>
@@ -301,7 +301,7 @@ export default function PricingPage() {
                             className={`px-6 py-3 rounded-full font-bold transition-all ${
                                 !isAnnual 
                                     ? "bg-purple-600 text-white shadow-md" 
-                                    : "text-gray-600 hover:text-purple-600"
+                                    : "text-gray-800 hover:text-purple-600"
                             }`}
                         >
                             Monthly
@@ -311,7 +311,7 @@ export default function PricingPage() {
                             className={`px-6 py-3 rounded-full font-bold transition-all flex items-center gap-2 ${
                                 isAnnual 
                                     ? "bg-purple-600 text-white shadow-md" 
-                                    : "text-gray-600 hover:text-purple-600"
+                                    : "text-gray-800 hover:text-purple-600"
                             }`}
                         >
                             Annual
@@ -345,7 +345,7 @@ export default function PricingPage() {
 
                             <div className="mb-6">
                                 <h3 className="text-2xl font-bold text-gray-900 mb-2">{tier.name}</h3>
-                                <p className="text-gray-500 text-sm">{tier.description}</p>
+                                <p className="text-gray-700 text-sm">{tier.description}</p>
                             </div>
 
                             <div className="mb-6">
@@ -354,7 +354,7 @@ export default function PricingPage() {
                                         {isAnnual ? tier.priceYearly : tier.priceMonthly}
                                     </span>
                                     {tier.period && (
-                                        <span className="text-gray-500">
+                                        <span className="text-gray-700">
                                             {isAnnual ? "/yr" : tier.period}
                                         </span>
                                     )}
@@ -365,7 +365,7 @@ export default function PricingPage() {
                                     </div>
                                 )}
                                 {tier.name !== "Free" && (
-                                    <div className="text-gray-400 text-xs mt-1">
+                                    <div className="text-gray-800 text-xs mt-1">
                                         Just {isIndia ? "₹" : "$"}{getDailyPrice(isAnnual ? 
                                             (tier.name === "Pro" ? PRICING.pro.usd * 12 * 0.8 / 12 : PRICING.agency.usd * 12 * 0.8 / 12) :
                                             (tier.name === "Pro" ? PRICING.pro.usd : PRICING.agency.usd)
@@ -376,7 +376,7 @@ export default function PricingPage() {
 
                             <ul className="space-y-3 mb-8 flex-1">
                                 {tier.features.map((feature, fIndex) => (
-                                    <li key={fIndex} className="flex items-start text-gray-600 text-sm">
+                                    <li key={fIndex} className="flex items-start text-gray-800 text-sm">
                                         <span className="text-green-500 mr-2 font-bold">✓</span>
                                         <span>{feature}</span>
                                     </li>
@@ -431,7 +431,7 @@ export default function PricingPage() {
                                     {comparisonFeatures.map((row, index) => (
                                         <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
                                             <td className="px-6 py-4 font-medium text-gray-900">{row.feature}</td>
-                                            <td className="px-6 py-4 text-center text-sm text-gray-600">{row.free}</td>
+                                            <td className="px-6 py-4 text-center text-sm text-gray-800">{row.free}</td>
                                             <td className="px-6 py-4 text-center text-sm font-semibold text-purple-700 bg-purple-50/50">{row.pro}</td>
                                             <td className="px-6 py-4 text-center text-sm font-semibold text-gray-900 bg-gray-100/50">{row.agency}</td>
                                         </tr>
@@ -446,7 +446,7 @@ export default function PricingPage() {
                         <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl border-2 border-purple-200">
                             <h3 className="text-2xl font-bold text-purple-800 mb-4">Pro - Best for Sellers</h3>
                             <p className="text-gray-700 mb-4">Perfect for Amazon FBA, Shopify stores, Etsy shops</p>
-                            <ul className="space-y-2 text-sm text-gray-600">
+                            <ul className="space-y-2 text-sm text-gray-800">
                                 <li>✅ 100 generations/month</li>
                                 <li>✅ All platforms + all lengths</li>
                                 <li>✅ Social media kit + SEO heatmap</li>
@@ -459,13 +459,13 @@ export default function PricingPage() {
                         <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-8 rounded-2xl border-2 border-gray-300">
                             <h3 className="text-2xl font-bold text-gray-800 mb-4">Agency - Best for Teams</h3>
                             <p className="text-gray-700 mb-4">For marketing agencies, large teams, power users</p>
-                            <ul className="space-y-2 text-sm text-gray-600">
+                            <ul className="space-y-2 text-sm text-gray-800">
                                 <li>✅ Unlimited generations</li>
                                 <li>✅ White-label + team seats</li>
                                 <li>✅ API access + custom branding</li>
                                 <li>✅ Dedicated account manager</li>
                             </ul>
-                            <div className="mt-4 text-gray-600 font-bold">
+                            <div className="mt-4 text-gray-800 font-bold">
                                 {isIndia ? "₹3,999" : "$49"}/mo • Just {isIndia ? "₹133" : "$1.63"}/day
                             </div>
                         </div>
@@ -478,42 +478,42 @@ export default function PricingPage() {
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">Can I cancel anytime?</h4>
-                            <p className="text-gray-600 text-sm">Yes, you can cancel your subscription at any time from your settings page. No questions asked.</p>
+                            <p className="text-gray-800 text-sm">Yes, you can cancel your subscription at any time from your settings page. No questions asked.</p>
                         </div>
                         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">How do credits work?</h4>
-                            <p className="text-gray-600 text-sm">Free tier: 5 generations/month. Pro: 100/month. Agency: Unlimited. Credits reset monthly.</p>
+                            <p className="text-gray-800 text-sm">Free tier: 5 generations/month. Pro: 100/month. Agency: Unlimited. Credits reset monthly.</p>
                         </div>
                         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">What happens to my history if I cancel?</h4>
-                            <p className="text-gray-600 text-sm">Your generation history is yours to keep. We will never delete your past work even if you downgrade.</p>
+                            <p className="text-gray-800 text-sm">Your generation history is yours to keep. We will never delete your past work even if you downgrade.</p>
                         </div>
                         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">Do you offer refunds?</h4>
-                            <p className="text-gray-600 text-sm">Yes! We offer a 30-day money-back guarantee on all paid plans. <Link href="/refund" className="text-purple-600 hover:underline">Learn more</Link></p>
+                            <p className="text-gray-800 text-sm">Yes! We offer a 30-day money-back guarantee on all paid plans. <Link href="/refund" className="text-purple-600 hover:underline">Learn more</Link></p>
                         </div>
                         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">Can I upgrade/downgrade?</h4>
-                            <p className="text-gray-600 text-sm">Yes! Upgrade anytime with prorated billing. Downgrades take effect at the end of your billing period.</p>
+                            <p className="text-gray-800 text-sm">Yes! Upgrade anytime with prorated billing. Downgrades take effect at the end of your billing period.</p>
                         </div>
                         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">What payment methods?</h4>
-                            <p className="text-gray-600 text-sm">India: UPI, Cards, NetBanking via Razorpay. International: Cards via Stripe.</p>
+                            <p className="text-gray-800 text-sm">India: UPI, Cards, NetBanking via Razorpay. International: Cards via Stripe.</p>
                         </div>
                         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">Do you offer discounts for non-profits?</h4>
-                            <p className="text-gray-600 text-sm">We love supporting good causes. Contact <a href="mailto:support@descriptai.com" className="text-purple-600 hover:underline">support@descriptai.com</a> for special pricing.</p>
+                            <p className="text-gray-800 text-sm">We love supporting good causes. Contact <a href="mailto:support@descriptai.com" className="text-purple-600 hover:underline">support@descriptai.com</a> for special pricing.</p>
                         </div>
                         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
                             <h4 className="font-bold text-gray-900 mb-2">Is there a free trial?</h4>
-                            <p className="text-gray-600 text-sm">Our Free tier gives you 5 generations/month forever. No credit card required to start.</p>
+                            <p className="text-gray-800 text-sm">Our Free tier gives you 5 generations/month forever. No credit card required to start.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-gray-400 py-12 mt-20">
+            <footer className="bg-gray-900 text-gray-300 py-12 mt-20">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-4 gap-8 mb-8">
                         <div>

@@ -164,10 +164,10 @@ export default function HistoryPage() {
                     <div className="flex flex-col md:flex-row justify-between items-center mb-8">
                         <div>
                             <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Your History</h1>
-                            <p className="text-gray-600">All your generated descriptions, secured in your database.</p>
+                            <p className="text-gray-800">All your generated descriptions, secured in your database.</p>
                         </div>
                         <div className="flex items-center gap-2 mt-4 md:mt-0">
-                            <span className="text-sm text-gray-500">{filteredHistory.length} items</span>
+                            <span className="text-sm text-gray-700">{filteredHistory.length} items</span>
                             {selectedItems.length > 0 && (
                                 <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
                                     {selectedItems.length} selected
@@ -188,7 +188,7 @@ export default function HistoryPage() {
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     className="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition"
                                 />
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
                             </div>
@@ -258,7 +258,7 @@ export default function HistoryPage() {
                         <div className="text-center py-20 bg-white rounded-2xl shadow-sm border border-gray-100">
                             <div className="text-6xl mb-4">📭</div>
                             <h3 className="text-2xl font-bold text-gray-900 mb-2">No history yet</h3>
-                            <p className="text-gray-600 mb-6">Start generating amazing product descriptions to see them here.</p>
+                            <p className="text-gray-800 mb-6">Start generating amazing product descriptions to see them here.</p>
                             <Link
                                 href="/generate"
                                 className="bg-purple-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-purple-700 transition"
@@ -270,7 +270,7 @@ export default function HistoryPage() {
                         <div className="text-center py-20 bg-white rounded-2xl shadow-sm border border-gray-100">
                             <div className="text-6xl mb-4">🔍</div>
                             <h3 className="text-2xl font-bold text-gray-900 mb-2">No results found</h3>
-                            <p className="text-gray-600 mb-6">Try adjusting your search or filter criteria.</p>
+                            <p className="text-gray-800 mb-6">Try adjusting your search or filter criteria.</p>
                             <button
                                 onClick={() => { setSearchQuery(""); setDateFilter("all"); }}
                                 className="bg-purple-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-purple-700 transition"
@@ -288,7 +288,7 @@ export default function HistoryPage() {
                                     onChange={selectAll}
                                     className="w-5 h-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
                                 />
-                                <span className="text-sm text-gray-600">Select all</span>
+                                <span className="text-sm text-gray-800">Select all</span>
                             </div>
 
                             {/* History List */}
@@ -306,7 +306,7 @@ export default function HistoryPage() {
                                                     />
                                                     <div>
                                                         <h3 className="text-xl font-bold text-gray-900">{item.productName}</h3>
-                                                        <p className="text-sm text-gray-500">
+                                                        <p className="text-sm text-gray-700">
                                                             {new Date(item.createdAt).toLocaleString()} • <span className="capitalize">{item.tone}</span> Tone
                                                             {item.platform && ` • ${item.platform}`}
                                                         </p>
@@ -315,14 +315,14 @@ export default function HistoryPage() {
                                                 <div className="flex items-center gap-2">
                                                     <button
                                                         onClick={() => copyToClipboard(item.variants.join('\n\n---\n\n'))}
-                                                        className="text-gray-400 hover:text-purple-600 transition p-2"
+                                                        className="text-gray-800 hover:text-purple-600 transition p-2"
                                                         title="Copy all variants"
                                                     >
                                                         📋
                                                     </button>
                                                     <button
                                                         onClick={() => deleteItem(item.id)}
-                                                        className="text-gray-400 hover:text-red-600 transition p-2"
+                                                        className="text-gray-800 hover:text-red-600 transition p-2"
                                                         title="Delete"
                                                     >
                                                         🗑️
@@ -330,7 +330,7 @@ export default function HistoryPage() {
                                                 </div>
                                             </div>
 
-                                            <div className="text-sm text-gray-600 mb-4 bg-gray-50 p-3 rounded-lg">
+                                            <div className="text-sm text-gray-800 mb-4 bg-gray-50 p-3 rounded-lg">
                                                 <strong>Features:</strong> {item.features}
                                             </div>
 
@@ -341,7 +341,7 @@ export default function HistoryPage() {
                                                             <span className="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Variant {vIndex + 1}</span>
                                                             <button
                                                                 onClick={() => copyToClipboard(variant)}
-                                                                className="text-gray-400 hover:text-purple-600 text-xs"
+                                                                className="text-gray-800 hover:text-purple-600 text-xs"
                                                             >
                                                                 Copy
                                                             </button>
@@ -360,7 +360,7 @@ export default function HistoryPage() {
             </div>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-gray-400 py-12 mt-12">
+            <footer className="bg-gray-900 text-gray-300 py-12 mt-12">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-4 gap-8 mb-8">
                         <div>

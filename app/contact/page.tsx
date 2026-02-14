@@ -60,7 +60,7 @@ export default function ContactPage() {
                         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
                             Get in <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Touch</span>
                         </h1>
-                        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                        <p className="text-xl text-gray-800 max-w-2xl mx-auto">
                             Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
                         </p>
                     </div>
@@ -69,7 +69,7 @@ export default function ContactPage() {
                         <div className="bg-white rounded-2xl p-6 shadow-lg border border-purple-100 text-center">
                             <div className="text-4xl mb-4">📧</div>
                             <h3 className="font-bold text-gray-900 mb-2">Email Us</h3>
-                            <p className="text-gray-600 text-sm mb-3">For general inquiries</p>
+                            <p className="text-gray-800 text-sm mb-3">For general inquiries</p>
                             <a href="mailto:support@descriptai.com" className="text-purple-600 hover:underline font-medium">
                                 support@descriptai.com
                             </a>
@@ -77,7 +77,7 @@ export default function ContactPage() {
                         <div className="bg-white rounded-2xl p-6 shadow-lg border border-purple-100 text-center">
                             <div className="text-4xl mb-4">🐦</div>
                             <h3 className="font-bold text-gray-900 mb-2">Twitter</h3>
-                            <p className="text-gray-600 text-sm mb-3">For quick updates</p>
+                            <p className="text-gray-800 text-sm mb-3">For quick updates</p>
                             <a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline font-medium">
                                 @descriptai
                             </a>
@@ -85,7 +85,7 @@ export default function ContactPage() {
                         <div className="bg-white rounded-2xl p-6 shadow-lg border border-purple-100 text-center">
                             <div className="text-4xl mb-4">💼</div>
                             <h3 className="font-bold text-gray-900 mb-2">LinkedIn</h3>
-                            <p className="text-gray-600 text-sm mb-3">For business inquiries</p>
+                            <p className="text-gray-800 text-sm mb-3">For business inquiries</p>
                             <a href="https://linkedin.com/company/descriptai" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:underline font-medium">
                                 DescriptAI
                             </a>
@@ -96,7 +96,7 @@ export default function ContactPage() {
                         <div className="bg-white rounded-2xl shadow-xl p-8 border border-purple-100 text-center">
                             <div className="text-6xl mb-4">✅</div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-4">Message Sent!</h2>
-                            <p className="text-gray-600 mb-6">
+                            <p className="text-gray-800 mb-6">
                                 Thank you for reaching out. We'll get back to you within 24 hours.
                             </p>
                             <Link 
@@ -175,7 +175,7 @@ export default function ContactPage() {
                     {/* FAQ Teaser */}
                     <div className="mt-12 bg-purple-50 rounded-2xl p-8 border border-purple-100 text-center">
                         <h3 className="text-xl font-bold text-gray-900 mb-4">Looking for quick answers?</h3>
-                        <p className="text-gray-600 mb-4">Check out our Help Center for frequently asked questions.</p>
+                        <p className="text-gray-800 mb-4">Check out our Help Center for frequently asked questions.</p>
                         <Link 
                             href="/help"
                             className="inline-block bg-white text-purple-600 px-6 py-3 rounded-xl font-bold hover:bg-purple-100 transition border border-purple-200"
@@ -187,7 +187,7 @@ export default function ContactPage() {
             </main>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-gray-400 py-12 mt-12">
+            <footer className="bg-gray-900 text-gray-300 py-12 mt-12">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-4 gap-8 mb-8">
                         <div>

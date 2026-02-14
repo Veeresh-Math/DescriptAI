@@ -167,7 +167,7 @@ export default function HelpPage() {
                 <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
                     How can we <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">help you?</span>
                 </h1>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+                <p className="text-xl text-gray-800 max-w-2xl mx-auto mb-8">
                     Find answers to common questions or reach out to our support team.
                 </p>
 
@@ -181,7 +181,7 @@ export default function HelpPage() {
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full px-6 py-4 rounded-2xl border-2 border-purple-100 focus:border-purple-500 focus:ring-4 focus:ring-purple-100 outline-none transition text-lg shadow-lg"
                         />
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-800">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
@@ -194,22 +194,22 @@ export default function HelpPage() {
                     <Link href="/pricing" className="bg-white rounded-xl p-6 shadow-md border border-purple-100 hover:shadow-lg hover:border-purple-300 transition">
                         <div className="text-3xl mb-2">💰</div>
                         <div className="font-bold text-gray-900">Pricing</div>
-                        <div className="text-sm text-gray-500">View plans</div>
+                        <div className="text-sm text-gray-700">View plans</div>
                     </Link>
                     <Link href="/refund" className="bg-white rounded-xl p-6 shadow-md border border-purple-100 hover:shadow-lg hover:border-purple-300 transition">
                         <div className="text-3xl mb-2">🔄</div>
                         <div className="font-bold text-gray-900">Refunds</div>
-                        <div className="text-sm text-gray-500">30-day policy</div>
+                        <div className="text-sm text-gray-700">30-day policy</div>
                     </Link>
                     <a href="mailto:support@descriptai.com" className="bg-white rounded-xl p-6 shadow-md border border-purple-100 hover:shadow-lg hover:border-purple-300 transition">
                         <div className="text-3xl mb-2">📧</div>
                         <div className="font-bold text-gray-900">Email Us</div>
-                        <div className="text-sm text-gray-500">Get support</div>
+                        <div className="text-sm text-gray-700">Get support</div>
                     </a>
                     <Link href="/generate" className="bg-white rounded-xl p-6 shadow-md border border-purple-100 hover:shadow-lg hover:border-purple-300 transition">
                         <div className="text-3xl mb-2">🚀</div>
                         <div className="font-bold text-gray-900">Dashboard</div>
-                        <div className="text-sm text-gray-500">Start generating</div>
+                        <div className="text-sm text-gray-700">Start generating</div>
                     </Link>
                 </div>
             </section>
@@ -226,7 +226,7 @@ export default function HelpPage() {
                             className={`px-4 py-2 rounded-full font-medium transition ${
                                 !selectedCategory 
                                     ? "bg-purple-600 text-white" 
-                                    : "bg-white text-gray-600 hover:bg-purple-50 border border-gray-200"
+                                    : "bg-white text-gray-800 hover:bg-purple-50 border border-gray-200"
                             }`}
                         >
                             All
@@ -238,7 +238,7 @@ export default function HelpPage() {
                                 className={`px-4 py-2 rounded-full font-medium transition ${
                                     selectedCategory === category 
                                         ? "bg-purple-600 text-white" 
-                                        : "bg-white text-gray-600 hover:bg-purple-50 border border-gray-200"
+                                        : "bg-white text-gray-800 hover:bg-purple-50 border border-gray-200"
                                 }`}
                             >
                                 {category}
@@ -266,7 +266,7 @@ export default function HelpPage() {
                                 </button>
                                 {expandedFAQ === index && (
                                     <div className="px-6 py-4 bg-purple-50 border-t border-purple-100">
-                                        <p className="text-gray-600">{item.answer}</p>
+                                        <p className="text-gray-800">{item.answer}</p>
                                     </div>
                                 )}
                             </div>
@@ -277,7 +277,7 @@ export default function HelpPage() {
                         <div className="text-center py-12">
                             <div className="text-4xl mb-4">🔍</div>
                             <h3 className="text-xl font-bold text-gray-900 mb-2">No results found</h3>
-                            <p className="text-gray-600">Try a different search term or browse all categories.</p>
+                            <p className="text-gray-800">Try a different search term or browse all categories.</p>
                         </div>
                     )}
                 </div>
@@ -326,7 +326,7 @@ export default function HelpPage() {
                         <div className="bg-white rounded-xl p-6 shadow-md border border-purple-100">
                             <div className="text-3xl mb-4">📝</div>
                             <h3 className="font-bold text-gray-900 mb-2">Creating Your First Description</h3>
-                            <ol className="text-sm text-gray-600 space-y-2">
+                            <ol className="text-sm text-gray-800 space-y-2">
                                 <li>1. Sign up for a free account</li>
                                 <li>2. Go to the Dashboard</li>
                                 <li>3. Enter product name & features</li>
@@ -337,7 +337,7 @@ export default function HelpPage() {
                         <div className="bg-white rounded-xl p-6 shadow-md border border-purple-100">
                             <div className="text-3xl mb-4">📤</div>
                             <h3 className="font-bold text-gray-900 mb-2">Exporting to Shopify</h3>
-                            <ol className="text-sm text-gray-600 space-y-2">
+                            <ol className="text-sm text-gray-800 space-y-2">
                                 <li>1. Generate your description</li>
                                 <li>2. Go to History page</li>
                                 <li>3. Click Export CSV</li>
@@ -348,7 +348,7 @@ export default function HelpPage() {
                         <div className="bg-white rounded-xl p-6 shadow-md border border-purple-100">
                             <div className="text-3xl mb-4">📱</div>
                             <h3 className="font-bold text-gray-900 mb-2">Using Social Media Kit</h3>
-                            <ol className="text-sm text-gray-600 space-y-2">
+                            <ol className="text-sm text-gray-800 space-y-2">
                                 <li>1. Upgrade to Pro or Agency</li>
                                 <li>2. Generate a description</li>
                                 <li>3. Click on Instagram/Twitter/FB tabs</li>
@@ -359,7 +359,7 @@ export default function HelpPage() {
                         <div className="bg-white rounded-xl p-6 shadow-md border border-purple-100">
                             <div className="text-3xl mb-4">👥</div>
                             <h3 className="font-bold text-gray-900 mb-2">Team Collaboration (Agency)</h3>
-                            <ol className="text-sm text-gray-600 space-y-2">
+                            <ol className="text-sm text-gray-800 space-y-2">
                                 <li>1. Upgrade to Agency plan</li>
                                 <li>2. Go to Team Settings</li>
                                 <li>3. Invite team members</li>
@@ -372,7 +372,7 @@ export default function HelpPage() {
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-gray-400 py-12 mt-12">
+            <footer className="bg-gray-900 text-gray-300 py-12 mt-12">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-4 gap-8 mb-8">
                         <div>

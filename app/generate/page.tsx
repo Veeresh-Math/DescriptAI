@@ -156,7 +156,7 @@ const VariantCard = ({ variant, index, copyToClipboard, copiedIndex, tier, custo
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`px-3 py-1 text-sm font-bold whitespace-nowrap transition relative ${activeTab === tab ? "text-purple-600 border-b-2 border-purple-600" : "text-gray-400 hover:text-gray-600"}`}
+                            className={`px-3 py-1 text-sm font-bold whitespace-nowrap transition relative ${activeTab === tab ? "text-purple-600 border-b-2 border-purple-600" : "text-gray-800 hover:text-gray-800"}`}
                         >
                             {tab !== 'Description' && !isPro && <span className="mr-1">🔒</span>}
                             {tab}
@@ -170,7 +170,7 @@ const VariantCard = ({ variant, index, copyToClipboard, copiedIndex, tier, custo
                     <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/60 backdrop-blur-md rounded-xl p-6 text-center border border-purple-200">
                         <div className="text-4xl mb-2">🚀</div>
                         <h4 className="font-bold text-gray-900 uppercase tracking-tighter">Social Kit Locked</h4>
-                        <p className="text-xs text-gray-500 mb-4">Upgrade to Pro to instantly generate social media captions!</p>
+                        <p className="text-xs text-gray-700 mb-4">Upgrade to Pro to instantly generate social media captions!</p>
                         <Link href="/pricing" className="bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-lg">Upgrade Now</Link>
                     </div>
                 ) : (
@@ -248,7 +248,7 @@ const OnboardingModal = ({ isOpen, onClose, currentStep, onNext, onSkip }: {
                 <div className="text-center">
                     <div className="text-6xl mb-4">{step.icon}</div>
                     <h2 className="text-2xl font-bold text-gray-900 mb-2">{step.title}</h2>
-                    <p className="text-gray-600 mb-4">{step.description}</p>
+                    <p className="text-gray-800 mb-4">{step.description}</p>
                     {step.tip && (
                         <div className="bg-purple-50 rounded-xl p-3 mb-4 border border-purple-100">
                             <p className="text-sm text-purple-700">{step.tip}</p>
@@ -271,7 +271,7 @@ const OnboardingModal = ({ isOpen, onClose, currentStep, onNext, onSkip }: {
                     <div className="flex gap-3">
                         <button
                             onClick={onSkip}
-                            className="flex-1 py-3 rounded-xl font-bold text-gray-500 hover:bg-gray-100 transition"
+                            className="flex-1 py-3 rounded-xl font-bold text-gray-700 hover:bg-gray-100 transition"
                         >
                             Skip Tour
                         </button>
@@ -514,9 +514,9 @@ export default function GeneratePage() {
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
                     <Link href="/" className="text-lg font-black gradient-text">⚡ DescriptAI</Link>
                     <div className="flex gap-3 items-center">
-                        <Link href="/help" className="text-xs font-bold text-gray-600 hover:text-purple-600 transition p-2">Help</Link>
-                        <Link href="/history" className="text-xs font-bold text-gray-600 hover:text-purple-600 transition p-2">History</Link>
-                        <Link href="/pricing" className="text-xs font-bold text-gray-600 hover:text-purple-600 transition p-2">⭐ Pricing</Link>
+                        <Link href="/help" className="text-xs font-bold text-gray-800 hover:text-purple-600 transition p-2">Help</Link>
+                        <Link href="/history" className="text-xs font-bold text-gray-800 hover:text-purple-600 transition p-2">History</Link>
+                        <Link href="/pricing" className="text-xs font-bold text-gray-800 hover:text-purple-600 transition p-2">⭐ Pricing</Link>
                         {userData && (
                             <div className="hidden sm:flex gap-1 text-[9px] font-black">
                                 <span className={`px-2 py-1 rounded-full ${userData.shortCredits > 0 ? "bg-purple-100 text-purple-700" : "bg-red-100 text-red-600"}`} title="Short Credits">S:{userData.shortCredits}</span>
@@ -537,16 +537,16 @@ export default function GeneratePage() {
 
                     <div className="space-y-6">
                         <div>
-                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Product Name</label>
+                            <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Product Name</label>
                             <input value={productName} onChange={e => setProductName(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition" placeholder="e.g. Arabica Coffee Beans" />
                         </div>
                         <div>
-                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Key Features</label>
+                            <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Key Features</label>
                             <textarea value={features} onChange={e => setFeatures(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition h-32" placeholder="e.g. Organic, strong aroma, fair trade..." />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Target Length</label>
+                                <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Target Length</label>
                                 <div className="flex flex-wrap gap-2">
                                     {[
                                         { id: 'micro', label: '50', words: '50w', premium: false },
@@ -562,7 +562,7 @@ export default function GeneratePage() {
                                             <button
                                                 key={l.id}
                                                 onClick={() => !isLocked && setLength(l.id)}
-                                                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition ${length === l.id ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
+                                                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition ${length === l.id ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
                                             >
                                                 {isLocked && '🔒 '}{l.label}
                                             </button>
@@ -572,7 +572,7 @@ export default function GeneratePage() {
                             </div>
 
                             <div>
-                                <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Voice Tone</label>
+                                <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Voice Tone</label>
                                 <div className="flex gap-2">
                                     {[
                                         { id: 'professional', label: 'PRO', premium: true },
@@ -584,7 +584,7 @@ export default function GeneratePage() {
                                             <button
                                                 key={t.id}
                                                 onClick={() => !isLocked && setTone(t.id)}
-                                                className={`flex-1 py-1.5 rounded-lg text-[10px] font-black transition ${tone === t.id ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
+                                                className={`flex-1 py-1.5 rounded-lg text-[10px] font-black transition ${tone === t.id ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
                                             >
                                                 {isLocked && '🔒 '}{t.label}
                                             </button>
@@ -596,7 +596,7 @@ export default function GeneratePage() {
 
                         {/* Platform Selector - SOCIAL + E-COMMERCE MODES */}
                         <div>
-                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Target Platform 🎯</label>
+                            <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Target Platform 🎯</label>
                             
                             {/* Social Media Mode - Pro & Agency */}
                             <div className="mb-3">
@@ -624,7 +624,7 @@ export default function GeneratePage() {
                                                 )}
                                                 <span className="text-lg mb-1">{p.label.split(' ')[0]}</span>
                                                 <span className="text-[9px] font-bold text-gray-700">{p.label.split(' ')[1]}</span>
-                                                <span className="text-[7px] text-gray-400 mt-1">{p.desc}</span>
+                                                <span className="text-[7px] text-gray-800 mt-1">{p.desc}</span>
                                             </button>
                                         );
                                     })}
@@ -656,7 +656,7 @@ export default function GeneratePage() {
                                                 )}
                                                 <span className="text-lg mb-1">{p.label.split(' ')[0]}</span>
                                                 <span className="text-[10px] font-bold text-gray-700">{p.label.split(' ')[1]}</span>
-                                                <span className="text-[8px] text-gray-400 mt-1">{p.desc}</span>
+                                                <span className="text-[8px] text-gray-800 mt-1">{p.desc}</span>
                                             </button>
                                         );
                                     })}
@@ -683,7 +683,7 @@ export default function GeneratePage() {
                         </div>
 
                         <div>
-                            <label className="block text-xs font-bold text-gray-500 uppercase mb-2">AI Persona (Your Role)</label>
+                            <label className="block text-xs font-bold text-gray-700 uppercase mb-2">AI Persona (Your Role)</label>
                             <div className="flex flex-wrap gap-2">
                                 {[
                                     { id: 'Co-founder', label: 'General', tier: 'free' },
@@ -696,7 +696,7 @@ export default function GeneratePage() {
                                         <button
                                             key={p.id}
                                             onClick={() => !isLocked && setProfession(p.id)}
-                                            className={`px-4 py-2 rounded-lg text-xs font-bold transition ${profession === p.id ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
+                                            className={`px-4 py-2 rounded-lg text-xs font-bold transition ${profession === p.id ? "bg-purple-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
                                         >
                                             {isLocked && <span className="mr-1">{p.tier === 'agency' ? '👑' : '🔒'}</span>}{p.label}
                                         </button>
@@ -715,7 +715,7 @@ export default function GeneratePage() {
                                 </div>
                                 <div>
                                     <div className="flex justify-between items-center mb-2">
-                                        <label className="block text-xs font-bold text-gray-500 uppercase">Target SEO Keywords (Comma separated)</label>
+                                        <label className="block text-xs font-bold text-gray-700 uppercase">Target SEO Keywords (Comma separated)</label>
                                         <button
                                             onClick={suggestKeywords}
                                             disabled={isSuggestingKeywords}
@@ -732,7 +732,7 @@ export default function GeneratePage() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">Brand Voice Preset</label>
+                                    <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Brand Voice Preset</label>
                                     <div className="flex gap-2 mb-2">
                                         <select
                                             value={brandVoice}
@@ -768,7 +768,7 @@ export default function GeneratePage() {
                                     </div>
                                     {savedPresets.length > 0 && (
                                         <div className="mt-4 space-y-2">
-                                            <label className="block text-[10px] font-bold text-gray-400 uppercase">Manage Library</label>
+                                            <label className="block text-[10px] font-bold text-gray-800 uppercase">Manage Library</label>
                                             <div className="flex flex-wrap gap-2">
                                                 {savedPresets.map(p => (
                                                     <div key={p.id} className="flex items-center gap-1 bg-white border border-teal-100 px-2 py-1 rounded-md text-[10px] font-bold text-teal-700">
@@ -820,7 +820,7 @@ export default function GeneratePage() {
                             <h3 className="font-black text-xs text-purple-900 uppercase tracking-widest">Invite & Earn</h3>
                         </div>
 
-                        <p className="text-[10px] text-gray-500 mb-4 leading-relaxed">
+                        <p className="text-[10px] text-gray-700 mb-4 leading-relaxed">
                             Share your link with a friend. When they sign up, we&apos;ll credit your account with **5 Premium Credits**!
                         </p>
 

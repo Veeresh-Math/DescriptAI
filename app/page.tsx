@@ -129,7 +129,7 @@ export default function Home() {
             <span className="bg-gradient-to-r from-teal-600 to-teal-800 bg-clip-text text-transparent">3 Minutes</span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-800 mb-8 leading-relaxed">
             Generate high-converting, SEO-optimized product descriptions using AI. <br />
             <strong className="text-gray-900">Professional copy that sells. Start for free.</strong>
           </p>
@@ -142,7 +142,7 @@ export default function Home() {
               >
                 Generate Now (Free) →
               </a>
-              <p className="text-xs text-gray-500 mt-2">3 free generations per month</p>
+              <p className="text-xs text-gray-700 mt-2">3 free generations per month</p>
             </div>
             <a
               href="#how-it-works"
@@ -152,7 +152,7 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-500">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-700">
             <div className="flex items-center space-x-2">
               <span className="text-green-500 text-xl">✓</span>
               <span>Platform-Specific (Amazon/Shopify/Etsy/eBay)</span>
@@ -183,35 +183,35 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-2 text-gray-900">🎯 Live Proof of Work</h2>
-            <p className="text-gray-600">Real-time results from our AI engine</p>
+            <p className="text-gray-800">Real-time results from our AI engine</p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {/* Stat 1 */}
             <div className="bg-white rounded-xl p-6 text-center border border-purple-200 shadow-lg">
               <div className="text-4xl font-bold text-purple-600 mb-2">2.4M+</div>
-              <div className="text-sm text-gray-600">Descriptions Generated</div>
+              <div className="text-sm text-gray-800">Descriptions Generated</div>
               <div className="text-xs text-green-600 mt-1 font-semibold">↑ 12% this week</div>
             </div>
             
             {/* Stat 2 */}
             <div className="bg-white rounded-xl p-6 text-center border border-teal-200 shadow-lg">
               <div className="text-4xl font-bold text-teal-600 mb-2">3.2s</div>
-              <div className="text-sm text-gray-600">Avg Generation Time</div>
+              <div className="text-sm text-gray-800">Avg Generation Time</div>
               <div className="text-xs text-green-600 mt-1 font-semibold">99.9% uptime</div>
             </div>
             
             {/* Stat 3 */}
             <div className="bg-white rounded-xl p-6 text-center border border-pink-200 shadow-lg">
               <div className="text-4xl font-bold text-pink-600 mb-2">47%</div>
-              <div className="text-sm text-gray-600">Conversion Lift</div>
+              <div className="text-sm text-gray-800">Conversion Lift</div>
               <div className="text-xs text-green-600 mt-1 font-semibold">Avg for Pro users</div>
             </div>
             
             {/* Stat 4 */}
             <div className="bg-white rounded-xl p-6 text-center border border-purple-200 shadow-lg">
               <div className="text-4xl font-bold text-purple-600 mb-2">1,000+</div>
-              <div className="text-sm text-gray-600">Active Sellers</div>
+              <div className="text-sm text-gray-800">Active Sellers</div>
               <div className="text-xs text-green-600 mt-1 font-semibold">Across 12 platforms</div>
             </div>
           </div>
@@ -254,7 +254,7 @@ export default function Home() {
                 See The Difference
               </span>
             </h2>
-            <p className="text-xl text-gray-600">Real results from real sellers</p>
+            <p className="text-xl text-gray-800">Real results from real sellers</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -262,15 +262,15 @@ export default function Home() {
             <div className="bg-gray-50 rounded-2xl p-8 border-2 border-gray-200">
               <div className="flex items-center space-x-2 mb-6">
                 <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-bold">BEFORE</span>
-                <span className="text-gray-500 text-sm">Generic Description</span>
+                <span className="text-gray-700 text-sm">Generic Description</span>
               </div>
               <div className="bg-white rounded-xl p-6 shadow-sm">
                 <h4 className="font-bold text-gray-800 mb-3">Premium Wireless Bluetooth Earbuds</h4>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-gray-800 text-sm leading-relaxed">
                   High quality wireless earbuds with Bluetooth 5.0. Good sound quality. Long battery life. Comfortable fit. 
                   Perfect for music and calls. Buy now.
                 </p>
-                <div className="mt-4 flex items-center space-x-4 text-xs text-gray-500">
+                <div className="mt-4 flex items-center space-x-4 text-xs text-gray-700">
                   <span>❌ No SEO keywords</span>
                   <span>❌ No emotion</span>
                   <span>❌ 0.8% conversion</span>
@@ -309,15 +309,15 @@ export default function Home() {
           <div className="max-w-4xl mx-auto mt-12 grid grid-cols-3 gap-6 text-center">
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
               <div className="text-3xl font-bold text-green-600 mb-1">425%</div>
-              <div className="text-sm text-gray-600">Conversion Increase</div>
+              <div className="text-sm text-gray-800">Conversion Increase</div>
             </div>
             <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-200">
               <div className="text-3xl font-bold text-purple-600 mb-1">12</div>
-              <div className="text-sm text-gray-600">SEO Keywords Added</div>
+              <div className="text-sm text-gray-800">SEO Keywords Added</div>
             </div>
             <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-6 border border-blue-200">
               <div className="text-3xl font-bold text-blue-600 mb-1">3hrs</div>
-              <div className="text-sm text-gray-600">Time Saved Per Product</div>
+              <div className="text-sm text-gray-800">Time Saved Per Product</div>
             </div>
           </div>
         </div>
@@ -332,7 +332,7 @@ export default function Home() {
                 Sellers Love DescriptAI
               </span>
             </h2>
-            <p className="text-xl text-gray-600">Join 1,000+ e-commerce professionals</p>
+            <p className="text-xl text-gray-800">Join 1,000+ e-commerce professionals</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -353,12 +353,12 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="font-bold text-gray-900">Sarah K.</div>
-                  <div className="text-sm text-gray-500">Amazon FBA Seller • $2M/year revenue</div>
+                  <div className="text-sm text-gray-700">Amazon FBA Seller • $2M/year revenue</div>
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Pro Plan</span>
-                <span className="text-xs text-gray-500 ml-2">383% ROI</span>
+                <span className="text-xs text-gray-700 ml-2">383% ROI</span>
               </div>
             </div>
 
@@ -379,12 +379,12 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="font-bold text-gray-900">Marcus J.</div>
-                  <div className="text-sm text-gray-500">Shopify Store Owner • 50K followers</div>
+                  <div className="text-sm text-gray-700">Shopify Store Owner • 50K followers</div>
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">Agency Plan</span>
-                <span className="text-xs text-gray-500 ml-2">10hrs saved/week</span>
+                <span className="text-xs text-gray-700 ml-2">10hrs saved/week</span>
               </div>
             </div>
 
@@ -405,12 +405,12 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="font-bold text-gray-900">Elena R.</div>
-                  <div className="text-sm text-gray-500">Etsy Shop Owner • Handmade Jewelry</div>
+                  <div className="text-sm text-gray-700">Etsy Shop Owner • Handmade Jewelry</div>
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Pro Plan</span>
-                <span className="text-xs text-gray-500 ml-2">89% sales increase</span>
+                <span className="text-xs text-gray-700 ml-2">89% sales increase</span>
               </div>
             </div>
           </div>
@@ -418,20 +418,20 @@ export default function Home() {
           {/* Trust Badges */}
           <div className="max-w-4xl mx-auto mt-16 flex flex-wrap items-center justify-center gap-8 opacity-60">
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-400">4.9/5</div>
-              <div className="text-xs text-gray-500">Trustpilot</div>
+              <div className="text-2xl font-bold text-gray-800">4.9/5</div>
+              <div className="text-xs text-gray-700">Trustpilot</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-400">#1</div>
-              <div className="text-xs text-gray-500">Product Hunt</div>
+              <div className="text-2xl font-bold text-gray-800">#1</div>
+              <div className="text-xs text-gray-700">Product Hunt</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-400">50K+</div>
-              <div className="text-xs text-gray-500">Chrome Users</div>
+              <div className="text-2xl font-bold text-gray-800">50K+</div>
+              <div className="text-xs text-gray-700">Chrome Users</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-gray-400">99.9%</div>
-              <div className="text-xs text-gray-500">Uptime</div>
+              <div className="text-2xl font-bold text-gray-800">99.9%</div>
+              <div className="text-xs text-gray-700">Uptime</div>
             </div>
           </div>
         </div>
@@ -446,7 +446,7 @@ export default function Home() {
                 Why DescriptAI?
               </span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-800 max-w-2xl mx-auto">
               The fastest, easiest, and most powerful way to create product descriptions
             </p>
           </div>
@@ -456,7 +456,7 @@ export default function Home() {
             <div className="group p-8 border-2 border-purple-100 rounded-2xl hover:border-purple-400 hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-purple-50">
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition">🎯</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">Platform-Specific Magic</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-800 leading-relaxed">
                 Amazon SEO bullets, Shopify brand stories, Etsy handmade charm, eBay deal focus. Each platform gets optimized copy that converts.
               </p>
             </div>
@@ -465,7 +465,7 @@ export default function Home() {
             <div className="group p-8 border-2 border-teal-100 rounded-2xl hover:border-teal-400 hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-teal-50">
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition">💰</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">Sales Machine Copy</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-800 leading-relaxed">
                 Not just descriptions—SALES MACHINES. Uses AIDA, PAS, FOMO, social proof. 3 variants: Emotional, Technical, Urgent.
               </p>
             </div>
@@ -474,7 +474,7 @@ export default function Home() {
             <div className="group p-8 border-2 border-pink-100 rounded-2xl hover:border-pink-400 hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-pink-50">
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition">📏</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">3 Perfect Lengths</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-800 leading-relaxed">
                 Short (80 words) for mobile, Medium (150 words) for SEO balance, Long (300 words) for high-ticket storytelling.
               </p>
             </div>
@@ -483,7 +483,7 @@ export default function Home() {
             <div className="group p-8 border-2 border-green-100 rounded-2xl hover:border-green-400 hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-green-50">
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition">⚡</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">Lightning Fast</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-800 leading-relaxed">
                 Generate descriptions in 3-5 seconds. 99.9% uptime guarantee. Never wait, never fail. Always ready when you are.
               </p>
             </div>
@@ -492,7 +492,7 @@ export default function Home() {
             <div className="group p-8 border-2 border-orange-100 rounded-2xl hover:border-orange-400 hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-orange-50">
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition">📱</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">Social Media Kit</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-800 leading-relaxed">
                 One product = 3 social posts. Auto-generate Instagram captions, Twitter hooks, and Facebook ads. Pro feature.
               </p>
             </div>
@@ -501,7 +501,7 @@ export default function Home() {
             <div className="group p-8 border-2 border-blue-100 rounded-2xl hover:border-blue-400 hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-blue-50">
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition">🔥</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">SEO Heatmap</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-800 leading-relaxed">
                 Visual keyword optimization. See your SEO score in real-time. Highlight power words that trigger conversions.
               </p>
             </div>
@@ -510,7 +510,7 @@ export default function Home() {
             <div className="group p-8 border-2 border-indigo-100 rounded-2xl hover:border-indigo-400 hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-indigo-50">
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition">🎁</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">Referral Rewards</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-800 leading-relaxed">
                 Invite friends and earn 5 premium credits for each signup. Each credit can be used for one premium generation. Accumulate credits to unlock Pro features for free.
               </p>
             </div>
@@ -519,7 +519,7 @@ export default function Home() {
             <div className="group p-8 border-2 border-red-100 rounded-2xl hover:border-red-400 hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-red-50">
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition">📥</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">One-Click Exports</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-800 leading-relaxed">
                 Export to Shopify, Amazon, or general CSV. Platform-optimized formatting. Upload and sell immediately.
               </p>
             </div>
@@ -528,7 +528,7 @@ export default function Home() {
             <div className="group p-8 border-2 border-yellow-100 rounded-2xl hover:border-yellow-400 hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-white to-yellow-50">
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition">🧠</div>
               <h3 className="text-2xl font-bold mb-3 text-gray-900">Personalized Intelligence</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-800 leading-relaxed">
                 Our AI learns from your most successful descriptions, identifying patterns and keywords that lead to higher conversions for your specific products.
               </p>
             </div>
@@ -545,7 +545,7 @@ export default function Home() {
                 How It Works
               </span>
             </h2>
-            <p className="text-xl text-gray-600">3 Simple Steps to Perfect Descriptions</p>
+            <p className="text-xl text-gray-800">3 Simple Steps to Perfect Descriptions</p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-8">
@@ -555,7 +555,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-2xl font-bold mb-3 text-gray-900">Choose Your Platform & Length</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
+                <p className="text-gray-800 text-lg leading-relaxed">
                   Select Amazon, Shopify, Etsy, or eBay. Pick Short (80 words), Medium (150), or Long (300). Set your conversion goal.
                 </p>
               </div>
@@ -567,7 +567,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-2xl font-bold mb-3 text-gray-900">AI Writes 3 Sales Machines</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
+                <p className="text-gray-800 text-lg leading-relaxed">
                   Our Elite AI Engine creates Emotional, Technical, and Urgent variants using conversion psychology. 3-5 seconds.
                 </p>
               </div>
@@ -579,7 +579,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-2xl font-bold mb-3 text-gray-900">Export & Sell Like Crazy</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
+                <p className="text-gray-800 text-lg leading-relaxed">
                   Copy, export to your platform, or generate social media kit. Watch conversions skyrocket! 🚀
                 </p>
               </div>
@@ -617,7 +617,7 @@ export default function Home() {
                 <li className="flex items-center"><span className="text-green-400 mr-2">✓</span> 3 generations/month</li>
                 <li className="flex items-center"><span className="text-green-400 mr-2">✓</span> Basic descriptions</li>
                 <li className="flex items-center"><span className="text-green-400 mr-2">✓</span> 1 platform</li>
-                <li className="flex items-center"><span className="text-gray-400 mr-2">✗</span> No social media kit</li>
+                <li className="flex items-center"><span className="text-gray-800 mr-2">✗</span> No social media kit</li>
               </ul>
               <Link href="/sign-up" className="block w-full text-center bg-white/20 hover:bg-white/30 text-white py-3 rounded-lg font-semibold transition">
                 Get Started Free
@@ -633,9 +633,9 @@ export default function Home() {
               </div>
               <div className="text-2xl font-bold mb-2 text-gray-900">Pro</div>
               <div className="text-4xl font-bold mb-4 text-gray-900">
-                {isIndia ? "₹1,599" : "$19"}<span className="text-lg text-gray-500">/mo</span>
+                {isIndia ? "₹1,599" : "$19"}<span className="text-lg text-gray-700">/mo</span>
               </div>
-              <p className="text-gray-600 mb-6">For serious sellers</p>
+              <p className="text-gray-800 mb-6">For serious sellers</p>
               <ul className="space-y-3 text-sm mb-8 text-gray-700">
                 <li className="flex items-center"><span className="text-green-500 mr-2">✓</span> Unlimited generations</li>
                 <li className="flex items-center"><span className="text-green-500 mr-2">✓</span> Social Media Kit</li>
@@ -696,26 +696,26 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-center">
             <div className="flex flex-col items-center">
               <div className="text-3xl font-bold text-gray-900 mb-1">256-bit</div>
-              <div className="text-sm text-gray-600">SSL Encryption</div>
+              <div className="text-sm text-gray-800">SSL Encryption</div>
             </div>
             <div className="flex flex-col items-center">
               <div className="text-3xl font-bold text-gray-900 mb-1">30-Day</div>
-              <div className="text-sm text-gray-600">Money Back</div>
+              <div className="text-sm text-gray-800">Money Back</div>
             </div>
             <div className="flex flex-col items-center">
               <div className="text-3xl font-bold text-gray-900 mb-1">99.9%</div>
-              <div className="text-sm text-gray-600">Uptime SLA</div>
+              <div className="text-sm text-gray-800">Uptime SLA</div>
             </div>
             <div className="flex flex-col items-center">
               <div className="text-3xl font-bold text-gray-900 mb-1">24/7</div>
-              <div className="text-sm text-gray-600">Support</div>
+              <div className="text-sm text-gray-800">Support</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12">
+      <footer className="bg-gray-900 text-gray-300 py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>

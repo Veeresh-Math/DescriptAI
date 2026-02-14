@@ -43,7 +43,7 @@ export default function RefundPolicyPage() {
                             </span>
                         </div>
                         <h1 className="text-4xl font-bold text-gray-900 mb-2">Refund Policy</h1>
-                        <p className="text-gray-500 mb-8">Last updated: February 2026</p>
+                        <p className="text-gray-700 mb-8">Last updated: February 2026</p>
 
                         <div className="prose prose-purple max-w-none">
                             {/* Guarantee Banner */}
@@ -62,11 +62,11 @@ export default function RefundPolicyPage() {
 
                             <section className="mb-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-4">1. 30-Day Money-Back Guarantee</h2>
-                                <p className="text-gray-600 leading-relaxed">
+                                <p className="text-gray-800 leading-relaxed">
                                     We want you to be completely satisfied with DescriptAI. That's why we offer a 
                                     <strong> 30-day money-back guarantee</strong> on all paid plans:
                                 </p>
-                                <ul className="list-disc list-inside text-gray-600 space-y-2 mt-4">
+                                <ul className="list-disc list-inside text-gray-800 space-y-2 mt-4">
                                     <li>Valid for <strong>first-time subscribers only</strong></li>
                                     <li>Applies to Pro ($19) and Agency ($49) plans</li>
                                     <li>Valid for both monthly and annual subscriptions</li>
@@ -83,7 +83,7 @@ export default function RefundPolicyPage() {
                                 <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Refund Eligibility</h2>
                                 
                                 <h3 className="text-xl font-semibold text-gray-800 mb-3">Eligible for Refund:</h3>
-                                <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                                <ul className="list-disc list-inside text-gray-800 space-y-2 mb-4">
                                     <li>First-time subscribers within 30 days of initial payment</li>
                                     <li>Annual subscriptions within 30 days of purchase</li>
                                     <li>Technical issues that prevent you from using the service</li>
@@ -91,7 +91,7 @@ export default function RefundPolicyPage() {
                                 </ul>
 
                                 <h3 className="text-xl font-semibold text-gray-800 mb-3">Not Eligible for Refund:</h3>
-                                <ul className="list-disc list-inside text-gray-600 space-y-2">
+                                <ul className="list-disc list-inside text-gray-800 space-y-2">
                                     <li>Renewal payments (after first billing cycle)</li>
                                     <li>Downgrade requests (you can cancel instead)</li>
                                     <li>Partial month refunds for cancellation</li>
@@ -103,7 +103,7 @@ export default function RefundPolicyPage() {
                             <section className="mb-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-4">3. How to Request a Refund</h2>
                                 <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                                    <ol className="list-decimal list-inside text-gray-600 space-y-3">
+                                    <ol className="list-decimal list-inside text-gray-800 space-y-3">
                                         <li><strong>Email us:</strong> Send an email to <a href="mailto:refund@descriptai.com" className="text-purple-600 hover:underline">refund@descriptai.com</a></li>
                                         <li><strong>Include:</strong> Your account email address and plan name</li>
                                         <li><strong>Reason:</strong> Optional - helps us improve our service</li>
@@ -115,10 +115,10 @@ export default function RefundPolicyPage() {
 
                             <section className="mb-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Refund Methods</h2>
-                                <p className="text-gray-600 leading-relaxed">
+                                <p className="text-gray-800 leading-relaxed">
                                     Refunds are processed back to the original payment method:
                                 </p>
-                                <ul className="list-disc list-inside text-gray-600 space-y-2 mt-4">
+                                <ul className="list-disc list-inside text-gray-800 space-y-2 mt-4">
                                     <li><strong>Credit/Debit Card:</strong> Refunded to the same card (5-10 business days)</li>
                                     <li><strong>UPI (India):</strong> Refunded to the original UPI ID (3-5 business days)</li>
                                     <li><strong>Net Banking:</strong> Refunded to the bank account (5-7 business days)</li>
@@ -152,10 +152,10 @@ export default function RefundPolicyPage() {
 
                             <section className="mb-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Annual Subscription Refunds</h2>
-                                <p className="text-gray-600 leading-relaxed">
+                                <p className="text-gray-800 leading-relaxed">
                                     For annual subscriptions:
                                 </p>
-                                <ul className="list-disc list-inside text-gray-600 space-y-2 mt-4">
+                                <ul className="list-disc list-inside text-gray-800 space-y-2 mt-4">
                                     <li><strong>Within 30 days:</strong> Full refund of annual payment</li>
                                     <li><strong>After 30 days:</strong> No refund, but you can cancel to prevent renewal</li>
                                     <li><strong>Prorated refund:</strong> Not available for annual plans after 30 days</li>
@@ -164,7 +164,7 @@ export default function RefundPolicyPage() {
 
                             <section className="mb-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Free Trial & Free Tier</h2>
-                                <p className="text-gray-600 leading-relaxed">
+                                <p className="text-gray-800 leading-relaxed">
                                     Our free tier (5 generations/month) does not require payment and therefore has no refund policy. 
                                     You can use the free tier indefinitely without any payment obligation.
                                 </p>
@@ -172,25 +172,25 @@ export default function RefundPolicyPage() {
 
                             <section className="mb-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Service Credits</h2>
-                                <p className="text-gray-600 leading-relaxed">
+                                <p className="text-gray-800 leading-relaxed">
                                     In some cases, we may offer service credits instead of refunds:
                                 </p>
-                                <ul className="list-disc list-inside text-gray-600 space-y-2 mt-4">
+                                <ul className="list-disc list-inside text-gray-800 space-y-2 mt-4">
                                     <li>Extended service outages (24+ hours)</li>
                                     <li>Billing errors on our end</li>
                                     <li>Feature unavailability during subscription period</li>
                                 </ul>
-                                <p className="text-gray-600 leading-relaxed mt-4">
+                                <p className="text-gray-800 leading-relaxed mt-4">
                                     Service credits extend your subscription by the credited amount.
                                 </p>
                             </section>
 
                             <section className="mb-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Chargebacks</h2>
-                                <p className="text-gray-600 leading-relaxed">
+                                <p className="text-gray-800 leading-relaxed">
                                     If you initiate a chargeback with your bank or payment provider:
                                 </p>
-                                <ul className="list-disc list-inside text-gray-600 space-y-2 mt-4">
+                                <ul className="list-disc list-inside text-gray-800 space-y-2 mt-4">
                                     <li>Your account will be suspended immediately</li>
                                     <li>We will contest fraudulent chargebacks</li>
                                     <li>Please contact us first - we're happy to process refunds directly</li>
@@ -214,20 +214,20 @@ export default function RefundPolicyPage() {
 
                             <section className="mb-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Contact Us</h2>
-                                <p className="text-gray-600 leading-relaxed">
+                                <p className="text-gray-800 leading-relaxed">
                                     For refund requests or questions about this policy:
                                 </p>
                                 <div className="bg-purple-50 rounded-xl p-6 mt-4 border border-purple-100">
                                     <p className="text-gray-700"><strong>DescriptAI Refund Team</strong></p>
-                                    <p className="text-gray-600">Email: <a href="mailto:refund@descriptai.com" className="text-purple-600 hover:underline">refund@descriptai.com</a></p>
-                                    <p className="text-gray-600">Support: <a href="mailto:support@descriptai.com" className="text-purple-600 hover:underline">support@descriptai.com</a></p>
-                                    <p className="text-gray-600">Response time: Within 24 hours</p>
+                                    <p className="text-gray-800">Email: <a href="mailto:refund@descriptai.com" className="text-purple-600 hover:underline">refund@descriptai.com</a></p>
+                                    <p className="text-gray-800">Support: <a href="mailto:support@descriptai.com" className="text-purple-600 hover:underline">support@descriptai.com</a></p>
+                                    <p className="text-gray-800">Response time: Within 24 hours</p>
                                 </div>
                             </section>
 
                             <section className="mb-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Policy Changes</h2>
-                                <p className="text-gray-600 leading-relaxed">
+                                <p className="text-gray-800 leading-relaxed">
                                     We may update this Refund Policy from time to time. Changes will be posted on this page 
                                     with an updated date. For existing subscribers, the policy in effect at the time of 
                                     purchase will apply.
@@ -271,7 +271,7 @@ export default function RefundPolicyPage() {
             </main>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-gray-400 py-12 mt-12">
+            <footer className="bg-gray-900 text-gray-300 py-12 mt-12">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-4 gap-8 mb-8">
                         <div>
