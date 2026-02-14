@@ -69,24 +69,28 @@ const getPricingTiers = (isIndia: boolean): PricingTier[] => [
         period: "/mo",
         description: "For high-volume marketing teams & agencies",
         features: [
-            "♾️ Unlimited AI Generations",
-            "📊 Bulk Generation (500+ descriptions)",
+            "♾️ Unlimited AI Generations (No limits ever)",
+            "📊 Bulk Generation (1000+ descriptions at once)",
+            "🌍 50+ Languages (Including regional Indian languages)",
             "✅ Everything in Pro PLUS:",
             "🛡️ Triple-Shield Resilience (Zero Downtime)",
-            "🏆 Agency Command Suite (Multi-Client)",
-            "🎯 Advanced SEO Keyword Targeting",
-            "🎨 Custom Brand Voice Presets & Library",
-            "📚 Unlimited Brand Asset Storage",
-            "🏷️ Full Agency White-label Delivery",
-            "📊 Advanced Analytics & Reporting",
-            "👥 Team Collaboration Tools",
-            "🎁 Client Referral Program",
-            "📞 Dedicated Account Manager",
-            "⚡ Priority API Access & Support"
+            "🏆 Agency Command Suite (Manage 50+ clients)",
+            "🎯 Advanced SEO Keyword Targeting (Unlimited keywords)",
+            "🎨 Custom Brand Voice Presets (Create unlimited presets)",
+            "📚 Unlimited Brand Asset Storage (100GB+)",
+            "🏷️ Full White-label (Your logo, your domain)",
+            "📊 Advanced Analytics & Reporting (Custom dashboards)",
+            "👥 Team Collaboration (50 team members)",
+            "🎁 Client Portal (Self-serve for clients)",
+            "📞 Dedicated Account Manager (24/7 priority support)",
+            "⚡ Priority API Access (10x faster processing)",
+            "💰 White-label Invoicing (Your billing)",
+            "🔐 SSO & Enterprise Security",
+            "🎓 Free Training & Onboarding"
         ],
         buttonText: "Go Agency",
-        highlight: false,
-        buttonClass: "bg-gray-900 text-white hover:bg-black"
+        highlight: true,
+        buttonClass: "bg-gradient-to-r from-gray-800 to-gray-900 text-white hover:shadow-2xl transform hover:scale-105 border-2 border-yellow-400"
     }
 ];
 
