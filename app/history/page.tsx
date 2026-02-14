@@ -136,21 +136,24 @@ export default function HistoryPage() {
                 <nav className="flex items-center justify-between">
                     <Link href="/" className="flex items-center space-x-2">
                         <div className="text-2xl font-bold gradient-text">
-                            DescriptAI
+                            ⚡ DescriptAI
                         </div>
+                        <span className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full font-semibold shadow-sm">
+                            PREMIUM AI ENGINE
+                        </span>
                     </Link>
-                    <div className="flex items-center space-x-6">
+                    <div className="hidden md:flex items-center space-x-6">
                         <Link href="/" className="text-gray-700 hover:text-purple-600 font-medium transition">
                             Home
                         </Link>
                         <Link href="/pricing" className="text-gray-700 hover:text-purple-600 font-bold transition">
-                            Pricing
-                        </Link>
-                        <Link href="/generate" className="text-gray-700 hover:text-purple-600 font-medium transition">
-                            Dashboard
+                            ⭐ Pricing
                         </Link>
                         <Link href="/help" className="text-gray-700 hover:text-purple-600 font-medium transition">
                             Help
+                        </Link>
+                        <Link href="/generate" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                            Dashboard
                         </Link>
                     </div>
                 </nav>
@@ -361,7 +364,7 @@ export default function HistoryPage() {
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-4 gap-8 mb-8">
                         <div>
-                            <div className="text-2xl font-bold text-white mb-4">DescriptAI</div>
+                            <div className="text-2xl font-bold text-white mb-4">⚡ DescriptAI</div>
                             <p className="text-sm">Scale your business with AI-powered copy. Built for the modern merchant.</p>
                         </div>
                         <div>
@@ -370,6 +373,7 @@ export default function HistoryPage() {
                                 <li><Link href="/pricing" className="hover:text-purple-400 transition">Pricing</Link></li>
                                 <li><Link href="/generate" className="hover:text-purple-400 transition">Dashboard</Link></li>
                                 <li><Link href="/history" className="hover:text-purple-400 transition">History</Link></li>
+                                <li><Link href="/help" className="hover:text-purple-400 transition">Help Center</Link></li>
                             </ul>
                         </div>
                         <div>
@@ -383,8 +387,9 @@ export default function HistoryPage() {
                         <div>
                             <h4 className="text-white font-bold mb-4">Contact</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><Link href="/contact" className="hover:text-purple-400 transition">Contact Us</Link></li>
                                 <li><a href="mailto:support@descriptai.com" className="hover:text-purple-400 transition">support@descriptai.com</a></li>
+                                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 transition">Twitter</a></li>
+                                <li><a href="https://linkedin.com/company/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 transition">LinkedIn</a></li>
                             </ul>
                         </div>
                     </div>

@@ -31,15 +31,21 @@ export default function ContactPage() {
                 <nav className="flex items-center justify-between">
                     <Link href="/" className="flex items-center space-x-2">
                         <div className="text-2xl font-bold gradient-text">
-                            DescriptAI
+                            ⚡ DescriptAI
                         </div>
+                        <span className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full font-semibold shadow-sm">
+                            PREMIUM AI ENGINE
+                        </span>
                     </Link>
-                    <div className="flex items-center space-x-6">
+                    <div className="hidden md:flex items-center space-x-6">
                         <Link href="/" className="text-gray-700 hover:text-purple-600 font-medium transition">
                             Home
                         </Link>
                         <Link href="/pricing" className="text-gray-700 hover:text-purple-600 font-bold transition">
-                            Pricing
+                            ⭐ Pricing
+                        </Link>
+                        <Link href="/help" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                            Help
                         </Link>
                         <Link href="/generate" className="text-gray-700 hover:text-purple-600 font-medium transition">
                             Dashboard
@@ -185,7 +191,7 @@ export default function ContactPage() {
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-4 gap-8 mb-8">
                         <div>
-                            <div className="text-2xl font-bold text-white mb-4">DescriptAI</div>
+                            <div className="text-2xl font-bold text-white mb-4">⚡ DescriptAI</div>
                             <p className="text-sm">Scale your business with AI-powered copy. Built for the modern merchant.</p>
                         </div>
                         <div>
@@ -194,6 +200,7 @@ export default function ContactPage() {
                                 <li><Link href="/pricing" className="hover:text-purple-400 transition">Pricing</Link></li>
                                 <li><Link href="/generate" className="hover:text-purple-400 transition">Dashboard</Link></li>
                                 <li><Link href="/history" className="hover:text-purple-400 transition">History</Link></li>
+                                <li><Link href="/help" className="hover:text-purple-400 transition">Help Center</Link></li>
                             </ul>
                         </div>
                         <div>
