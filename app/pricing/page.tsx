@@ -5,8 +5,19 @@ import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { PRICING, detectPaymentGateway } from "@/lib/payments";
 
+interface PricingTier {
+  name: string;
+  price: string;
+  period?: string;
+  description: string;
+  features: string[];
+  buttonText: string;
+  highlight: boolean;
+  buttonClass: string;
+}
+
 // Pricing display configuration
-const getPricingTiers = (isIndia: boolean) => [
+const getPricingTiers = (isIndia: boolean): PricingTier[] => [
     {
         name: "Free",
         price: isIndia ? "₹0" : "$0",
@@ -162,7 +173,7 @@ export default function PricingPage() {
                     name: "DescriptAI",
                     description: `${data.planName} Plan`,
                     order_id: data.orderId,
-                    handler: function (response: unknown) {
+                    handler: function (response: any) {
                         alert("Payment successful! Your account has been upgraded.");
                         window.location.href = "/generate";
                     },
