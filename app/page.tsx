@@ -690,27 +690,66 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Trust Signals Section */}
+      <section className="py-12 bg-white border-t border-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-center">
+            <div className="flex flex-col items-center">
+              <div className="text-3xl font-bold text-gray-900 mb-1">256-bit</div>
+              <div className="text-sm text-gray-600">SSL Encryption</div>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="text-3xl font-bold text-gray-900 mb-1">30-Day</div>
+              <div className="text-sm text-gray-600">Money Back</div>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="text-3xl font-bold text-gray-900 mb-1">99.9%</div>
+              <div className="text-sm text-gray-600">Uptime SLA</div>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="text-3xl font-bold text-gray-900 mb-1">24/7</div>
+              <div className="text-sm text-gray-600">Support</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-400 py-12">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-center md:text-left">
-              <div className="text-2xl font-bold text-white mb-2">⚡ DescriptAI</div>
-              <p className="text-sm">
-                © {new Date().getFullYear()} DescriptAI. The Professional AI Marketing Laboratory.
-              </p>
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="text-2xl font-bold text-white mb-4">⚡ DescriptAI</div>
+              <p className="text-sm">Scale your business with AI-powered copy. Built for the modern merchant.</p>
             </div>
-            <div className="flex space-x-6">
-              <a href="#" className="text-gray-400 hover:text-purple-400 transition">
-                Privacy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-purple-400 transition">
-                Terms
-              </a>
-              <a href="#" className="text-gray-400 hover:text-purple-400 transition">
-                Support
-              </a>
+            <div>
+              <h4 className="text-white font-bold mb-4">Product</h4>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/pricing" className="hover:text-purple-400 transition">Pricing</Link></li>
+                <li><Link href="/generate" className="hover:text-purple-400 transition">Dashboard</Link></li>
+                <li><Link href="/history" className="hover:text-purple-400 transition">History</Link></li>
+                <li><Link href="/help" className="hover:text-purple-400 transition">Help Center</Link></li>
+              </ul>
             </div>
+            <div>
+              <h4 className="text-white font-bold mb-4">Legal</h4>
+              <ul className="space-y-2 text-sm">
+                <li><Link href="/privacy" className="hover:text-purple-400 transition">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="hover:text-purple-400 transition">Terms of Service</Link></li>
+                <li><Link href="/refund" className="hover:text-purple-400 transition">Refund Policy</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-bold mb-4">Contact</h4>
+              <ul className="space-y-2 text-sm">
+                <li><a href="mailto:support@descriptai.com" className="hover:text-purple-400 transition">support@descriptai.com</a></li>
+                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 transition">Twitter</a></li>
+                <li><a href="https://linkedin.com/company/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 transition">LinkedIn</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 pt-8 text-center text-sm">
+            <p>© {new Date().getFullYear()} DescriptAI. All rights reserved.</p>
           </div>
         </div>
       </footer>
