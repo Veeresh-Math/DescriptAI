@@ -392,26 +392,30 @@ export default function GeneratePage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
-            <header className="bg-white border-b border-purple-100 py-4 px-6 sticky top-0 z-50">
+        <div className="min-h-screen bg-gray-50 flex flex-col pb-20 lg:pb-0">
+            {/* Mobile-First Header */}
+            <header className="bg-white border-b border-purple-100 py-3 px-4 sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
-                    <Link href="/" className="text-xl font-black gradient-text">⚡ DescriptAI</Link>
-                    <div className="flex gap-6 items-center">
-                        <Link href="/history" className="text-sm font-bold text-gray-600 hover:text-purple-600 transition">History</Link>
-                        <Link href="/pricing" className="text-sm font-bold text-gray-600 hover:text-purple-600 transition">⭐ Pricing</Link>
+                    <Link href="/" className="text-lg font-black gradient-text">⚡ DescriptAI</Link>
+                    <div className="flex gap-3 items-center">
+                        <Link href="/history" className="text-xs font-bold text-gray-600 hover:text-purple-600 transition p-2">History</Link>
+                        <Link href="/pricing" className="text-xs font-bold text-gray-600 hover:text-purple-600 transition p-2">⭐ Pricing</Link>
                         {userData && (
-                            <div className="flex gap-2 text-[10px] font-black">
-                                <span className={`px-2 py-1 rounded-full ${userData.shortCredits > 0 ? "bg-purple-100 text-purple-700" : "bg-red-100 text-red-600"}`}>Short: {userData.shortCredits}</span>
-                                <span className={`px-2 py-1 rounded-full ${userData.mediumCredits > 0 ? "bg-teal-100 text-teal-700" : "bg-red-100 text-red-600"}`}>Medium: {userData.mediumCredits}</span>
+                            <div className="hidden sm:flex gap-1 text-[9px] font-black">
+                                <span className={`px-2 py-1 rounded-full ${userData.shortCredits > 0 ? "bg-purple-100 text-purple-700" : "bg-red-100 text-red-600"}`}>S:{userData.shortCredits}</span>
+                                <span className={`px-2 py-1 rounded-full ${userData.mediumCredits > 0 ? "bg-teal-100 text-teal-700" : "bg-red-100 text-red-600"}`}>M:{userData.mediumCredits}</span>
                             </div>
                         )}
                     </div>
                 </div>
             </header>
 
-            <main className="flex-1 max-w-7xl mx-auto w-full p-6 grid lg:grid-cols-2 gap-8">
-                <div className="bg-white rounded-3xl shadow-xl p-8 h-fit border border-purple-50">
-                    <h1 className="text-3xl font-black mb-6 tracking-tight">Generate <span className="text-purple-600">Pure Copy</span></h1>
+
+            <main className="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-6 grid lg:grid-cols-2 gap-6">
+
+                <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-8 h-fit border border-purple-50">
+                    <h1 className="text-2xl sm:text-3xl font-black mb-4 sm:mb-6 tracking-tight">Generate <span className="text-purple-600">Pure Copy</span></h1>
+
                     {error && <div className="mb-4 bg-red-50 text-red-700 p-4 rounded-xl text-sm font-bold border border-red-200">{error}</div>}
 
                     <div className="space-y-6">
@@ -661,23 +665,26 @@ export default function GeneratePage() {
                                 </div>
                             </div>
                         )}
-                        <button onClick={handleGenerate} disabled={isGenerating} className="w-full bg-gradient-to-r from-purple-600 to-teal-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:scale-[1.02] transition disabled:opacity-50">
+                        {/* Desktop Generate Button */}
+                        <button onClick={handleGenerate} disabled={isGenerating} className="hidden sm:block w-full bg-gradient-to-r from-purple-600 to-teal-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:scale-[1.02] transition disabled:opacity-50">
                             {isGenerating ? "Waking up AI..." : "⚡ Generate 3 Variants"}
                         </button>
+
                     </div>
                 </div>
 
                 <div>
                     {!isPremium && (
-                        <div className="bg-gradient-to-br from-purple-600 to-indigo-700 rounded-3xl p-6 mb-8 text-white shadow-2xl relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition duration-500">
-                                <span className="text-8xl">⭐</span>
+                        <div className="bg-gradient-to-br from-purple-600 to-indigo-700 rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-6 text-white shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-2 sm:p-4 opacity-10 group-hover:scale-110 transition duration-500">
+                                <span className="text-6xl sm:text-8xl">⭐</span>
                             </div>
-                            <h3 className="text-xl font-black mb-2 relative z-10">Go Pro</h3>
-                            <p className="text-purple-100 text-xs mb-4 relative z-10">Unlock Social Kits, SEO Heatmaps, and 500-word deep content. The ultimate tool for growing sellers.</p>
-                            <Link href="/pricing" className="bg-white text-purple-700 px-6 py-3 rounded-xl font-black text-sm inline-block shadow-lg hover:bg-purple-50 transition relative z-10">✨ UPGRADE TO PRO</Link>
+                            <h3 className="text-lg sm:text-xl font-black mb-2 relative z-10">Go Pro</h3>
+                            <p className="text-purple-100 text-xs mb-3 sm:mb-4 relative z-10 leading-relaxed">Unlock Social Kits, SEO Heatmaps, and 500-word deep content.</p>
+                            <Link href="/pricing" className="bg-white text-purple-700 px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-black text-xs sm:text-sm inline-block shadow-lg hover:bg-purple-50 transition relative z-10">✨ UPGRADE TO PRO</Link>
                         </div>
                     )}
+
                     {isPro && !isAgency && (
                         <div className="bg-gradient-to-br from-teal-600 to-emerald-700 rounded-3xl p-6 mb-8 text-white shadow-2xl relative overflow-hidden group">
                             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition duration-500">
@@ -690,17 +697,18 @@ export default function GeneratePage() {
                     )}
 
 
-                    <div className="bg-white rounded-3xl p-6 border border-purple-100 shadow-sm mb-8">
-                        <div className="flex items-center gap-2 mb-4">
-                            <span className="text-2xl">🎁</span>
+                    <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-purple-100 shadow-sm mb-6">
+                        <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                            <span className="text-xl sm:text-2xl">🎁</span>
                             <h3 className="font-black text-xs text-purple-900 uppercase tracking-widest">Invite & Earn</h3>
                         </div>
+
                         <p className="text-[10px] text-gray-500 mb-4 leading-relaxed">
                             Share your link with a friend. When they sign up, we&apos;ll credit your account with **5 Premium Credits**!
                         </p>
 
-                        <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 flex items-center justify-between mb-4">
-                            <code className="text-[10px] font-mono text-purple-600 truncate mr-2">
+                        <div className="bg-gray-50 p-2 sm:p-3 rounded-xl border border-gray-100 flex items-center justify-between mb-3 sm:mb-4">
+                            <code className="text-[9px] sm:text-[10px] font-mono text-purple-600 truncate mr-2 max-w-[200px] sm:max-w-none">
                                 {`dai.sh/${userData?.referralCode || '...'}`}
                             </code>
                             <button
@@ -708,31 +716,34 @@ export default function GeneratePage() {
                                     navigator.clipboard.writeText(`https://descriptai.com/ref=${userData?.referralCode}`);
                                     alert("Link copied to clipboard!");
                                 }}
-                                className="bg-purple-100 text-purple-700 p-2 rounded-lg hover:bg-purple-200 transition"
+                                className="bg-purple-100 text-purple-700 p-1.5 sm:p-2 rounded-lg hover:bg-purple-200 transition text-sm"
                             >
                                 📋
                             </button>
                         </div>
+
                         <div className="grid grid-cols-2 gap-2">
                             <div className="bg-purple-50 p-2 rounded-xl text-center">
-                                <p className="text-[10px] text-purple-400 font-bold uppercase">Invites</p>
-                                <p className="text-lg font-black text-purple-700">0</p>
+                                <p className="text-[9px] sm:text-[10px] text-purple-400 font-bold uppercase">Invites</p>
+                                <p className="text-base sm:text-lg font-black text-purple-700">0</p>
                             </div>
                             <div className="bg-teal-50 p-2 rounded-xl text-center">
-                                <p className="text-[10px] text-teal-400 font-bold uppercase">Earned</p>
-                                <p className="text-lg font-black text-teal-700">+0</p>
+                                <p className="text-[9px] sm:text-[10px] text-teal-400 font-bold uppercase">Earned</p>
+                                <p className="text-base sm:text-lg font-black text-teal-700">+0</p>
                             </div>
                         </div>
+
                     </div>
 
                     <div ref={resultsRef} className="space-y-6">
                         {variants.length === 0 ? (
-                            <div className="bg-purple-50 rounded-3xl p-12 text-center border-2 border-dashed border-purple-200 h-full flex flex-col justify-center">
-                                <div className="text-5xl mb-4 opacity-50">✍️</div>
-                                <h3 className="text-xl font-bold text-purple-900">Your variants will appear here</h3>
-                                <p className="text-purple-400 text-sm">Enter your product details to get started.</p>
+                            <div className="bg-purple-50 rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-center border-2 border-dashed border-purple-200 h-full flex flex-col justify-center min-h-[200px]">
+                                <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 opacity-50">✍️</div>
+                                <h3 className="text-lg sm:text-xl font-bold text-purple-900">Your variants will appear here</h3>
+                                <p className="text-purple-400 text-xs sm:text-sm mt-2">Enter product details & tap Generate</p>
                             </div>
                         ) : (
+
                             <>
                                 <div className="flex justify-between items-center mb-2 px-2 relative">
                                     <h2 className="text-sm font-black text-purple-900 uppercase tracking-widest">Generation Results</h2>
