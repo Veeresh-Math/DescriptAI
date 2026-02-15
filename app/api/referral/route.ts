@@ -34,8 +34,8 @@ export async function GET() {
         return NextResponse.json({
             referralCode: user.referralCode,
             referralCount: referrals.length,
-            rewardedCount: referrals.filter(r => r.status === 'rewarded').length,
-            potentialCredits: referrals.filter(r => r.status === 'pending').length * 5
+            rewardedCount: referrals.filter((r: typeof referrals[number]) => r.status === 'rewarded').length,
+            potentialCredits: referrals.filter((r: typeof referrals[number]) => r.status === 'pending').length * 5
         });
     } catch (error) {
         console.error("[REFERRAL_ERROR]", error);

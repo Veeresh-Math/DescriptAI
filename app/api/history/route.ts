@@ -61,7 +61,7 @@ export async function GET(_req: Request) {
         console.log("[HISTORY_GET] Found", history.length, "records");
 
         // Parse JSON variants and imageUrls back to array
-        const parsedHistory = history.map((item) => ({
+        const parsedHistory = history.map((item: typeof history[number]) => ({
             ...item,
             variants: JSON.parse(item.variants),
             imageUrls: item.imageUrls ? JSON.parse(item.imageUrls) : [],
