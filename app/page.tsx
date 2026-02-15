@@ -227,7 +227,7 @@ function ROICalculator() {
             step="0.1"
             value={conversionRate}
             onChange={(e) => setConversionRate(Number(e.target.value))}
-            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-pink-500"
+            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyan-500"
           />
         </div>
 
@@ -603,7 +603,7 @@ export default function Home() {
             {[
               { value: 2.4, suffix: "M+", label: "Descriptions Generated", color: "text-blue-500" },
               { value: 3.2, suffix: "s", label: "Avg Generation Time", color: "text-cyan-400" },
-              { value: 47, suffix: "%", label: "Conversion Lift", color: "text-pink-400" },
+              { value: 47, suffix: "%", label: "Conversion Lift", color: "text-cyan-400" },
               { value: 1000, suffix: "+", label: "Active Sellers", color: "text-blue-500" },
             ].map((stat, index) => (
               <TiltCard key={index} className="rounded-2xl bg-white/5 border border-white/10 p-6 text-center">
@@ -719,7 +719,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
               { icon: "1", title: "Platform-Specific Magic", desc: "Amazon SEO bullets, Shopify brand stories, Etsy handmade charm, eBay deal focus. Each platform gets optimized copy that converts.", color: "purple" },
-              { icon: "2", title: "Sales Machine Copy", desc: "Not just descriptions - SALES MACHINES. Uses AIDA, PAS, FOMO, social proof. 3 variants: Emotional, Technical, Urgent.", color: "pink" },
+              { icon: "2", title: "Sales Machine Copy", desc: "Not just descriptions - SALES MACHINES. Uses AIDA, PAS, FOMO, social proof. 3 variants: Emotional, Technical, Urgent.", color: "cyan" },
               { icon: "3", title: "3 Perfect Lengths", desc: "Short (80 words) for mobile, Medium (150 words) for SEO balance, Long (300 words) for high-ticket storytelling.", color: "cyan" },
               { icon: "4", title: "Lightning Fast", desc: "Generate descriptions in 3-5 seconds. 99.9% uptime guarantee. Never wait, never fail. Always ready when you are.", color: "green" },
               { icon: "5", title: "Social Media Kit", desc: "One product = 3 social posts. Auto-generate Instagram captions, Twitter hooks, and Facebook ads. Pro feature.", color: "orange" },
@@ -901,7 +901,7 @@ export default function Home() {
             </p>
             <Link
               href="/generate"
-              className="inline-block px-10 py-5 rounded-xl bg-gradient-to-r from-blue-700 via-pink-500 to-blue-700 text-white text-lg font-bold hover:opacity-90 transition shadow-2xl shadow-blue-600/30"
+              className="inline-block px-10 py-5 rounded-xl bg-gradient-to-r from-blue-700 via-cyan-500 to-blue-700 text-white text-lg font-bold hover:opacity-90 transition shadow-2xl shadow-blue-600/30"
             >
               Start Generating Now - It's Free!
             </Link>

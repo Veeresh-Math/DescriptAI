@@ -60,7 +60,7 @@ const getPricingTiers = (isIndia: boolean, isAnnual: boolean): PricingTier[] => 
         buttonText: "Upgrade to Pro",
         highlight: true,
         popular: true,
-        buttonClass: "bg-gradient-to-r from-blue-700 via-pink-500 to-blue-700 text-white hover:opacity-90 shadow-lg shadow-blue-600/30",
+        buttonClass: "bg-gradient-to-r from-blue-700 via-cyan-500 to-blue-700 text-white hover:opacity-90 shadow-lg shadow-blue-600/30",
         savings: isAnnual ? (isIndia ? "Save 3,838/yr" : "Save $46/yr") : undefined
     },
     {
@@ -232,7 +232,7 @@ export default function PricingPage() {
             <header className="container mx-auto px-4 py-6 sticky top-0 z-50 backdrop-blur-xl bg-black/20 border-b border-white/5">
                 <nav className="flex items-center justify-between">
                     <Link href="/" className="flex items-center space-x-2">
-                        <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 via-pink-400 to-blue-500 bg-clip-text text-transparent">
+                        <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
                             DescriptAI
                         </div>
                         <span className="text-xs bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-2 py-1 rounded-full font-semibold shadow-lg shadow-blue-600/20">
@@ -286,7 +286,7 @@ export default function PricingPage() {
                             <span className="text-sm font-medium text-gray-300">No Hidden Fees</span>
                         </div>
                         <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                            <svg className="w-5 h-5 text-pink-400" fill="currentColor" viewBox="0 0 20 20">
+                            <svg className="w-5 h-5 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                             </svg>
                             <span className="text-sm font-medium text-gray-300">99.9% Uptime</span>
@@ -463,7 +463,7 @@ export default function PricingPage() {
                     <div className="grid md:grid-cols-4 gap-8">
                         {/* Brand */}
                         <div>
-                            <div className="text-xl font-bold bg-gradient-to-r from-blue-500 via-pink-400 to-blue-500 bg-clip-text text-transparent mb-4">
+                            <div className="text-xl font-bold bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">
                                 DescriptAI
                             </div>
                             <p className="text-gray-500 text-sm">
