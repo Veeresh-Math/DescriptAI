@@ -718,19 +718,19 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
-              { icon: "1", title: "Platform-Specific Magic", desc: "Amazon SEO bullets, Shopify brand stories, Etsy handmade charm, eBay deal focus. Each platform gets optimized copy that converts.", color: "purple" },
-              { icon: "2", title: "Sales Machine Copy", desc: "Not just descriptions - SALES MACHINES. Uses AIDA, PAS, FOMO, social proof. 3 variants: Emotional, Technical, Urgent.", color: "cyan" },
-              { icon: "3", title: "3 Perfect Lengths", desc: "Short (80 words) for mobile, Medium (150 words) for SEO balance, Long (300 words) for high-ticket storytelling.", color: "cyan" },
-              { icon: "4", title: "Lightning Fast", desc: "Generate descriptions in 3-5 seconds. 99.9% uptime guarantee. Never wait, never fail. Always ready when you are.", color: "green" },
-              { icon: "5", title: "Social Media Kit", desc: "One product = 3 social posts. Auto-generate Instagram captions, Twitter hooks, and Facebook ads. Pro feature.", color: "orange" },
-              { icon: "6", title: "SEO Heatmap", desc: "Visual keyword optimization. See your SEO score in real-time. Highlight power words that trigger conversions.", color: "blue" },
-              { icon: "7", title: "Referral Rewards", desc: "Invite friends and earn 5 premium credits for each signup. Accumulate credits to unlock Pro features for free.", color: "yellow" },
-              { icon: "8", title: "One-Click Exports", desc: "Export to Shopify, Amazon, or general CSV. Platform-optimized formatting. Upload and sell immediately.", color: "indigo" },
-              { icon: "9", title: "Personalized Intelligence", desc: "Our AI learns from your most successful descriptions, identifying patterns and keywords that lead to higher conversions.", color: "rose" },
+              { icon: "1", title: "Platform-Specific Magic", desc: "Amazon SEO bullets, Shopify brand stories, Etsy handmade charm, eBay deal focus. Each platform gets optimized copy that converts.", bgClass: "bg-purple-500/20", textClass: "text-purple-400" },
+              { icon: "2", title: "Sales Machine Copy", desc: "Not just descriptions - SALES MACHINES. Uses AIDA, PAS, FOMO, social proof. 3 variants: Emotional, Technical, Urgent.", bgClass: "bg-pink-500/20", textClass: "text-pink-400" },
+              { icon: "3", title: "3 Perfect Lengths", desc: "Short (80 words) for mobile, Medium (150 words) for SEO balance, Long (300 words) for high-ticket storytelling.", bgClass: "bg-blue-500/20", textClass: "text-blue-400" },
+              { icon: "4", title: "Lightning Fast", desc: "Generate descriptions in 3-5 seconds. 99.9% uptime guarantee. Never wait, never fail. Always ready when you are.", bgClass: "bg-green-500/20", textClass: "text-green-400" },
+              { icon: "5", title: "Social Media Kit", desc: "One product = 3 social posts. Auto-generate Instagram captions, Twitter hooks, and Facebook ads. Pro feature.", bgClass: "bg-orange-500/20", textClass: "text-orange-400" },
+              { icon: "6", title: "SEO Heatmap", desc: "Visual keyword optimization. See your SEO score in real-time. Highlight power words that trigger conversions.", bgClass: "bg-cyan-500/20", textClass: "text-cyan-400" },
+              { icon: "7", title: "Referral Rewards", desc: "Invite friends and earn 5 premium credits for each signup. Accumulate credits to unlock Pro features for free.", bgClass: "bg-yellow-500/20", textClass: "text-yellow-400" },
+              { icon: "8", title: "One-Click Exports", desc: "Export to Shopify, Amazon, or general CSV. Platform-optimized formatting. Upload and sell immediately.", bgClass: "bg-indigo-500/20", textClass: "text-indigo-400" },
+              { icon: "9", title: "Personalized Intelligence", desc: "Our AI learns from your most successful descriptions, identifying patterns and keywords that lead to higher conversions.", bgClass: "bg-rose-500/20", textClass: "text-rose-400" },
             ].map((feature, index) => (
               <TiltCard key={index} className="rounded-2xl bg-white/5 border border-white/10 p-6 hover:border-white/20 transition">
-                <div className={`w-10 h-10 rounded-lg bg-gradient-to-r from-${feature.color}-500/20 to-${feature.color}-600/20 flex items-center justify-center mb-4`}>
-                  <span className={`font-bold text-${feature.color}-400`}>{feature.icon}</span>
+                <div className={`w-10 h-10 rounded-lg ${feature.bgClass} flex items-center justify-center mb-4`}>
+                  <span className={`font-bold ${feature.textClass}`}>{feature.icon}</span>
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
