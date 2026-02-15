@@ -220,12 +220,12 @@ export default function PricingPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0a0a0f] text-white overflow-hidden">
+        <div className={`min-h-screen bg-[#0a0a0f] text-white overflow-hidden transition-colors duration-500 ${isAnnual ? 'bg-[#1a1500]' : ''}`}>
             {/* Aurora Background Effect */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-red-700/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-red-600/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse delay-1000"></div>
-                <div className="absolute top-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-bl from-red-600/10 via-transparent to-transparent rounded-full blur-3xl"></div>
+                <div className={`absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br rounded-full blur-3xl animate-pulse transition-all duration-500 ${isAnnual ? 'from-yellow-600/30' : 'from-red-700/20'}`}></div>
+                <div className={`absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl rounded-full blur-3xl animate-pulse delay-1000 transition-all duration-500 ${isAnnual ? 'from-amber-500/30' : 'from-red-600/20'}`}></div>
+                <div className={`absolute top-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-bl rounded-full blur-3xl transition-all duration-500 ${isAnnual ? 'from-yellow-500/20' : 'from-red-600/10'}`}></div>
             </div>
 
             {/* Header */}
@@ -298,12 +298,12 @@ export default function PricingPage() {
                         <span className={`text-sm font-medium transition ${!isAnnual ? 'text-white' : 'text-gray-500'}`}>Monthly</span>
                         <button
                             onClick={() => setIsAnnual(!isAnnual)}
-                            className={`relative w-16 h-8 rounded-full transition-all duration-300 ${isAnnual ? 'bg-gradient-to-r from-red-700 to-red-600' : 'bg-white/10'}`}
+                            className={`relative w-16 h-8 rounded-full transition-all duration-500 ${isAnnual ? 'bg-gradient-to-r from-yellow-500 to-amber-500' : 'bg-white/10'}`}
                         >
-                            <div className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-lg transition-all duration-300 ${isAnnual ? 'left-9' : 'left-1'}`}></div>
+                            <div className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-lg transition-all duration-500 ${isAnnual ? 'left-9' : 'left-1'}`}></div>
                         </button>
-                        <span className={`text-sm font-medium transition ${isAnnual ? 'text-white' : 'text-gray-500'}`}>Annual</span>
-                        <span className="text-xs font-bold text-green-400 bg-green-400/10 px-2 py-1 rounded-full">Save 20%</span>
+                        <span className={`text-sm font-medium transition ${isAnnual ? 'text-yellow-400' : 'text-gray-500'}`}>Annual</span>
+                        <span className={`text-xs font-bold px-3 py-1 rounded-full transition-all duration-500 ${isAnnual ? 'bg-yellow-500 text-black animate-pulse' : 'text-green-400 bg-green-400/10'}`}>{isAnnual ? '🎉 SAVE 20%!' : 'Save 20%'}</span>
                     </div>
                 </div>
 
@@ -317,15 +317,15 @@ export default function PricingPage() {
                             {/* Popular Badge */}
                             {tier.popular && (
                                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-                                    <span className="bg-gradient-to-r from-red-700 to-red-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg shadow-yellow-600/30">
-                                        MOST POPULAR
+                                    <span className={`bg-gradient-to-r text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg transition-all duration-500 ${isAnnual ? 'from-yellow-500 to-amber-500 shadow-yellow-500/50' : 'from-red-700 to-red-600 shadow-yellow-600/30'}`}>
+                                        {isAnnual ? '⭐ BEST VALUE' : 'MOST POPULAR'}
                                     </span>
                                 </div>
                             )}
 
                             {/* Glow Effect for Popular */}
                             {tier.popular && (
-                                <div className="absolute inset-0 bg-gradient-to-r from-red-700/20 via-pink-500/20 to-red-700/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                                <div className={`absolute inset-0 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500 ${isAnnual ? 'bg-gradient-to-r from-yellow-500/30 via-amber-400/20 to-yellow-500/30' : 'bg-gradient-to-r from-red-700/20 via-pink-500/20 to-red-700/20'}`}></div>
                             )}
 
                             {/* Card */}
