@@ -90,3 +90,4 @@ export function getStaticFallback(productName: string, features: string) {
 
     return variants; // Returns array of 3 unique strings
 }
+

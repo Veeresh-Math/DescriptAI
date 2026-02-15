@@ -27,3 +27,4 @@ export async function GET(_req: Request) {
         return NextResponse.json({ error: "SYNC_FAILED", details: String(error) }, { status: 500 });
     }
 }
+

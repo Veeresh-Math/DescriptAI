@@ -4,29 +4,29 @@ import Link from "next/link";
 
 export default function RefundPolicyPage() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-teal-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50">
             {/* Header */}
-            <header className="container mx-auto px-4 py-6 backdrop-blur-sm bg-white/50 sticky top-0 z-50 border-b border-purple-100">
+            <header className="container mx-auto px-4 py-6 backdrop-blur-sm bg-white/50 sticky top-0 z-50 border-b border-blue-100">
                 <nav className="flex items-center justify-between">
                     <Link href="/" className="flex items-center space-x-2">
                         <div className="text-2xl font-bold gradient-text">
                             ⚡ DescriptAI
                         </div>
-                        <span className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full font-semibold shadow-sm">
+                        <span className="text-xs bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-2 py-1 rounded-full font-semibold shadow-sm">
                             PREMIUM AI ENGINE
                         </span>
                     </Link>
                     <div className="hidden md:flex items-center space-x-6">
-                        <Link href="/" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                        <Link href="/" className="text-gray-700 hover:text-blue-700 font-medium transition">
                             Home
                         </Link>
-                        <Link href="/pricing" className="text-gray-700 hover:text-purple-600 font-bold transition">
+                        <Link href="/pricing" className="text-gray-700 hover:text-blue-700 font-bold transition">
                             ⭐ Pricing
                         </Link>
-                        <Link href="/help" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                        <Link href="/help" className="text-gray-700 hover:text-blue-700 font-medium transition">
                             Help
                         </Link>
-                        <Link href="/generate" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                        <Link href="/generate" className="text-gray-700 hover:text-blue-700 font-medium transition">
                             Dashboard
                         </Link>
                     </div>
@@ -35,7 +35,7 @@ export default function RefundPolicyPage() {
 
             <main className="container mx-auto px-4 py-12">
                 <div className="max-w-4xl mx-auto">
-                    <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-purple-100">
+                    <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-blue-100">
                         <div className="flex items-center gap-3 mb-6">
                             <span className="text-4xl">30-Day</span>
                             <span className="bg-gradient-to-r from-green-500 to-teal-500 text-white px-4 py-2 rounded-full text-sm font-bold">
@@ -72,8 +72,8 @@ export default function RefundPolicyPage() {
                                     <li>Valid for both monthly and annual subscriptions</li>
                                     <li>No questions asked - just email us and we'll process your refund</li>
                                 </ul>
-                                <div className="bg-purple-50 rounded-xl p-4 mt-4 border border-purple-100">
-                                    <p className="text-purple-700 font-medium">
+                                <div className="bg-blue-50 rounded-xl p-4 mt-4 border border-blue-100">
+                                    <p className="text-blue-800 font-medium">
                                         To request a refund: Email <a href="mailto:refund@descriptai.com" className="underline">refund@descriptai.com</a> with your account email and reason (optional)
                                     </p>
                                 </div>
@@ -104,7 +104,7 @@ export default function RefundPolicyPage() {
                                 <h2 className="text-2xl font-bold text-gray-900 mb-4">3. How to Request a Refund</h2>
                                 <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
                                     <ol className="list-decimal list-inside text-gray-800 space-y-3">
-                                        <li><strong>Email us:</strong> Send an email to <a href="mailto:refund@descriptai.com" className="text-purple-600 hover:underline">refund@descriptai.com</a></li>
+                                        <li><strong>Email us:</strong> Send an email to <a href="mailto:refund@descriptai.com" className="text-blue-700 hover:underline">refund@descriptai.com</a></li>
                                         <li><strong>Include:</strong> Your account email address and plan name</li>
                                         <li><strong>Reason:</strong> Optional - helps us improve our service</li>
                                         <li><strong>Processing time:</strong> Refunds are processed within 5-7 business days</li>
@@ -217,10 +217,10 @@ export default function RefundPolicyPage() {
                                 <p className="text-gray-800 leading-relaxed">
                                     For refund requests or questions about this policy:
                                 </p>
-                                <div className="bg-purple-50 rounded-xl p-6 mt-4 border border-purple-100">
+                                <div className="bg-blue-50 rounded-xl p-6 mt-4 border border-blue-100">
                                     <p className="text-gray-700"><strong>DescriptAI Refund Team</strong></p>
-                                    <p className="text-gray-800">Email: <a href="mailto:refund@descriptai.com" className="text-purple-600 hover:underline">refund@descriptai.com</a></p>
-                                    <p className="text-gray-800">Support: <a href="mailto:support@descriptai.com" className="text-purple-600 hover:underline">support@descriptai.com</a></p>
+                                    <p className="text-gray-800">Email: <a href="mailto:refund@descriptai.com" className="text-blue-700 hover:underline">refund@descriptai.com</a></p>
+                                    <p className="text-gray-800">Support: <a href="mailto:support@descriptai.com" className="text-blue-700 hover:underline">support@descriptai.com</a></p>
                                     <p className="text-gray-800">Response time: Within 24 hours</p>
                                 </div>
                             </section>
@@ -246,7 +246,7 @@ export default function RefundPolicyPage() {
                                 </a>
                                 <Link 
                                     href="/pricing"
-                                    className="bg-purple-500 text-white text-center py-3 rounded-xl font-bold hover:bg-purple-600 transition"
+                                    className="bg-blue-600 text-white text-center py-3 rounded-xl font-bold hover:bg-blue-700 transition"
                                 >
                                     View Pricing
                                 </Link>
@@ -258,10 +258,10 @@ export default function RefundPolicyPage() {
                                 </Link>
                             </div>
                             <div className="flex flex-wrap gap-4">
-                                <Link href="/privacy" className="text-purple-600 hover:underline font-medium">
+                                <Link href="/privacy" className="text-blue-700 hover:underline font-medium">
                                     Privacy Policy
                                 </Link>
-                                <Link href="/terms" className="text-purple-600 hover:underline font-medium">
+                                <Link href="/terms" className="text-blue-700 hover:underline font-medium">
                                     Terms of Service
                                 </Link>
                             </div>
@@ -281,26 +281,26 @@ export default function RefundPolicyPage() {
                         <div>
                             <h4 className="text-white font-bold mb-4">Product</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><Link href="/pricing" className="hover:text-purple-400 transition">Pricing</Link></li>
-                                <li><Link href="/generate" className="hover:text-purple-400 transition">Dashboard</Link></li>
-                                <li><Link href="/history" className="hover:text-purple-400 transition">History</Link></li>
-                                <li><Link href="/help" className="hover:text-purple-400 transition">Help Center</Link></li>
+                                <li><Link href="/pricing" className="hover:text-blue-500 transition">Pricing</Link></li>
+                                <li><Link href="/generate" className="hover:text-blue-500 transition">Dashboard</Link></li>
+                                <li><Link href="/history" className="hover:text-blue-500 transition">History</Link></li>
+                                <li><Link href="/help" className="hover:text-blue-500 transition">Help Center</Link></li>
                             </ul>
                         </div>
                         <div>
                             <h4 className="text-white font-bold mb-4">Legal</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><Link href="/privacy" className="hover:text-purple-400 transition">Privacy Policy</Link></li>
-                                <li><Link href="/terms" className="hover:text-purple-400 transition">Terms of Service</Link></li>
-                                <li><Link href="/refund" className="hover:text-purple-400 transition">Refund Policy</Link></li>
+                                <li><Link href="/privacy" className="hover:text-blue-500 transition">Privacy Policy</Link></li>
+                                <li><Link href="/terms" className="hover:text-blue-500 transition">Terms of Service</Link></li>
+                                <li><Link href="/refund" className="hover:text-blue-500 transition">Refund Policy</Link></li>
                             </ul>
                         </div>
                         <div>
                             <h4 className="text-white font-bold mb-4">Contact</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><a href="mailto:support@descriptai.com" className="hover:text-purple-400 transition">support@descriptai.com</a></li>
-                                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 transition">Twitter</a></li>
-                                <li><a href="https://linkedin.com/company/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 transition">LinkedIn</a></li>
+                                <li><a href="mailto:support@descriptai.com" className="hover:text-blue-500 transition">support@descriptai.com</a></li>
+                                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">Twitter</a></li>
+                                <li><a href="https://linkedin.com/company/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">LinkedIn</a></li>
                             </ul>
                         </div>
                     </div>
@@ -312,3 +312,4 @@ export default function RefundPolicyPage() {
         </div>
     );
 }
+

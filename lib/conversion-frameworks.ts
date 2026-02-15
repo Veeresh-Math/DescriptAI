@@ -113,3 +113,4 @@ export function applyFramework(frameworkId: string, productData: {
   // This would be expanded with AI integration to actually apply the framework
   return `Using ${framework.name} framework for ${productData.productName}...\n\n${framework.template}`;
 }
+

@@ -4,29 +4,29 @@ import Link from "next/link";
 
 export default function PrivacyPolicyPage() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-teal-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50">
             {/* Header */}
-            <header className="container mx-auto px-4 py-6 backdrop-blur-sm bg-white/50 sticky top-0 z-50 border-b border-purple-100">
+            <header className="container mx-auto px-4 py-6 backdrop-blur-sm bg-white/50 sticky top-0 z-50 border-b border-blue-100">
                 <nav className="flex items-center justify-between">
                     <Link href="/" className="flex items-center space-x-2">
                         <div className="text-2xl font-bold gradient-text">
                             ⚡ DescriptAI
                         </div>
-                        <span className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full font-semibold shadow-sm">
+                        <span className="text-xs bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-2 py-1 rounded-full font-semibold shadow-sm">
                             PREMIUM AI ENGINE
                         </span>
                     </Link>
                     <div className="hidden md:flex items-center space-x-6">
-                        <Link href="/" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                        <Link href="/" className="text-gray-700 hover:text-blue-700 font-medium transition">
                             Home
                         </Link>
-                        <Link href="/pricing" className="text-gray-700 hover:text-purple-600 font-bold transition">
+                        <Link href="/pricing" className="text-gray-700 hover:text-blue-700 font-bold transition">
                             ⭐ Pricing
                         </Link>
-                        <Link href="/help" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                        <Link href="/help" className="text-gray-700 hover:text-blue-700 font-medium transition">
                             Help
                         </Link>
-                        <Link href="/generate" className="text-gray-700 hover:text-purple-600 font-medium transition">
+                        <Link href="/generate" className="text-gray-700 hover:text-blue-700 font-medium transition">
                             Dashboard
                         </Link>
                     </div>
@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
 
             <main className="container mx-auto px-4 py-12">
                 <div className="max-w-4xl mx-auto">
-                    <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-purple-100">
+                    <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-blue-100">
                         <h1 className="text-4xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
                         <p className="text-gray-700 mb-8">Last updated: February 2026</p>
 
@@ -125,7 +125,7 @@ export default function PrivacyPolicyPage() {
                                     <li><strong>Portability:</strong> Receive your data in a portable format</li>
                                 </ul>
                                 <p className="text-gray-800 leading-relaxed mt-4">
-                                    To exercise these rights, contact us at <a href="mailto:privacy@descriptai.com" className="text-purple-600 hover:underline">privacy@descriptai.com</a>
+                                    To exercise these rights, contact us at <a href="mailto:privacy@descriptai.com" className="text-blue-700 hover:underline">privacy@descriptai.com</a>
                                 </p>
                             </section>
 
@@ -192,20 +192,20 @@ export default function PrivacyPolicyPage() {
                                 <p className="text-gray-800 leading-relaxed">
                                     For any questions about this Privacy Policy or our data practices, contact us:
                                 </p>
-                                <div className="bg-purple-50 rounded-xl p-6 mt-4 border border-purple-100">
+                                <div className="bg-blue-50 rounded-xl p-6 mt-4 border border-blue-100">
                                     <p className="text-gray-700"><strong>DescriptAI Privacy Team</strong></p>
-                                    <p className="text-gray-800">Email: <a href="mailto:privacy@descriptai.com" className="text-purple-600 hover:underline">privacy@descriptai.com</a></p>
-                                    <p className="text-gray-800">Support: <a href="mailto:support@descriptai.com" className="text-purple-600 hover:underline">support@descriptai.com</a></p>
+                                    <p className="text-gray-800">Email: <a href="mailto:privacy@descriptai.com" className="text-blue-700 hover:underline">privacy@descriptai.com</a></p>
+                                    <p className="text-gray-800">Support: <a href="mailto:support@descriptai.com" className="text-blue-700 hover:underline">support@descriptai.com</a></p>
                                     <p className="text-gray-800">Response time: Within 48 hours</p>
                                 </div>
                             </section>
                         </div>
 
                         <div className="mt-8 pt-8 border-t border-gray-200 flex flex-wrap gap-4">
-                            <Link href="/terms" className="text-purple-600 hover:underline font-medium">
+                            <Link href="/terms" className="text-blue-700 hover:underline font-medium">
                                 Terms of Service
                             </Link>
-                            <Link href="/refund" className="text-purple-600 hover:underline font-medium">
+                            <Link href="/refund" className="text-blue-700 hover:underline font-medium">
                                 Refund Policy
                             </Link>
                             <Link href="/" className="text-gray-800 hover:underline font-medium">
@@ -227,26 +227,26 @@ export default function PrivacyPolicyPage() {
                         <div>
                             <h4 className="text-white font-bold mb-4">Product</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><Link href="/pricing" className="hover:text-purple-400 transition">Pricing</Link></li>
-                                <li><Link href="/generate" className="hover:text-purple-400 transition">Dashboard</Link></li>
-                                <li><Link href="/history" className="hover:text-purple-400 transition">History</Link></li>
-                                <li><Link href="/help" className="hover:text-purple-400 transition">Help Center</Link></li>
+                                <li><Link href="/pricing" className="hover:text-blue-500 transition">Pricing</Link></li>
+                                <li><Link href="/generate" className="hover:text-blue-500 transition">Dashboard</Link></li>
+                                <li><Link href="/history" className="hover:text-blue-500 transition">History</Link></li>
+                                <li><Link href="/help" className="hover:text-blue-500 transition">Help Center</Link></li>
                             </ul>
                         </div>
                         <div>
                             <h4 className="text-white font-bold mb-4">Legal</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><Link href="/privacy" className="hover:text-purple-400 transition">Privacy Policy</Link></li>
-                                <li><Link href="/terms" className="hover:text-purple-400 transition">Terms of Service</Link></li>
-                                <li><Link href="/refund" className="hover:text-purple-400 transition">Refund Policy</Link></li>
+                                <li><Link href="/privacy" className="hover:text-blue-500 transition">Privacy Policy</Link></li>
+                                <li><Link href="/terms" className="hover:text-blue-500 transition">Terms of Service</Link></li>
+                                <li><Link href="/refund" className="hover:text-blue-500 transition">Refund Policy</Link></li>
                             </ul>
                         </div>
                         <div>
                             <h4 className="text-white font-bold mb-4">Contact</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><a href="mailto:support@descriptai.com" className="hover:text-purple-400 transition">support@descriptai.com</a></li>
-                                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 transition">Twitter</a></li>
-                                <li><a href="https://linkedin.com/company/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 transition">LinkedIn</a></li>
+                                <li><a href="mailto:support@descriptai.com" className="hover:text-blue-500 transition">support@descriptai.com</a></li>
+                                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">Twitter</a></li>
+                                <li><a href="https://linkedin.com/company/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">LinkedIn</a></li>
                             </ul>
                         </div>
                     </div>
@@ -258,3 +258,4 @@ export default function PrivacyPolicyPage() {
         </div>
     );
 }
+

@@ -60,7 +60,7 @@ const getPricingTiers = (isIndia: boolean, isAnnual: boolean): PricingTier[] => 
         buttonText: "Upgrade to Pro",
         highlight: true,
         popular: true,
-        buttonClass: "bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 text-white hover:opacity-90 shadow-lg shadow-purple-500/30",
+        buttonClass: "bg-gradient-to-r from-blue-700 via-pink-500 to-blue-700 text-white hover:opacity-90 shadow-lg shadow-blue-600/30",
         savings: isAnnual ? (isIndia ? "Save 3,838/yr" : "Save $46/yr") : undefined
     },
     {
@@ -188,7 +188,7 @@ export default function PricingPage() {
                         contact: ""
                     },
                     theme: {
-                        color: "#7c3aed"
+                        color: "#1e3a8a"
                     }
                 };
                 
@@ -223,8 +223,8 @@ export default function PricingPage() {
         <div className="min-h-screen bg-[#0a0a0f] text-white overflow-hidden">
             {/* Aurora Background Effect */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-purple-600/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-pink-600/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse delay-1000"></div>
+                <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-blue-700/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-cyan-600/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse delay-1000"></div>
                 <div className="absolute top-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-bl from-blue-600/10 via-transparent to-transparent rounded-full blur-3xl"></div>
             </div>
 
@@ -232,10 +232,10 @@ export default function PricingPage() {
             <header className="container mx-auto px-4 py-6 sticky top-0 z-50 backdrop-blur-xl bg-black/20 border-b border-white/5">
                 <nav className="flex items-center justify-between">
                     <Link href="/" className="flex items-center space-x-2">
-                        <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                        <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 via-pink-400 to-blue-500 bg-clip-text text-transparent">
                             DescriptAI
                         </div>
-                        <span className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full font-semibold shadow-lg shadow-purple-500/20">
+                        <span className="text-xs bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-2 py-1 rounded-full font-semibold shadow-lg shadow-blue-600/20">
                             PREMIUM AI ENGINE
                         </span>
                     </Link>
@@ -258,7 +258,7 @@ export default function PricingPage() {
 
             <div className="container mx-auto px-4 py-20 relative z-10">
                 <div className="text-center mb-16">
-                    <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+                    <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
                         Simple Pricing
                     </h1>
                     <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
@@ -280,7 +280,7 @@ export default function PricingPage() {
                             <span className="text-sm font-medium text-gray-300">30-Day Guarantee</span>
                         </div>
                         <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                            <svg className="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                            <svg className="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z" />
                             </svg>
                             <span className="text-sm font-medium text-gray-300">No Hidden Fees</span>
@@ -298,7 +298,7 @@ export default function PricingPage() {
                         <span className={`text-sm font-medium transition ${!isAnnual ? 'text-white' : 'text-gray-500'}`}>Monthly</span>
                         <button
                             onClick={() => setIsAnnual(!isAnnual)}
-                            className={`relative w-16 h-8 rounded-full transition-all duration-300 ${isAnnual ? 'bg-gradient-to-r from-purple-600 to-pink-600' : 'bg-white/10'}`}
+                            className={`relative w-16 h-8 rounded-full transition-all duration-300 ${isAnnual ? 'bg-gradient-to-r from-blue-700 to-cyan-600' : 'bg-white/10'}`}
                         >
                             <div className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-lg transition-all duration-300 ${isAnnual ? 'left-9' : 'left-1'}`}></div>
                         </button>
@@ -317,7 +317,7 @@ export default function PricingPage() {
                             {/* Popular Badge */}
                             {tier.popular && (
                                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-                                    <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg shadow-purple-500/30">
+                                    <span className="bg-gradient-to-r from-blue-700 to-cyan-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg shadow-blue-600/30">
                                         MOST POPULAR
                                     </span>
                                 </div>
@@ -325,13 +325,13 @@ export default function PricingPage() {
 
                             {/* Glow Effect for Popular */}
                             {tier.popular && (
-                                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-purple-600/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                                <div className="absolute inset-0 bg-gradient-to-r from-blue-700/20 via-cyan-500/20 to-blue-700/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
                             )}
 
                             {/* Card */}
                             <div className={`relative h-full rounded-3xl p-8 backdrop-blur-xl transition-all duration-500 ${
                                 tier.popular 
-                                    ? 'bg-gradient-to-b from-white/10 to-white/5 border-2 border-purple-500/50 shadow-2xl shadow-purple-500/20' 
+                                    ? 'bg-gradient-to-b from-white/10 to-white/5 border-2 border-blue-600/50 shadow-2xl shadow-blue-600/20' 
                                     : 'bg-white/5 border border-white/10 hover:border-white/20'
                             }`}>
                                 {/* Tier Name */}
@@ -368,7 +368,7 @@ export default function PricingPage() {
                                 <ul className="space-y-3 mb-8">
                                     {tier.features.map((feature, fIndex) => (
                                         <li key={fIndex} className="flex items-start gap-3 text-sm">
-                                            <svg className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                            <svg className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                                             </svg>
                                             <span className="text-gray-300">{feature}</span>
@@ -391,7 +391,7 @@ export default function PricingPage() {
 
                 {/* Comparison Table */}
                 <div className="max-w-6xl mx-auto mb-20">
-                    <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+                    <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
                         Compare All Features
                     </h2>
                     <div className="rounded-3xl border border-white/10 overflow-hidden backdrop-blur-xl bg-white/5">
@@ -400,7 +400,7 @@ export default function PricingPage() {
                                 <tr className="border-b border-white/10">
                                     <th className="px-6 py-4 text-left text-sm font-bold text-gray-400">Feature</th>
                                     <th className="px-6 py-4 text-center text-sm font-bold text-gray-400">Free</th>
-                                    <th className="px-6 py-4 text-center text-sm font-bold bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-white">Pro</th>
+                                    <th className="px-6 py-4 text-center text-sm font-bold bg-gradient-to-r from-blue-600/20 to-cyan-500/20 text-white">Pro</th>
                                     <th className="px-6 py-4 text-center text-sm font-bold text-gray-400">Agency</th>
                                 </tr>
                             </thead>
@@ -409,7 +409,7 @@ export default function PricingPage() {
                                     <tr key={index} className="border-b border-white/5 hover:bg-white/5 transition">
                                         <td className="px-6 py-4 text-sm text-gray-300">{row.feature}</td>
                                         <td className="px-6 py-4 text-center text-sm text-gray-400">{row.free}</td>
-                                        <td className="px-6 py-4 text-center text-sm text-white bg-gradient-to-r from-purple-500/10 to-pink-500/10 font-medium">{row.pro}</td>
+                                        <td className="px-6 py-4 text-center text-sm text-white bg-gradient-to-r from-blue-600/10 to-cyan-500/10 font-medium">{row.pro}</td>
                                         <td className="px-6 py-4 text-center text-sm text-gray-400">{row.agency}</td>
                                     </tr>
                                 ))}
@@ -420,7 +420,7 @@ export default function PricingPage() {
 
                 {/* FAQ Section */}
                 <div className="max-w-4xl mx-auto mb-20">
-                    <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+                    <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
                         Frequently Asked Questions
                     </h2>
                     <div className="grid md:grid-cols-2 gap-6">
@@ -444,12 +444,12 @@ export default function PricingPage() {
 
                 {/* CTA Section */}
                 <div className="text-center">
-                    <div className="inline-block p-8 rounded-3xl bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-purple-600/20 border border-purple-500/30 backdrop-blur-xl">
+                    <div className="inline-block p-8 rounded-3xl bg-gradient-to-r from-blue-700/20 via-cyan-500/20 to-blue-700/20 border border-blue-600/30 backdrop-blur-xl">
                         <h3 className="text-2xl font-bold text-white mb-4">Ready to Transform Your Product Descriptions?</h3>
                         <p className="text-gray-400 mb-6">Join 1,000+ e-commerce professionals using DescriptAI</p>
                         <Link
                             href="/generate"
-                            className="inline-block px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 text-white font-bold hover:opacity-90 transition shadow-lg shadow-purple-500/30"
+                            className="inline-block px-8 py-4 rounded-xl bg-gradient-to-r from-blue-700 via-pink-500 to-blue-700 text-white font-bold hover:opacity-90 transition shadow-lg shadow-blue-600/30"
                         >
                             Start Generating Now
                         </Link>
@@ -463,7 +463,7 @@ export default function PricingPage() {
                     <div className="grid md:grid-cols-4 gap-8">
                         {/* Brand */}
                         <div>
-                            <div className="text-xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent mb-4">
+                            <div className="text-xl font-bold bg-gradient-to-r from-blue-500 via-pink-400 to-blue-500 bg-clip-text text-transparent mb-4">
                                 DescriptAI
                             </div>
                             <p className="text-gray-500 text-sm">
@@ -475,10 +475,10 @@ export default function PricingPage() {
                         <div>
                             <h4 className="font-bold text-white mb-4">Product</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><Link href="/generate" className="text-gray-400 hover:text-purple-400 transition">Generate</Link></li>
-                                <li><Link href="/pricing" className="text-gray-400 hover:text-purple-400 transition">Pricing</Link></li>
-                                <li><Link href="/help" className="text-gray-400 hover:text-purple-400 transition">Help Center</Link></li>
-                                <li><Link href="/history" className="text-gray-400 hover:text-purple-400 transition">History</Link></li>
+                                <li><Link href="/generate" className="text-gray-400 hover:text-blue-500 transition">Generate</Link></li>
+                                <li><Link href="/pricing" className="text-gray-400 hover:text-blue-500 transition">Pricing</Link></li>
+                                <li><Link href="/help" className="text-gray-400 hover:text-blue-500 transition">Help Center</Link></li>
+                                <li><Link href="/history" className="text-gray-400 hover:text-blue-500 transition">History</Link></li>
                             </ul>
                         </div>
 
@@ -486,9 +486,9 @@ export default function PricingPage() {
                         <div>
                             <h4 className="font-bold text-white mb-4">Legal</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><Link href="/privacy" className="text-gray-400 hover:text-purple-400 transition">Privacy Policy</Link></li>
-                                <li><Link href="/terms" className="text-gray-400 hover:text-purple-400 transition">Terms of Service</Link></li>
-                                <li><Link href="/refund" className="text-gray-400 hover:text-purple-400 transition">Refund Policy</Link></li>
+                                <li><Link href="/privacy" className="text-gray-400 hover:text-blue-500 transition">Privacy Policy</Link></li>
+                                <li><Link href="/terms" className="text-gray-400 hover:text-blue-500 transition">Terms of Service</Link></li>
+                                <li><Link href="/refund" className="text-gray-400 hover:text-blue-500 transition">Refund Policy</Link></li>
                             </ul>
                         </div>
 
@@ -496,9 +496,9 @@ export default function PricingPage() {
                         <div>
                             <h4 className="font-bold text-white mb-4">Contact</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><a href="mailto:support@descriptai.com" className="text-gray-400 hover:text-purple-400 transition">support@descriptai.com</a></li>
-                                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-purple-400 transition">Twitter</a></li>
-                                <li><Link href="/contact" className="text-gray-400 hover:text-purple-400 transition">Contact Form</Link></li>
+                                <li><a href="mailto:support@descriptai.com" className="text-gray-400 hover:text-blue-500 transition">support@descriptai.com</a></li>
+                                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition">Twitter</a></li>
+                                <li><Link href="/contact" className="text-gray-400 hover:text-blue-500 transition">Contact Form</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -511,3 +511,4 @@ export default function PricingPage() {
         </div>
     );
 }
+

@@ -322,3 +322,4 @@ export const AdditionalCategories: Record<string, ProductIntelligence> = {
     platformSpecific: {},
   },
 };
+

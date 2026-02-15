@@ -125,3 +125,4 @@ export const nicheCompetitorTemplates: Record<string, string> = {
 export function getNicheTemplate(niche: string): string {
   return nicheCompetitorTemplates[niche.toLowerCase()] || nicheCompetitorTemplates.software;
 }
+

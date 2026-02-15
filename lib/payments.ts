@@ -56,3 +56,4 @@ export const PRICING = {
     features: ['Everything in Pro', 'LinkedIn B2B', 'Brand Voice Library', 'Custom Keywords', 'White-label']
   }
 };
+

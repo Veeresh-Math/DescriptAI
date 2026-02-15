@@ -569,3 +569,4 @@ export const MoreCategories: Record<string, ProductIntelligence> = {
     }
   }
 };
+

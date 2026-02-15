@@ -688,3 +688,4 @@ export const ProductIntelligenceDB: Record<string, ProductCategory> = {
     keywords: ['camera', 'lens', 'photography', 'professional', 'photo', 'video']
   }
 };
+
