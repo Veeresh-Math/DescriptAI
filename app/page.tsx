@@ -728,22 +728,23 @@ export default function Home() {
               { icon: "8", title: "One-Click Exports", desc: "Export to Shopify, Amazon, or general CSV. Platform-optimized formatting. Upload and sell immediately.", bgClass: "bg-indigo-500/20", textClass: "text-indigo-400" },
               { icon: "9", title: "Personalized Intelligence", desc: "Our AI learns from your most successful descriptions, identifying patterns and keywords that lead to higher conversions.", bgClass: "bg-rose-500/20", textClass: "text-rose-400" },
             ].map((feature, index) => (
-              <TiltCard 
-                key={index} 
-                onClick={() => {}}
-                className={`rounded-2xl bg-white/5 border border-white/10 p-6 hover:border-white/30 transition-all duration-300 cursor-pointer hover:bg-white/10 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] active:scale-95 active:bg-white/20`}
+              <div 
+                key={index}
+                className="rounded-2xl bg-white/5 border border-white/10 p-6 hover:border-white/30 transition-all duration-300 cursor-pointer hover:bg-white/10 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] active:scale-95 active:bg-white/20"
                 style={{
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
                   backdropFilter: 'blur(10px)',
                   WebkitBackdropFilter: 'blur(10px)',
                 }}
               >
-                <div className={`w-10 h-10 rounded-lg ${feature.bgClass} flex items-center justify-center mb-4`}>
-                  <span className={`font-bold ${feature.textClass}`}>{feature.icon}</span>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
-              </TiltCard>
+                <TiltCard className="bg-transparent">
+                  <div className={`w-10 h-10 rounded-lg ${feature.bgClass} flex items-center justify-center mb-4`}>
+                    <span className={`font-bold ${feature.textClass}`}>{feature.icon}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
+                </TiltCard>
+              </div>
             ))}
           </div>
         </div>
