@@ -210,7 +210,7 @@ function ROICalculator() {
             max="500"
             value={products}
             onChange={(e) => setProducts(Number(e.target.value))}
-            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-blue-500"
+            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
           />
         </div>
 
@@ -227,7 +227,7 @@ function ROICalculator() {
             step="0.1"
             value={conversionRate}
             onChange={(e) => setConversionRate(Number(e.target.value))}
-            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-amber-500"
           />
         </div>
 
@@ -244,13 +244,13 @@ function ROICalculator() {
             step="10"
             value={avgOrderValue}
             onChange={(e) => setAvgOrderValue(Number(e.target.value))}
-            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+            className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-amber-500"
           />
         </div>
       </div>
 
       {/* Results */}
-      <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-blue-600/10 to-cyan-500/10 border border-blue-600/20">
+      <div className="mt-8 p-6 rounded-xl bg-gradient-to-r from-amber-600/10 to-amber-500/10 border border-amber-600/20">
         <div className="grid grid-cols-2 gap-4 text-center">
           <div>
             <div className="text-sm text-gray-400 mb-1">Current Revenue</div>
@@ -263,7 +263,7 @@ function ROICalculator() {
         </div>
         <div className="mt-4 pt-4 border-t border-white/10 text-center">
           <div className="text-sm text-gray-400 mb-1">Additional Monthly Revenue</div>
-          <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-cyan-400">
+          <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-amber-400">
             +${additionalRevenue.toLocaleString()}
           </div>
           <div className="text-xs text-gray-500 mt-1">Based on 47% conversion lift</div>
@@ -311,7 +311,7 @@ function InteractiveDemo() {
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
             placeholder="e.g., Wireless Bluetooth Earbuds"
-            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition"
+            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition"
           />
         </div>
 
@@ -325,7 +325,7 @@ function InteractiveDemo() {
                 onClick={() => setPlatform(p)}
                 className={`py-2 px-3 rounded-lg text-sm font-medium transition ${
                   platform === p
-                    ? "bg-gradient-to-r from-blue-700 to-cyan-600 text-white"
+                    ? "bg-gradient-to-r from-amber-700 to-amber-600 text-white"
                     : "bg-white/5 text-gray-400 hover:bg-white/10"
                 }`}
               >
@@ -339,7 +339,7 @@ function InteractiveDemo() {
         <button
           onClick={handleGenerate}
           disabled={isGenerating || !productName.trim()}
-          className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-700 to-cyan-600 text-white font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-700 to-amber-600 text-white font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {isGenerating ? (
             <>
@@ -356,7 +356,7 @@ function InteractiveDemo() {
 
         {/* Generated Description */}
         {generatedDescription && (
-          <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-green-500/10 to-cyan-500/10 border border-green-500/20">
+          <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-green-500/10 to-amber-500/10 border border-green-500/20">
             <div className="flex items-center gap-2 mb-2">
               <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -427,9 +427,9 @@ export default function Home() {
 
       {/* Aurora Background Effect */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-blue-700/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-cyan-600/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-bl from-cyan-600/10 via-transparent to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-amber-700/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-amber-600/20 via-transparent to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/4 right-1/4 w-1/2 h-1/2 bg-gradient-to-bl from-amber-600/10 via-transparent to-transparent rounded-full blur-3xl"></div>
       </div>
 
       {/* Header */}
@@ -439,7 +439,7 @@ export default function Home() {
             <div className="text-2xl font-bold gradient-text-animate">
               DescriptAI
             </div>
-            <span className="text-xs bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-2 py-1 rounded-full font-semibold shadow-lg shadow-blue-600/20">
+            <span className="text-xs bg-gradient-to-r from-amber-600 to-amber-500 text-white px-2 py-1 rounded-full font-semibold shadow-lg shadow-amber-600/20">
               PREMIUM AI ENGINE
             </span>
           </div>
@@ -460,7 +460,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/sign-up"
-                className="bg-gradient-to-r from-blue-700 to-cyan-600 text-white px-6 py-2 rounded-lg hover:opacity-90 transition shadow-lg shadow-blue-600/20 font-semibold"
+                className="bg-gradient-to-r from-amber-700 to-amber-600 text-white px-6 py-2 rounded-lg hover:opacity-90 transition shadow-lg shadow-amber-600/20 font-semibold"
               >
                 Sign Up Free
               </Link>
@@ -507,7 +507,7 @@ export default function Home() {
                 </Link>
                 <Link
                   href="/sign-up"
-                  className="bg-gradient-to-r from-blue-700 to-cyan-600 text-white px-6 py-2 rounded-lg hover:opacity-90 transition shadow-lg shadow-blue-600/20 font-semibold text-center"
+                  className="bg-gradient-to-r from-amber-700 to-amber-600 text-white px-6 py-2 rounded-lg hover:opacity-90 transition shadow-lg shadow-amber-600/20 font-semibold text-center"
                 >
                   Sign Up Free
                 </Link>
@@ -560,7 +560,7 @@ export default function Home() {
               className="group relative px-10 py-5 rounded-xl text-lg font-bold text-white overflow-hidden"
             >
               <div className="absolute inset-0 gradient-border rounded-xl p-[2px]">
-                <div className="absolute inset-[2px] bg-gradient-to-r from-blue-700 to-cyan-600 rounded-xl group-hover:opacity-90 transition"></div>
+                <div className="absolute inset-[2px] bg-gradient-to-r from-amber-700 to-amber-600 rounded-xl group-hover:opacity-90 transition"></div>
               </div>
               <span className="relative z-10">Generate Now (Free)</span>
             </Link>
@@ -601,10 +601,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
-              { value: 2.4, suffix: "M+", label: "Descriptions Generated", color: "text-blue-500" },
-              { value: 3.2, suffix: "s", label: "Avg Generation Time", color: "text-cyan-400" },
-              { value: 47, suffix: "%", label: "Conversion Lift", color: "text-cyan-400" },
-              { value: 1000, suffix: "+", label: "Active Sellers", color: "text-blue-500" },
+              { value: 2.4, suffix: "M+", label: "Descriptions Generated", color: "text-emerald-500" },
+              { value: 3.2, suffix: "s", label: "Avg Generation Time", color: "text-amber-400" },
+              { value: 47, suffix: "%", label: "Conversion Lift", color: "text-amber-400" },
+              { value: 1000, suffix: "+", label: "Active Sellers", color: "text-emerald-500" },
             ].map((stat, index) => (
               <TiltCard key={index} className="rounded-2xl bg-white/5 border border-white/10 p-6 text-center">
                 <div className={`text-4xl font-black mb-2 ${stat.color}`}>
@@ -627,7 +627,7 @@ export default function Home() {
       <section className="py-16 relative z-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent">
               See the Difference
             </h2>
             <p className="text-xl text-gray-400">Real results from real sellers</p>
@@ -652,10 +652,10 @@ export default function Home() {
             </TiltCard>
 
             {/* After */}
-            <TiltCard className="rounded-2xl bg-gradient-to-b from-blue-600/10 to-cyan-500/10 border border-blue-600/30 p-6">
+            <TiltCard className="rounded-2xl bg-gradient-to-b from-amber-600/10 to-amber-500/10 border border-amber-600/30 p-6">
               <div className="flex items-center justify-between mb-4">
                 <span className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-bold">AFTER</span>
-                <span className="text-blue-500 text-sm">DescriptAI Generated</span>
+                <span className="text-emerald-500 text-sm">DescriptAI Generated</span>
               </div>
               <h4 className="font-bold text-white mb-3">Premium Wireless Bluetooth Earbuds</h4>
               <p className="text-gray-300 text-sm leading-relaxed mb-4">
@@ -691,7 +691,7 @@ export default function Home() {
       <section className="py-20 relative z-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent">
               Experience the Power
             </h2>
             <p className="text-xl text-gray-400">Try it now and calculate your potential earnings</p>
@@ -708,7 +708,7 @@ export default function Home() {
       <section id="features" className="py-20 relative z-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent">
               Powerful Features
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
@@ -744,7 +744,7 @@ export default function Home() {
       <section id="how-it-works" className="py-20 relative z-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent">
               How It Works
             </h2>
             <p className="text-xl text-gray-400">3 Simple Steps to Perfect Descriptions</p>
@@ -759,10 +759,10 @@ export default function Home() {
               <div key={index} className="relative">
                 {/* Connector Line */}
                 {index < 2 && (
-                  <div className="hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-blue-600/50 to-transparent z-0" style={{ width: 'calc(100% - 3rem)' }}></div>
+                  <div className="hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-amber-600/50 to-transparent z-0" style={{ width: 'calc(100% - 3rem)' }}></div>
                 )}
                 <TiltCard className="rounded-2xl bg-white/5 border border-white/10 p-8 text-center relative z-10">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-700 to-cyan-600 flex items-center justify-center mx-auto mb-6 text-2xl font-black text-white shadow-lg shadow-blue-600/30">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-amber-700 to-amber-600 flex items-center justify-center mx-auto mb-6 text-2xl font-black text-white shadow-lg shadow-amber-600/30">
                     {item.step}
                   </div>
                   <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
@@ -778,7 +778,7 @@ export default function Home() {
       <section className="py-20 relative z-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent">
               Simple, Transparent Pricing
             </h2>
             <p className="text-xl text-gray-400">Start free, scale as you grow</p>
@@ -803,12 +803,12 @@ export default function Home() {
             {/* Pro Tier */}
             <div className="relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-                <span className="bg-gradient-to-r from-blue-700 to-cyan-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg shadow-blue-600/30">
+                <span className="bg-gradient-to-r from-amber-700 to-amber-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg shadow-amber-600/30">
                   MOST POPULAR
                 </span>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-700/20 via-cyan-500/20 to-blue-700/20 rounded-2xl blur-xl"></div>
-              <TiltCard className="relative rounded-2xl bg-gradient-to-b from-white/10 to-white/5 border-2 border-blue-600/50 p-6 shadow-2xl shadow-blue-600/20">
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-700/20 via-amber-500/20 to-amber-700/20 rounded-2xl blur-xl"></div>
+              <TiltCard className="relative rounded-2xl bg-gradient-to-b from-white/10 to-white/5 border-2 border-amber-600/50 p-6 shadow-2xl shadow-amber-600/20">
                 <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
                 <p className="text-gray-400 text-sm mb-4">For serious sellers</p>
                 <div className="text-3xl font-black text-white mb-4">
@@ -820,7 +820,7 @@ export default function Home() {
                   <li className="flex items-center gap-2"><span className="text-green-400">+</span> Social media kit</li>
                   <li className="flex items-center gap-2"><span className="text-green-400">+</span> SEO heatmap</li>
                 </ul>
-                <Link href="/pricing" className="block w-full py-3 rounded-xl bg-gradient-to-r from-blue-700 to-cyan-600 text-white font-bold text-center hover:opacity-90 transition shadow-lg shadow-blue-600/30">
+                <Link href="/pricing" className="block w-full py-3 rounded-xl bg-gradient-to-r from-amber-700 to-amber-600 text-white font-bold text-center hover:opacity-90 transition shadow-lg shadow-amber-600/30">
                   Upgrade to Pro
                 </Link>
               </TiltCard>
@@ -893,7 +893,7 @@ export default function Home() {
       <section className="py-20 relative z-10">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent">
               Ready to Transform Your Product Descriptions?
             </h2>
             <p className="text-xl text-gray-400 mb-8">
@@ -901,7 +901,7 @@ export default function Home() {
             </p>
             <Link
               href="/generate"
-              className="inline-block px-10 py-5 rounded-xl bg-gradient-to-r from-blue-700 via-cyan-500 to-blue-700 text-white text-lg font-bold hover:opacity-90 transition shadow-2xl shadow-blue-600/30"
+              className="inline-block px-10 py-5 rounded-xl bg-gradient-to-r from-amber-700 via-amber-500 to-amber-700 text-white text-lg font-bold hover:opacity-90 transition shadow-2xl shadow-amber-600/30"
             >
               Start Generating Now - It's Free!
             </Link>
@@ -927,10 +927,10 @@ export default function Home() {
             <div>
               <h4 className="font-bold text-white mb-4">Product</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="/generate" className="text-gray-400 hover:text-blue-500 transition">Generate</Link></li>
-                <li><Link href="/pricing" className="text-gray-400 hover:text-blue-500 transition">Pricing</Link></li>
-                <li><Link href="/help" className="text-gray-400 hover:text-blue-500 transition">Help Center</Link></li>
-                <li><Link href="/history" className="text-gray-400 hover:text-blue-500 transition">History</Link></li>
+                <li><Link href="/generate" className="text-gray-400 hover:text-emerald-500 transition">Generate</Link></li>
+                <li><Link href="/pricing" className="text-gray-400 hover:text-emerald-500 transition">Pricing</Link></li>
+                <li><Link href="/help" className="text-gray-400 hover:text-emerald-500 transition">Help Center</Link></li>
+                <li><Link href="/history" className="text-gray-400 hover:text-emerald-500 transition">History</Link></li>
               </ul>
             </div>
 
@@ -938,9 +938,9 @@ export default function Home() {
             <div>
               <h4 className="font-bold text-white mb-4">Legal</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="/privacy" className="text-gray-400 hover:text-blue-500 transition">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="text-gray-400 hover:text-blue-500 transition">Terms of Service</Link></li>
-                <li><Link href="/refund" className="text-gray-400 hover:text-blue-500 transition">Refund Policy</Link></li>
+                <li><Link href="/privacy" className="text-gray-400 hover:text-emerald-500 transition">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="text-gray-400 hover:text-emerald-500 transition">Terms of Service</Link></li>
+                <li><Link href="/refund" className="text-gray-400 hover:text-emerald-500 transition">Refund Policy</Link></li>
               </ul>
             </div>
 
@@ -948,9 +948,9 @@ export default function Home() {
             <div>
               <h4 className="font-bold text-white mb-4">Contact</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="mailto:support@descriptai.com" className="text-gray-400 hover:text-blue-500 transition">support@descriptai.com</a></li>
-                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition">Twitter</a></li>
-                <li><Link href="/contact" className="text-gray-400 hover:text-blue-500 transition">Contact Form</Link></li>
+                <li><a href="mailto:support@descriptai.com" className="text-gray-400 hover:text-emerald-500 transition">support@descriptai.com</a></li>
+                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-emerald-500 transition">Twitter</a></li>
+                <li><Link href="/contact" className="text-gray-400 hover:text-emerald-500 transition">Contact Form</Link></li>
               </ul>
             </div>
           </div>

@@ -130,29 +130,29 @@ export default function HistoryPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-teal-100">
+        <div className="min-h-screen bg-gradient-to-br from-amber-100 via-white to-emerald-100">
             {/* Header */}
-            <header className="container mx-auto px-4 py-6 backdrop-blur-sm bg-white/50 sticky top-0 z-50 border-b border-blue-100">
+            <header className="container mx-auto px-4 py-6 backdrop-blur-sm bg-white/50 sticky top-0 z-50 border-b border-amber-100">
                 <nav className="flex items-center justify-between">
                     <Link href="/" className="flex items-center space-x-2">
                         <div className="text-2xl font-bold gradient-text">
                             ⚡ DescriptAI
                         </div>
-                        <span className="text-xs bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-2 py-1 rounded-full font-semibold shadow-sm">
+                        <span className="text-xs bg-gradient-to-r from-amber-600 to-amber-500 text-white px-2 py-1 rounded-full font-semibold shadow-sm">
                             PREMIUM AI ENGINE
                         </span>
                     </Link>
                     <div className="hidden md:flex items-center space-x-6">
-                        <Link href="/" className="text-gray-700 hover:text-blue-700 font-medium transition">
+                        <Link href="/" className="text-gray-700 hover:text-amber-700 font-medium transition">
                             Home
                         </Link>
-                        <Link href="/pricing" className="text-gray-700 hover:text-blue-700 font-bold transition">
+                        <Link href="/pricing" className="text-gray-700 hover:text-amber-700 font-bold transition">
                             ⭐ Pricing
                         </Link>
-                        <Link href="/help" className="text-gray-700 hover:text-blue-700 font-medium transition">
+                        <Link href="/help" className="text-gray-700 hover:text-amber-700 font-medium transition">
                             Help
                         </Link>
-                        <Link href="/generate" className="text-gray-700 hover:text-blue-700 font-medium transition">
+                        <Link href="/generate" className="text-gray-700 hover:text-amber-700 font-medium transition">
                             Dashboard
                         </Link>
                     </div>
@@ -169,7 +169,7 @@ export default function HistoryPage() {
                         <div className="flex items-center gap-2 mt-4 md:mt-0">
                             <span className="text-sm text-gray-700">{filteredHistory.length} items</span>
                             {selectedItems.length > 0 && (
-                                <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                                <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
                                     {selectedItems.length} selected
                                 </span>
                             )}
@@ -177,7 +177,7 @@ export default function HistoryPage() {
                     </div>
 
                     {/* Search and Filter Bar */}
-                    <div className="bg-white rounded-2xl shadow-lg p-4 mb-8 border border-blue-100">
+                    <div className="bg-white rounded-2xl shadow-lg p-4 mb-8 border border-amber-100">
                         <div className="flex flex-col md:flex-row gap-4">
                             {/* Search */}
                             <div className="flex-1 relative">
@@ -186,7 +186,7 @@ export default function HistoryPage() {
                                     placeholder="Search by product name or features..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 outline-none transition"
+                                    className="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 focus:border-amber-600 focus:ring-2 focus:ring-amber-200 outline-none transition"
                                 />
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -197,7 +197,7 @@ export default function HistoryPage() {
                             <select
                                 value={dateFilter}
                                 onChange={(e) => setDateFilter(e.target.value)}
-                                className="px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 outline-none transition"
+                                className="px-4 py-3 rounded-xl border border-gray-200 focus:border-amber-600 focus:ring-2 focus:ring-amber-200 outline-none transition"
                             >
                                 <option value="all">All Time</option>
                                 <option value="today">Today</option>
@@ -218,14 +218,14 @@ export default function HistoryPage() {
                                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 z-[60] py-2 overflow-hidden">
                                         <button 
                                             onClick={() => handleExport('general')} 
-                                            className="w-full text-left px-4 py-2 text-sm font-bold text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition"
+                                            className="w-full text-left px-4 py-2 text-sm font-bold text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition"
                                         >
                                             General View
                                         </button>
                                         <button
                                             disabled={!isPremium}
                                             onClick={() => isPremium && handleExport('shopify')}
-                                            className={`w-full text-left px-4 py-2 text-sm font-bold transition flex items-center justify-between ${isPremium ? "text-gray-700 hover:bg-blue-50 hover:text-blue-700" : "text-gray-300 cursor-not-allowed"}`}
+                                            className={`w-full text-left px-4 py-2 text-sm font-bold transition flex items-center justify-between ${isPremium ? "text-gray-700 hover:bg-amber-50 hover:text-amber-700" : "text-gray-300 cursor-not-allowed"}`}
                                         >
                                             <span>Shopify Import</span>
                                             {!isPremium && <span>🔒</span>}
@@ -233,7 +233,7 @@ export default function HistoryPage() {
                                         <button
                                             disabled={!isPremium}
                                             onClick={() => isPremium && handleExport('amazon')}
-                                            className={`w-full text-left px-4 py-2 text-sm font-bold transition flex items-center justify-between ${isPremium ? "text-gray-700 hover:bg-blue-50 hover:text-blue-700" : "text-gray-300 cursor-not-allowed"}`}
+                                            className={`w-full text-left px-4 py-2 text-sm font-bold transition flex items-center justify-between ${isPremium ? "text-gray-700 hover:bg-amber-50 hover:text-amber-700" : "text-gray-300 cursor-not-allowed"}`}
                                         >
                                             <span>Amazon Sellers</span>
                                             {!isPremium && <span>🔒</span>}
@@ -261,7 +261,7 @@ export default function HistoryPage() {
                             <p className="text-gray-800 mb-6">Start generating amazing product descriptions to see them here.</p>
                             <Link
                                 href="/generate"
-                                className="bg-blue-700 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-800 transition"
+                                className="bg-amber-700 text-white px-8 py-3 rounded-xl font-bold hover:bg-amber-800 transition"
                             >
                                 Start Generating 
                             </Link>
@@ -273,7 +273,7 @@ export default function HistoryPage() {
                             <p className="text-gray-800 mb-6">Try adjusting your search or filter criteria.</p>
                             <button
                                 onClick={() => { setSearchQuery(""); setDateFilter("all"); }}
-                                className="bg-blue-700 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-800 transition"
+                                className="bg-amber-700 text-white px-8 py-3 rounded-xl font-bold hover:bg-amber-800 transition"
                             >
                                 Clear Filters
                             </button>
@@ -286,7 +286,7 @@ export default function HistoryPage() {
                                     type="checkbox"
                                     checked={selectedItems.length === filteredHistory.length && filteredHistory.length > 0}
                                     onChange={selectAll}
-                                    className="w-5 h-5 rounded border-gray-300 text-blue-700 focus:ring-blue-600"
+                                    className="w-5 h-5 rounded border-gray-300 text-amber-700 focus:ring-amber-600"
                                 />
                                 <span className="text-sm text-gray-800">Select all</span>
                             </div>
@@ -294,7 +294,7 @@ export default function HistoryPage() {
                             {/* History List */}
                             <div className="space-y-6">
                                 {filteredHistory.map((item, index) => (
-                                    <div key={item.id || index} className="bg-white rounded-xl shadow-md border border-blue-50 hover:shadow-lg transition overflow-hidden">
+                                    <div key={item.id || index} className="bg-white rounded-xl shadow-md border border-amber-50 hover:shadow-lg transition overflow-hidden">
                                         <div className="p-6">
                                             <div className="flex justify-between items-start mb-4">
                                                 <div className="flex items-start gap-3">
@@ -302,7 +302,7 @@ export default function HistoryPage() {
                                                         type="checkbox"
                                                         checked={selectedItems.includes(item.id)}
                                                         onChange={() => toggleSelect(item.id)}
-                                                        className="w-5 h-5 mt-1 rounded border-gray-300 text-blue-700 focus:ring-blue-600"
+                                                        className="w-5 h-5 mt-1 rounded border-gray-300 text-amber-700 focus:ring-amber-600"
                                                     />
                                                     <div>
                                                         <h3 className="text-xl font-bold text-gray-900">{item.productName}</h3>
@@ -315,7 +315,7 @@ export default function HistoryPage() {
                                                 <div className="flex items-center gap-2">
                                                     <button
                                                         onClick={() => copyToClipboard(item.variants.join('\n\n---\n\n'))}
-                                                        className="text-gray-800 hover:text-blue-700 transition p-2"
+                                                        className="text-gray-800 hover:text-amber-700 transition p-2"
                                                         title="Copy all variants"
                                                     >
                                                         📋
@@ -338,10 +338,10 @@ export default function HistoryPage() {
                                                 {item.variants.map((variant, vIndex) => (
                                                     <div key={vIndex} className="bg-gray-50 p-4 rounded-xl text-sm text-gray-700 h-48 overflow-y-auto border border-gray-100 leading-relaxed">
                                                         <div className="flex items-center justify-between mb-2">
-                                                            <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Variant {vIndex + 1}</span>
+                                                            <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">Variant {vIndex + 1}</span>
                                                             <button
                                                                 onClick={() => copyToClipboard(variant)}
-                                                                className="text-gray-800 hover:text-blue-700 text-xs"
+                                                                className="text-gray-800 hover:text-amber-700 text-xs"
                                                             >
                                                                 Copy
                                                             </button>
@@ -370,26 +370,26 @@ export default function HistoryPage() {
                         <div>
                             <h4 className="text-white font-bold mb-4">Product</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><Link href="/pricing" className="hover:text-blue-500 transition">Pricing</Link></li>
-                                <li><Link href="/generate" className="hover:text-blue-500 transition">Dashboard</Link></li>
-                                <li><Link href="/history" className="hover:text-blue-500 transition">History</Link></li>
-                                <li><Link href="/help" className="hover:text-blue-500 transition">Help Center</Link></li>
+                                <li><Link href="/pricing" className="hover:text-emerald-500 transition">Pricing</Link></li>
+                                <li><Link href="/generate" className="hover:text-emerald-500 transition">Dashboard</Link></li>
+                                <li><Link href="/history" className="hover:text-emerald-500 transition">History</Link></li>
+                                <li><Link href="/help" className="hover:text-emerald-500 transition">Help Center</Link></li>
                             </ul>
                         </div>
                         <div>
                             <h4 className="text-white font-bold mb-4">Legal</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><Link href="/privacy" className="hover:text-blue-500 transition">Privacy Policy</Link></li>
-                                <li><Link href="/terms" className="hover:text-blue-500 transition">Terms of Service</Link></li>
-                                <li><Link href="/refund" className="hover:text-blue-500 transition">Refund Policy</Link></li>
+                                <li><Link href="/privacy" className="hover:text-emerald-500 transition">Privacy Policy</Link></li>
+                                <li><Link href="/terms" className="hover:text-emerald-500 transition">Terms of Service</Link></li>
+                                <li><Link href="/refund" className="hover:text-emerald-500 transition">Refund Policy</Link></li>
                             </ul>
                         </div>
                         <div>
                             <h4 className="text-white font-bold mb-4">Contact</h4>
                             <ul className="space-y-2 text-sm">
-                                <li><a href="mailto:support@descriptai.com" className="hover:text-blue-500 transition">support@descriptai.com</a></li>
-                                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">Twitter</a></li>
-                                <li><a href="https://linkedin.com/company/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition">LinkedIn</a></li>
+                                <li><a href="mailto:support@descriptai.com" className="hover:text-emerald-500 transition">support@descriptai.com</a></li>
+                                <li><a href="https://twitter.com/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition">Twitter</a></li>
+                                <li><a href="https://linkedin.com/company/descriptai" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-500 transition">LinkedIn</a></li>
                             </ul>
                         </div>
                     </div>

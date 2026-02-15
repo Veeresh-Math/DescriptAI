@@ -134,17 +134,17 @@ const VariantCard = ({ variant, index, copyToClipboard, copiedIndex, tier, custo
     // seoScore is already calculated above via useMemo
 
     return (
-        <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-blue-100 transition group">
+        <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-amber-100 transition group">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                     <h3 className="text-lg font-bold text-gray-900">Variant {index + 1}</h3>
-                    <div className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${seoScore > 80 ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"} flex items-center gap-1`}>
+                    <div className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${seoScore > 80 ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700"} flex items-center gap-1`}>
                         {seoScore > 90 ? "💎" : "✨"} SEO Score: {seoScore}
                     </div>
                 </div>
                 <button
                     onClick={() => copyToClipboard(currentContent, index)}
-                    className={`px-4 py-2 rounded-lg font-semibold transition ${copiedIndex === index ? "bg-green-500 text-white" : "bg-blue-100 text-blue-800 hover:bg-blue-200"}`}
+                    className={`px-4 py-2 rounded-lg font-semibold transition ${copiedIndex === index ? "bg-green-500 text-white" : "bg-amber-100 text-amber-800 hover:bg-amber-200"}`}
                 >
                     {copiedIndex === index ? "✓ Copied!" : "📋 Copy"}
                 </button>
@@ -156,7 +156,7 @@ const VariantCard = ({ variant, index, copyToClipboard, copiedIndex, tier, custo
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`px-3 py-1 text-sm font-bold whitespace-nowrap transition relative ${activeTab === tab ? "text-blue-700 border-b-2 border-blue-700" : "text-gray-800 hover:text-gray-800"}`}
+                            className={`px-3 py-1 text-sm font-bold whitespace-nowrap transition relative ${activeTab === tab ? "text-amber-700 border-b-2 border-amber-700" : "text-gray-800 hover:text-gray-800"}`}
                         >
                             {tab !== 'Description' && !isPro && <span className="mr-1">🔒</span>}
                             {tab}
@@ -167,11 +167,11 @@ const VariantCard = ({ variant, index, copyToClipboard, copiedIndex, tier, custo
 
             <div className="relative min-h-[200px]">
                 {activeTab !== 'Description' && !isPro ? (
-                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/60 backdrop-blur-md rounded-xl p-6 text-center border border-blue-200">
+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/60 backdrop-blur-md rounded-xl p-6 text-center border border-amber-200">
                         <div className="text-4xl mb-2">🚀</div>
                         <h4 className="font-bold text-gray-900 uppercase tracking-tighter">Social Kit Locked</h4>
                         <p className="text-xs text-gray-700 mb-4">Upgrade to Pro to instantly generate social media captions!</p>
-                        <Link href="/pricing" className="bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-lg">Upgrade Now</Link>
+                        <Link href="/pricing" className="bg-amber-700 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-lg">Upgrade Now</Link>
                     </div>
                 ) : (
                     <>
@@ -179,7 +179,7 @@ const VariantCard = ({ variant, index, copyToClipboard, copiedIndex, tier, custo
                             <div className="absolute top-0 right-0 z-20">
                                 <Link
                                     href="/pricing"
-                                    className="bg-white/90 backdrop-blur-sm border border-blue-100 shadow-sm px-2 py-1 rounded-lg text-[9px] font-bold text-blue-700 flex items-center gap-1 hover:bg-blue-50 transition"
+                                    className="bg-white/90 backdrop-blur-sm border border-amber-100 shadow-sm px-2 py-1 rounded-lg text-[9px] font-bold text-amber-700 flex items-center gap-1 hover:bg-amber-50 transition"
                                 >
                                     🔒 UNLOCK EXPERT FEEDBACK
                                 </Link>
@@ -190,12 +190,12 @@ const VariantCard = ({ variant, index, copyToClipboard, copiedIndex, tier, custo
                                 dangerouslySetInnerHTML={{ __html: highlightKeywords(currentContent) }} />
                         </div>
                         {!isPro && (
-                            <div className="mt-4 p-3 bg-blue-50 rounded-xl border border-blue-100 flex items-center justify-between">
+                            <div className="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-100 flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                     <span className="text-lg">💡</span>
-                                    <p className="text-[10px] text-blue-700 font-bold leading-tight">Your SEO Score is {seoScore}. <br />Unlock the <span className="underline">Keyword Heatmap</span> to see how to hit 99+.</p>
+                                    <p className="text-[10px] text-amber-700 font-bold leading-tight">Your SEO Score is {seoScore}. <br />Unlock the <span className="underline">Keyword Heatmap</span> to see how to hit 99+.</p>
                                 </div>
-                                <Link href="/pricing" className="bg-slate-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase shadow-md hover:bg-blue-700 transition">Show Me</Link>
+                                <Link href="/pricing" className="bg-slate-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase shadow-md hover:bg-amber-700 transition">Show Me</Link>
                             </div>
                         )}
                     </>
@@ -244,14 +244,14 @@ const OnboardingModal = ({ isOpen, onClose, currentStep, onNext, onSkip }: {
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl border border-blue-100">
+            <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl border border-amber-100">
                 <div className="text-center">
                     <div className="text-6xl mb-4">{step.icon}</div>
                     <h2 className="text-2xl font-bold text-gray-900 mb-2">{step.title}</h2>
                     <p className="text-gray-800 mb-4">{step.description}</p>
                     {step.tip && (
-                        <div className="bg-blue-50 rounded-xl p-3 mb-4 border border-blue-100">
-                            <p className="text-sm text-blue-800">{step.tip}</p>
+                        <div className="bg-amber-50 rounded-xl p-3 mb-4 border border-amber-100">
+                            <p className="text-sm text-amber-800">{step.tip}</p>
                         </div>
                     )}
                     
@@ -261,8 +261,8 @@ const OnboardingModal = ({ isOpen, onClose, currentStep, onNext, onSkip }: {
                             <div 
                                 key={i} 
                                 className={`w-2 h-2 rounded-full transition ${
-                                    i === currentStep ? "bg-blue-700 w-6" : 
-                                    i < currentStep ? "bg-blue-500" : "bg-gray-300"
+                                    i === currentStep ? "bg-amber-700 w-6" : 
+                                    i < currentStep ? "bg-emerald-500" : "bg-gray-300"
                                 }`} 
                             />
                         ))}
@@ -277,7 +277,7 @@ const OnboardingModal = ({ isOpen, onClose, currentStep, onNext, onSkip }: {
                         </button>
                         <button
                             onClick={isLastStep ? onClose : onNext}
-                            className="flex-1 py-3 rounded-xl font-bold bg-gradient-to-r from-blue-700 to-amber-600 text-white hover:shadow-lg transition"
+                            className="flex-1 py-3 rounded-xl font-bold bg-gradient-to-r from-amber-700 to-amber-600 text-white hover:shadow-lg transition"
                         >
                             {isLastStep ? "Start Creating!" : "Next →"}
                         </button>
@@ -510,16 +510,16 @@ export default function GeneratePage() {
             />
             
             {/* Mobile-First Header */}
-            <header className="bg-white border-b border-blue-100 py-3 px-4 sticky top-0 z-50">
+            <header className="bg-white border-b border-amber-100 py-3 px-4 sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
                     <Link href="/" className="text-lg font-black gradient-text">⚡ DescriptAI</Link>
                     <div className="flex gap-3 items-center">
-                        <Link href="/help" className="text-xs font-bold text-gray-800 hover:text-blue-700 transition p-2">Help</Link>
-                        <Link href="/history" className="text-xs font-bold text-gray-800 hover:text-blue-700 transition p-2">History</Link>
-                        <Link href="/pricing" className="text-xs font-bold text-gray-800 hover:text-blue-700 transition p-2">⭐ Pricing</Link>
+                        <Link href="/help" className="text-xs font-bold text-gray-800 hover:text-amber-700 transition p-2">Help</Link>
+                        <Link href="/history" className="text-xs font-bold text-gray-800 hover:text-amber-700 transition p-2">History</Link>
+                        <Link href="/pricing" className="text-xs font-bold text-gray-800 hover:text-amber-700 transition p-2">⭐ Pricing</Link>
                         {userData && (
                             <div className="hidden sm:flex gap-1 text-[9px] font-black">
-                                <span className={`px-2 py-1 rounded-full ${userData.shortCredits > 0 ? "bg-blue-100 text-blue-800" : "bg-red-100 text-red-600"}`} title="Short Credits">S:{userData.shortCredits}</span>
+                                <span className={`px-2 py-1 rounded-full ${userData.shortCredits > 0 ? "bg-amber-100 text-amber-800" : "bg-red-100 text-red-600"}`} title="Short Credits">S:{userData.shortCredits}</span>
                                 <span className={`px-2 py-1 rounded-full ${userData.mediumCredits > 0 ? "bg-teal-100 text-teal-700" : "bg-red-100 text-red-600"}`} title="Medium Credits">M:{userData.mediumCredits}</span>
                             </div>
                         )}
@@ -530,19 +530,19 @@ export default function GeneratePage() {
 
             <main className="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-6 grid lg:grid-cols-2 gap-6">
 
-                <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-8 h-fit border border-blue-50">
-                    <h1 className="text-2xl sm:text-3xl font-black mb-4 sm:mb-6 tracking-tight">Generate <span className="text-blue-700">Pure Copy</span></h1>
+                <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-8 h-fit border border-amber-50">
+                    <h1 className="text-2xl sm:text-3xl font-black mb-4 sm:mb-6 tracking-tight">Generate <span className="text-amber-700">Pure Copy</span></h1>
 
                     {error && <div className="mb-4 bg-red-50 text-red-700 p-4 rounded-xl text-sm font-bold border border-red-200">{error}</div>}
 
                     <div className="space-y-6">
                         <div>
                             <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Product Name</label>
-                            <input value={productName} onChange={e => setProductName(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="e.g. Arabica Coffee Beans" />
+                            <input value={productName} onChange={e => setProductName(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-amber-600 focus:ring-2 focus:ring-amber-200 outline-none transition" placeholder="e.g. Arabica Coffee Beans" />
                         </div>
                         <div>
                             <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Key Features</label>
-                            <textarea value={features} onChange={e => setFeatures(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 outline-none transition h-32" placeholder="e.g. Organic, strong aroma, fair trade..." />
+                            <textarea value={features} onChange={e => setFeatures(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-amber-600 focus:ring-2 focus:ring-amber-200 outline-none transition h-32" placeholder="e.g. Organic, strong aroma, fair trade..." />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
@@ -562,7 +562,7 @@ export default function GeneratePage() {
                                             <button
                                                 key={l.id}
                                                 onClick={() => !isLocked && setLength(l.id)}
-                                                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition ${length === l.id ? "bg-blue-700 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
+                                                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition ${length === l.id ? "bg-amber-700 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
                                             >
                                                 {isLocked && '🔒 '}{l.label}
                                             </button>
@@ -584,7 +584,7 @@ export default function GeneratePage() {
                                             <button
                                                 key={t.id}
                                                 onClick={() => !isLocked && setTone(t.id)}
-                                                className={`flex-1 py-1.5 rounded-lg text-[10px] font-black transition ${tone === t.id ? "bg-blue-700 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
+                                                className={`flex-1 py-1.5 rounded-lg text-[10px] font-black transition ${tone === t.id ? "bg-amber-700 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
                                             >
                                                 {isLocked && '🔒 '}{t.label}
                                             </button>
@@ -600,7 +600,7 @@ export default function GeneratePage() {
                             
                             {/* Social Media Mode - Pro & Agency */}
                             <div className="mb-3">
-                                <p className="text-[10px] font-bold text-blue-700 uppercase mb-2">📱 Social Media Mode {isPro && <span className="text-blue-500">(Pro)</span>}{isAgency && <span className="text-teal-400">(Agency)</span>}</p>
+                                <p className="text-[10px] font-bold text-amber-700 uppercase mb-2">📱 Social Media Mode {isPro && <span className="text-emerald-500">(Pro)</span>}{isAgency && <span className="text-teal-400">(Agency)</span>}</p>
                                 <div className="grid grid-cols-5 gap-2">
                                     {[
                                         { id: 'tiktok', label: '🎵 TikTok', desc: 'Viral 80w', tier: 'pro' },
@@ -615,10 +615,10 @@ export default function GeneratePage() {
                                                 key={p.id}
                                                 onClick={() => !isLocked && setPlatform(p.id)}
                                                 disabled={isLocked}
-                                                className={`flex flex-col items-center p-2 rounded-xl border-2 transition relative ${platform === p.id ? "border-blue-700 bg-blue-50" : "border-gray-100 hover:border-blue-200"} ${isLocked ? "cursor-not-allowed opacity-60 bg-gray-50" : ""}`}
+                                                className={`flex flex-col items-center p-2 rounded-xl border-2 transition relative ${platform === p.id ? "border-amber-700 bg-amber-50" : "border-gray-100 hover:border-amber-200"} ${isLocked ? "cursor-not-allowed opacity-60 bg-gray-50" : ""}`}
                                             >
                                                 {isLocked && (
-                                                    <div className={`absolute -top-1 -right-1 text-white text-[7px] font-black px-1 py-0.5 rounded-full shadow-sm ${p.tier === 'agency' ? 'bg-teal-600' : 'bg-blue-700'}`}>
+                                                    <div className={`absolute -top-1 -right-1 text-white text-[7px] font-black px-1 py-0.5 rounded-full shadow-sm ${p.tier === 'agency' ? 'bg-teal-600' : 'bg-amber-700'}`}>
                                                         {p.tier === 'agency' ? 'AGENCY' : 'PRO'}
                                                     </div>
                                                 )}
@@ -647,10 +647,10 @@ export default function GeneratePage() {
                                                 key={p.id}
                                                 onClick={() => !isLocked && setPlatform(p.id)}
                                                 disabled={isLocked}
-                                                className={`flex flex-col items-center p-3 rounded-xl border-2 transition relative ${platform === p.id ? "border-blue-700 bg-blue-50" : "border-gray-100 hover:border-blue-200"} ${isLocked ? "cursor-not-allowed opacity-60 bg-gray-50" : ""}`}
+                                                className={`flex flex-col items-center p-3 rounded-xl border-2 transition relative ${platform === p.id ? "border-amber-700 bg-amber-50" : "border-gray-100 hover:border-amber-200"} ${isLocked ? "cursor-not-allowed opacity-60 bg-gray-50" : ""}`}
                                             >
                                                 {isLocked && (
-                                                    <div className={`absolute -top-1 -right-1 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full shadow-sm ${p.tier === 'agency' ? 'bg-teal-600' : 'bg-blue-700'}`}>
+                                                    <div className={`absolute -top-1 -right-1 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full shadow-sm ${p.tier === 'agency' ? 'bg-teal-600' : 'bg-amber-700'}`}>
                                                         {p.tier === 'agency' ? 'AGENCY' : 'PRO'}
                                                     </div>
                                                 )}
@@ -663,10 +663,10 @@ export default function GeneratePage() {
                                 </div>
                             </div>
                             {!isPremium && (
-                                <div className="mt-2 flex items-center gap-2 text-[10px] text-blue-700 font-bold bg-blue-50 px-3 py-2 rounded-lg border border-blue-100">
+                                <div className="mt-2 flex items-center gap-2 text-[10px] text-amber-700 font-bold bg-amber-50 px-3 py-2 rounded-lg border border-amber-100">
                                     <span>🔒</span>
                                     <span>Upgrade to Pro for Social Media + All E-Commerce platforms!</span>
-                                    <Link href="/pricing" className="ml-auto text-[9px] bg-blue-700 text-white px-2 py-1 rounded hover:bg-blue-800 transition">
+                                    <Link href="/pricing" className="ml-auto text-[9px] bg-amber-700 text-white px-2 py-1 rounded hover:bg-amber-800 transition">
                                         Upgrade
                                     </Link>
                                 </div>
@@ -696,7 +696,7 @@ export default function GeneratePage() {
                                         <button
                                             key={p.id}
                                             onClick={() => !isLocked && setProfession(p.id)}
-                                            className={`px-4 py-2 rounded-lg text-xs font-bold transition ${profession === p.id ? "bg-blue-700 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
+                                            className={`px-4 py-2 rounded-lg text-xs font-bold transition ${profession === p.id ? "bg-amber-700 text-white" : "bg-gray-100 text-gray-700 hover:bg-gray-200"} ${isLocked ? "cursor-not-allowed opacity-70" : ""}`}
                                         >
                                             {isLocked && <span className="mr-1">{p.tier === 'agency' ? '👑' : '🔒'}</span>}{p.label}
                                         </button>
@@ -708,7 +708,7 @@ export default function GeneratePage() {
                         {/* Agency Tier - Exclusive Inputs */}
 
                         {userData?.tier === 'agency' && (
-                            <div className="space-y-6 pt-6 border-t border-blue-100">
+                            <div className="space-y-6 pt-6 border-t border-amber-100">
                                 <div className="flex items-center gap-2">
                                     <span className="text-xl">🏆</span>
                                     <h3 className="font-black text-purple-900 uppercase text-xs tracking-widest">Agency Command Suite</h3>
@@ -783,7 +783,7 @@ export default function GeneratePage() {
                             </div>
                         )}
                         {/* Desktop Generate Button */}
-                        <button onClick={handleGenerate} disabled={isGenerating} className="hidden sm:block w-full bg-gradient-to-r from-blue-700 to-teal-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:scale-[1.02] transition disabled:opacity-50">
+                        <button onClick={handleGenerate} disabled={isGenerating} className="hidden sm:block w-full bg-gradient-to-r from-amber-700 to-emerald-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl hover:scale-[1.02] transition disabled:opacity-50">
                             {isGenerating ? "Waking up AI..." : "⚡ Generate 3 Variants"}
                         </button>
 
@@ -792,18 +792,18 @@ export default function GeneratePage() {
 
                 <div>
                     {!isPremium && (
-                        <div className="bg-gradient-to-br from-blue-700 to-indigo-700 rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-6 text-white shadow-2xl relative overflow-hidden group">
+                        <div className="bg-gradient-to-br from-amber-700 to-indigo-700 rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-6 text-white shadow-2xl relative overflow-hidden group">
                             <div className="absolute top-0 right-0 p-2 sm:p-4 opacity-10 group-hover:scale-110 transition duration-500">
                                 <span className="text-6xl sm:text-8xl">⭐</span>
                             </div>
                             <h3 className="text-lg sm:text-xl font-black mb-2 relative z-10">Go Pro</h3>
-                            <p className="text-blue-100 text-xs mb-3 sm:mb-4 relative z-10 leading-relaxed">Unlock Social Kits, SEO Heatmaps, and 500-word deep content.</p>
-                            <Link href="/pricing" className="bg-white text-blue-800 px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-black text-xs sm:text-sm inline-block shadow-lg hover:bg-blue-50 transition relative z-10">✨ UPGRADE TO PRO</Link>
+                            <p className="text-amber-100 text-xs mb-3 sm:mb-4 relative z-10 leading-relaxed">Unlock Social Kits, SEO Heatmaps, and 500-word deep content.</p>
+                            <Link href="/pricing" className="bg-white text-amber-800 px-4 sm:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl font-black text-xs sm:text-sm inline-block shadow-lg hover:bg-amber-50 transition relative z-10">✨ UPGRADE TO PRO</Link>
                         </div>
                     )}
 
                     {isPro && !isAgency && (
-                        <div className="bg-gradient-to-br from-teal-600 to-emerald-700 rounded-3xl p-6 mb-8 text-white shadow-2xl relative overflow-hidden group">
+                        <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-3xl p-6 mb-8 text-white shadow-2xl relative overflow-hidden group">
                             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition duration-500">
                                 <span className="text-8xl">👑</span>
                             </div>
@@ -814,7 +814,7 @@ export default function GeneratePage() {
                     )}
 
 
-                    <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-blue-100 shadow-sm mb-6">
+                    <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-amber-100 shadow-sm mb-6">
                         <div className="flex items-center gap-2 mb-3 sm:mb-4">
                             <span className="text-xl sm:text-2xl">🎁</span>
                             <h3 className="font-black text-xs text-purple-900 uppercase tracking-widest">Invite & Earn</h3>
@@ -825,7 +825,7 @@ export default function GeneratePage() {
                         </p>
 
                         <div className="bg-gray-50 p-2 sm:p-3 rounded-xl border border-gray-100 flex items-center justify-between mb-3 sm:mb-4">
-                            <code className="text-[9px] sm:text-[10px] font-mono text-blue-700 truncate mr-2 max-w-[200px] sm:max-w-none">
+                            <code className="text-[9px] sm:text-[10px] font-mono text-amber-700 truncate mr-2 max-w-[200px] sm:max-w-none">
                                 {`dai.sh/${userData?.referralCode || '...'}`}
                             </code>
                             <button
@@ -833,16 +833,16 @@ export default function GeneratePage() {
                                     navigator.clipboard.writeText(`https://descriptai.com/ref=${userData?.referralCode}`);
                                     alert("Link copied to clipboard!");
                                 }}
-                                className="bg-blue-100 text-blue-800 p-1.5 sm:p-2 rounded-lg hover:bg-blue-200 transition text-sm"
+                                className="bg-amber-100 text-amber-800 p-1.5 sm:p-2 rounded-lg hover:bg-amber-200 transition text-sm"
                             >
                                 📋
                             </button>
                         </div>
 
                         <div className="grid grid-cols-2 gap-2">
-                            <div className="bg-blue-50 p-2 rounded-xl text-center">
-                                <p className="text-[9px] sm:text-[10px] text-blue-500 font-bold uppercase">Invites</p>
-                                <p className="text-base sm:text-lg font-black text-blue-800">0</p>
+                            <div className="bg-amber-50 p-2 rounded-xl text-center">
+                                <p className="text-[9px] sm:text-[10px] text-emerald-500 font-bold uppercase">Invites</p>
+                                <p className="text-base sm:text-lg font-black text-amber-800">0</p>
                             </div>
                             <div className="bg-teal-50 p-2 rounded-xl text-center">
                                 <p className="text-[9px] sm:text-[10px] text-teal-400 font-bold uppercase">Earned</p>
@@ -854,10 +854,10 @@ export default function GeneratePage() {
 
                     <div ref={resultsRef} className="space-y-6">
                         {variants.length === 0 ? (
-                            <div className="bg-blue-50 rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-center border-2 border-dashed border-blue-200 h-full flex flex-col justify-center min-h-[200px]">
+                            <div className="bg-amber-50 rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-center border-2 border-dashed border-amber-200 h-full flex flex-col justify-center min-h-[200px]">
                                 <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 opacity-50">✍️</div>
                                 <h3 className="text-lg sm:text-xl font-bold text-purple-900">Your variants will appear here</h3>
-                                <p className="text-blue-500 text-xs sm:text-sm mt-2">Enter product details & tap Generate</p>
+                                <p className="text-emerald-500 text-xs sm:text-sm mt-2">Enter product details & tap Generate</p>
                             </div>
                         ) : (
 
@@ -873,12 +873,12 @@ export default function GeneratePage() {
                                         </button>
                                         {isExporting && (
                                             <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 z-[60] py-2 overflow-hidden">
-                                                <button onClick={() => handleExport('general')} className="w-full text-left px-4 py-2 text-[10px] font-bold text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition">📋 General View</button>
+                                                <button onClick={() => handleExport('general')} className="w-full text-left px-4 py-2 text-[10px] font-bold text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition">📋 General View</button>
 
                                                 <button
                                                     disabled={!isPremium}
                                                     onClick={() => isPremium && handleExport('shopify')}
-                                                    className={`w-full text-left px-4 py-2 text-[10px] font-bold transition flex items-center justify-between ${isPremium ? "text-gray-700 hover:bg-blue-50 hover:text-blue-700" : "text-gray-300 cursor-not-allowed"}`}
+                                                    className={`w-full text-left px-4 py-2 text-[10px] font-bold transition flex items-center justify-between ${isPremium ? "text-gray-700 hover:bg-amber-50 hover:text-amber-700" : "text-gray-300 cursor-not-allowed"}`}
                                                 >
                                                     <span>🚢 Shopify Import</span>
                                                     {!isPremium && <span>🔒</span>}
@@ -887,7 +887,7 @@ export default function GeneratePage() {
                                                 <button
                                                     disabled={!isPremium}
                                                     onClick={() => isPremium && handleExport('amazon')}
-                                                    className={`w-full text-left px-4 py-2 text-[10px] font-bold transition flex items-center justify-between ${isPremium ? "text-gray-700 hover:bg-blue-50 hover:text-blue-700" : "text-gray-300 cursor-not-allowed"}`}
+                                                    className={`w-full text-left px-4 py-2 text-[10px] font-bold transition flex items-center justify-between ${isPremium ? "text-gray-700 hover:bg-amber-50 hover:text-amber-700" : "text-gray-300 cursor-not-allowed"}`}
                                                 >
                                                     <span>📦 Amazon Sellers</span>
                                                     {!isPremium && <span>🔒</span>}
