@@ -531,7 +531,7 @@ export default function GeneratePage() {
             <main className="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-6 grid lg:grid-cols-2 gap-6">
 
                 <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-5 sm:p-8 h-fit border border-amber-50">
-                    <h1 className="text-2xl sm:text-3xl font-black mb-4 sm:mb-6 tracking-tight">Generate <span className="text-blue-700">Pure Copy</span></h1>
+                    <h1 className="text-2xl sm:text-3xl font-black mb-4 sm:mb-6 tracking-tight"><span className="text-yellow-500">Generate</span> <span className="text-blue-700">Pure Copy</span></h1>
 
                     {error && <div className="mb-4 bg-red-50 text-red-700 p-4 rounded-xl text-sm font-bold border border-red-200">{error}</div>}
 
