@@ -2,31 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Professional SaaS Color Palette - No AI Purple! */
+/* Sophisticated Professional SaaS Palette - Premium Look */
 :root {
   /* Background Colors */
   --background: #ffffff;
   --foreground: #0f172a;
   
-  /* Primary Brand Colors - Professional Navy/Blue */
-  --primary-navy: #1e3a8a;
-  --primary-navy-dark: #1e40af;
-  --primary-navy-light: #3b82f6;
+  /* Primary Brand - Deep Slate/Navy (Sophisticated) */
+  --primary-slate: #334155;
+  --primary-slate-dark: #1e293b;
+  --primary-slate-light: #475569;
   
-  /* Secondary Colors - Emerald for success */
-  --primary-emerald: #059669;
-  --primary-emerald-dark: #047857;
-  --primary-emerald-light: #10b981;
+  /* Accent - Gold/Amber (Premium, not AI) */
+  --accent-gold: #f59e0b;
+  --accent-gold-dark: #d97706;
+  --accent-gold-light: #fbbf24;
   
-  /* Accent Colors */
-  --accent-amber: #f59e0b;
-  --accent-rose: #f43f5e;
-  --accent-cyan: #06b6d4;
+  /* Success - Emerald */
+  --success-emerald: #10b981;
+  --success-emerald-dark: #059669;
   
-  /* Gradient Backgrounds - Professional Blue/Emerald */
-  --gradient-navy-emerald: linear-gradient(135deg, #1e3a8a 0%, #059669 100%);
-  --gradient-navy-blue: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-  --gradient-emerald-teal: linear-gradient(135deg, #059669 0%, #06b6d4 100%);
+  /* Secondary Accent - Coral (Warm, human) */
+  --accent-coral: #f97316;
   
   /* Neutral Colors */
   --gray-50: #f9fafb;
@@ -58,9 +55,9 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Gradient Text - Professional Blue/Emerald */
+/* Gradient Text - Sophisticated Gold/Slate */
 .gradient-text {
-  background: linear-gradient(135deg, #1e3a8a 0%, #059669 100%);
+  background: linear-gradient(135deg, #1e293b 0%, #f59e0b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -95,7 +92,7 @@ html {
   left: 100%;
 }
 
-/* Animated Gradient Background - Professional Colors */
+/* Animated Gradient Background - Gold/Slate Theme */
 @keyframes gradient-shift {
   0% {
     background-position: 0% 50%;
@@ -109,8 +106,7 @@ html {
 }
 
 .animated-gradient {
-  background: linear-gradient(270deg, #1e3a8a, #059669, #06b6d4);
+  background: linear-gradient(270deg, #1e293b, #f59e0b, #10b981);
   background-size: 600% 600%;
   animation: gradient-shift 15s ease infinite;
 }
-

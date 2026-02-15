@@ -195,7 +195,7 @@ const VariantCard = ({ variant, index, copyToClipboard, copiedIndex, tier, custo
                                     <span className="text-lg">💡</span>
                                     <p className="text-[10px] text-blue-700 font-bold leading-tight">Your SEO Score is {seoScore}. <br />Unlock the <span className="underline">Keyword Heatmap</span> to see how to hit 99+.</p>
                                 </div>
-                                <Link href="/pricing" className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase shadow-md hover:bg-blue-700 transition">Show Me</Link>
+                                <Link href="/pricing" className="bg-slate-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-black uppercase shadow-md hover:bg-blue-700 transition">Show Me</Link>
                             </div>
                         )}
                     </>
@@ -277,7 +277,7 @@ const OnboardingModal = ({ isOpen, onClose, currentStep, onNext, onSkip }: {
                         </button>
                         <button
                             onClick={isLastStep ? onClose : onNext}
-                            className="flex-1 py-3 rounded-xl font-bold bg-gradient-to-r from-blue-700 to-cyan-600 text-white hover:shadow-lg transition"
+                            className="flex-1 py-3 rounded-xl font-bold bg-gradient-to-r from-blue-700 to-amber-600 text-white hover:shadow-lg transition"
                         >
                             {isLastStep ? "Start Creating!" : "Next →"}
                         </button>
