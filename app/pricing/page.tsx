@@ -137,7 +137,75 @@ export default function PricingPage() {
         detectCountry();
     }, []);
 
+    // UPI Payment methods for India
+    const [showUPIOptions, setShowUPIOptions] = useState(false);
+    const [selectedUPI, setSelectedUPI] = useState<string | null>(null);
+
+    // Handle UPI Payment (PhonePe, Google Pay, Paytm)
+    const handleUPIPayment = async (tierName: string, method: string) => {
+        if (!user?.emailAddresses?.[0]?.emailAddress) {
+            alert("Please sign in to continue");
+            return;
+        }
+
+        setLoadingTier(tierName);
+        try {
+            const res = await fetch("/api/checkout/upi", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    tier: tierName.toLowerCase(),
+                    method: method
+                }),
+            });
+            
+            const data = await res.json();
+            
+            if (data.demo) {
+                // Demo mode - show success
+                alert("Demo Mode: Payment processed successfully!");
+                window.location.href = "/generate?success=true";
+                return;
+            }
+
+            if (data.upiLinks && data.upiLinks[method]) {
+                // Open UPI app deep link
+                window.location.href = data.upiLinks[method];
+            } else if (data.qrCode) {
+                // Show QR code for scanning
+                const qrWindow = window.open("", "_blank", "width=400,height=400");
+                if (qrWindow) {
+                    qrWindow.document.write(`
+                        <html>
+                        <head><title>Scan to Pay</title></head>
+                        <body style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;background:#0a0a0f;color:white;font-family:sans-serif;">
+                            <h2>Scan with your UPI app</h2>
+                            <img src="${data.qrCode}" alt="Payment QR" />
+                            <p>Amount: ₹${data.amount / 100}</p>
+                            <p>Or click: <a href="${data.upiLinks?.upi}">Pay with UPI</a></p>
+                        </body>
+                        </html>
+                    `);
+                }
+            } else if (data.url) {
+                window.location.href = data.url;
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong. Please try again.");
+        } finally {
+            setLoadingTier(null);
+        }
+    };
+
     const handleUpgrade = async (tierName: string) => {
+        // If India and showing UPI options, use UPI endpoint
+        if (isIndia && showUPIOptions && selectedUPI) {
+            await handleUPIPayment(tierName, selectedUPI);
+            return;
+        }
+
+        // Otherwise use regular checkout
         if (tierName === "Free") {
             // Redirect to sign-up for free tier
             window.location.href = "/sign-up";
@@ -305,6 +373,45 @@ export default function PricingPage() {
                         <span className={`text-sm font-medium transition ${isAnnual ? 'text-yellow-400' : 'text-gray-500'}`}>Annual</span>
                         <span className={`text-xs font-bold px-3 py-1 rounded-full transition-all duration-500 ${isAnnual ? 'bg-yellow-500 text-black animate-pulse' : 'text-green-400 bg-green-400/10'}`}>{isAnnual ? '🎉 SAVE 20%!' : 'Save 20%'}</span>
                     </div>
+
+                    {/* UPI Payment Method Toggle (India only) */}
+                    {isIndia && (
+                        <div className="flex items-center justify-center gap-2 mb-8">
+                            <button
+                                onClick={() => { setShowUPIOptions(!showUPIOptions); setSelectedUPI(null); }}
+                                className={`text-xs font-medium px-4 py-2 rounded-full border transition-all ${showUPIOptions ? 'bg-green-500/20 border-green-500 text-green-400' : 'bg-white/5 border-white/20 text-gray-400 hover:text-white'}`}
+                            >
+                                💳 {showUPIOptions ? 'Hide UPI Options' : 'Pay with UPI'}
+                            </button>
+                        </div>
+                    )}
+
+                    {/* UPI Payment Options */}
+                    {isIndia && showUPIOptions && (
+                        <div className="flex items-center justify-center gap-3 mb-8">
+                            <button
+                                onClick={() => setSelectedUPI('phonepe')}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-all ${selectedUPI === 'phonepe' ? 'bg-purple-500/20 border-purple-500 text-purple-400' : 'bg-white/5 border-white/20 text-gray-400 hover:text-white hover:border-purple-500/50'}`}
+                            >
+                                <span className="text-lg">📱</span>
+                                <span className="text-sm font-medium">PhonePe</span>
+                            </button>
+                            <button
+                                onClick={() => setSelectedUPI('gpay')}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-all ${selectedUPI === 'gpay' ? 'bg-blue-500/20 border-blue-500 text-blue-400' : 'bg-white/5 border-white/20 text-gray-400 hover:text-white hover:border-blue-500/50'}`}
+                            >
+                                <span className="text-lg">🔵</span>
+                                <span className="text-sm font-medium">Google Pay</span>
+                            </button>
+                            <button
+                                onClick={() => setSelectedUPI('paytm')}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-xl border transition-all ${selectedUPI === 'paytm' ? 'bg-red-500/20 border-red-500 text-red-400' : 'bg-white/5 border-white/20 text-gray-400 hover:text-white hover:border-red-500/50'}`}
+                            >
+                                <span className="text-lg">💰</span>
+                                <span className="text-sm font-medium">Paytm</span>
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 {/* Pricing Cards */}
