@@ -449,7 +449,7 @@ export default function PricingPage() {
                         <p className="text-gray-400 mb-6">Join 1,000+ e-commerce professionals using DescriptAI</p>
                         <Link
                             href="/generate"
-                            className="inline-block px-8 py-4 rounded-xl bg-gradient-to-r from-blue-700 via-pink-500 to-blue-700 text-white font-bold hover:opacity-90 transition shadow-lg shadow-blue-600/30"
+                            className="inline-block px-8 py-4 rounded-xl bg-gradient-to-r from-blue-700 via-cyan-500 to-blue-700 text-white font-bold hover:opacity-90 transition shadow-lg shadow-blue-600/30"
                         >
                             Start Generating Now
                         </Link>
