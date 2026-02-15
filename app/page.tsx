@@ -752,9 +752,9 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
-              { step: "1", title: "Choose Your Platform & Length", desc: "Select Amazon, Shopify, Etsy, or eBay. Pick Short (80 words), Medium (150), or Long (300). Set your conversion goal." },
-              { step: "2", title: "AI Writes 3 Sales Machines", desc: "Our Elite AI Engine creates Emotional, Technical, and Urgent variants using conversion psychology. 3-5 seconds." },
-              { step: "3", title: "Export & Sell Like Crazy", desc: "Copy, export to your platform, or generate social media kit. Watch conversions skyrocket!" },
+              { step: "1", title: "Choose Your Platform & Length", desc: "Select Amazon, Shopify, Etsy, or eBay. Pick Short (80 words), Medium (150), or Long (300). Set your conversion goal.", iconColor: "from-green-600 to-green-500", shadowColor: "shadow-green-500" },
+              { step: "2", title: "AI Writes 3 Sales Machines", desc: "Our Elite AI Engine creates Emotional, Technical, and Urgent variants using conversion psychology. 3-5 seconds.", iconColor: "from-blue-600 to-blue-500", shadowColor: "shadow-blue-500" },
+              { step: "3", title: "Export & Sell Like Crazy", desc: "Copy, export to your platform, or generate social media kit. Watch conversions skyrocket!", iconColor: "from-yellow-500 to-amber-500", shadowColor: "shadow-yellow-500" },
             ].map((item, index) => (
               <div key={index} className="relative">
                 {/* Connector Line */}
@@ -762,7 +762,7 @@ export default function Home() {
                   <div className="hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-red-600/50 to-transparent z-0" style={{ width: 'calc(100% - 3rem)' }}></div>
                 )}
                 <TiltCard className="rounded-2xl bg-white/5 border border-white/10 p-8 text-center relative z-10">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-red-700 to-red-600 flex items-center justify-center mx-auto mb-6 text-2xl font-black text-white shadow-lg shadow-yellow-600/30">
+                  <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${item.iconColor} flex items-center justify-center mx-auto mb-6 text-2xl font-black text-white shadow-lg ${item.shadowColor}/30`}>
                     {item.step}
                   </div>
                   <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
