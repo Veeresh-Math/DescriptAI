@@ -1,0 +1,20 @@
+{
+  "css.validate": true,
+  "less.validate": true,
+  "scss.validate": true,
+  "stylelint.validate": [
+    "css",
+    "scss",
+    "less"
+  ],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.includeLanguages": {
+    "javascript": "javascript",
+    "typescript": "typescript"
+  },
+  "css.customData": [
+    ".tailwindcss"
+  ]
+}
