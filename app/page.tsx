@@ -539,7 +539,7 @@ export default function Home() {
           </div>
 
           {/* Main Headline with Typing Animation */}
-          <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight glass-text px-6 py-3 rounded-2xl inline-block">
             <span className="text-white">Generate </span>
             <span className="gradient-text-animate">
               <TypeWriter texts={["High-Converting", "SEO-Optimized", "Platform-Specific", "AI-Powered"]} />
