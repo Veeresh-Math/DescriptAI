@@ -538,11 +538,11 @@ export default function GeneratePage() {
                     <div className="space-y-6">
                         <div>
                             <label className="block text-xs font-bold text-black uppercase mb-2">Product Name</label>
-                            <input value={productName} onChange={e => setProductName(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition text-black placeholder-gray-400" placeholder="e.g. Arabica Coffee Beans" />
+                            <input value={productName} onChange={e => setProductName(e.target.value)} style={{color: '#000000'}} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition text-black placeholder-gray-400" placeholder="e.g. Arabica Coffee Beans" />
                         </div>
                         <div>
                             <label className="block text-xs font-bold text-black uppercase mb-2">Key Features</label>
-                            <textarea value={features} onChange={e => setFeatures(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition h-32 text-black placeholder-gray-400" placeholder="e.g. Organic, strong aroma, fair trade..." />
+                            <textarea value={features} onChange={e => setFeatures(e.target.value)} style={{color: '#000000'}} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-red-600 focus:ring-2 focus:ring-red-200 outline-none transition h-32 text-black placeholder-gray-400" placeholder="e.g. Organic, strong aroma, fair trade..." />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
@@ -727,7 +727,7 @@ export default function GeneratePage() {
                                     <input
                                         value={customKeywords}
                                         onChange={e => setCustomKeywords(e.target.value)}
-                                        className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-teal-500 outline-none transition bg-white text-black placeholder-gray-400 font-medium"
+                                        className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-teal-500 outline-none transition bg-white text-black placeholder-gray-400 font-medium" style={{color: '#000000'}}
                                         placeholder="e.g. Arabica, Organic, Fair Trade"
                                     />
                                 </div>
@@ -737,7 +737,7 @@ export default function GeneratePage() {
                                         <select
                                             value={brandVoice}
                                             onChange={e => setBrandVoice(e.target.value)}
-                                            className="flex-1 px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-teal-500 outline-none transition bg-white text-black placeholder-gray-400 text-sm font-bold"
+                                            className="flex-1 px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-teal-500 outline-none transition bg-white text-black placeholder-gray-400 text-sm font-bold" style={{color: '#000000'}}
                                         >
                                             <option>Balanced</option>
                                             <option>Apple (Minimalist)</option>
@@ -755,7 +755,7 @@ export default function GeneratePage() {
                                         <input
                                             value={newPresetName}
                                             onChange={e => setNewPresetName(e.target.value)}
-                                            className="flex-1 px-3 py-2 text-xs rounded-lg border-2 border-gray-200 outline-none focus:border-teal-400 text-black placeholder-gray-400"
+                                            className="flex-1 px-3 py-2 text-xs rounded-lg border-2 border-gray-200 outline-none focus:border-teal-400 text-black placeholder-gray-400" style={{color: '#000000'}}
                                             placeholder="Name this brand voice..."
                                         />
                                         <button
