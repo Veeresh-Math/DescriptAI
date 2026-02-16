@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import { useState, useEffect, useRef } from "react";
 
 // Animated Counter Component
@@ -374,6 +374,38 @@ function InteractiveDemo() {
 export default function Home() {
   const [isIndia, setIsIndia] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userData, setUserData] = useState<{ tier: string } | null>(null);
+
+  // Fetch user tier data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await fetch("/api/user");
+        if (res.ok) {
+          const data = await res.json();
+          setUserData(data);
+        }
+      } catch (e) {
+        console.error("Failed to fetch user data", e);
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  // Tier badge component
+  const TierBadge = ({ tier }: { tier: string }) => {
+    const tierConfig = {
+      free: { label: "Free", bg: "bg-gray-600", text: "text-white", emoji: "" },
+      pro: { label: "Pro", bg: "bg-gradient-to-r from-yellow-500 to-amber-600", text: "text-white", emoji: "" },
+      agency: { label: "Agency", bg: "bg-gradient-to-r from-purple-600 to-indigo-600", text: "text-white", emoji: "" }
+    };
+    const config = tierConfig[tier as keyof typeof tierConfig] || tierConfig.free;
+    return (
+      <span className={`${config.bg} ${config.text} px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1`}>
+        <span>{config.emoji}</span>{config.label}
+      </span>
+    );
+  };
 
   // Detect user's country on mount
   useEffect(() => {
@@ -478,6 +510,7 @@ export default function Home() {
                   avatarBox: "w-8 h-8"
                 }
               }} />
+              {userData && <TierBadge tier={userData.tier} />}
             </SignedIn>
           </div>
           <div className="md:hidden">
@@ -517,7 +550,8 @@ export default function Home() {
                 <Link href="/generate" className="text-gray-400 hover:text-white font-medium transition">
                   Dashboard
                 </Link>
-                <div className="mt-2">
+                <div className="mt-2 flex items-center gap-2">
+                  {userData && <TierBadge tier={userData.tier} />}
                   <UserButton afterSignOutUrl="/" />
                 </div>
               </SignedIn>

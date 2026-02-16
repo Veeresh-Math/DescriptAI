@@ -518,9 +518,14 @@ export default function GeneratePage() {
                         <Link href="/history" className="text-xs font-bold text-gray-800 hover:text-blue-700 transition p-2">History</Link>
                         <Link href="/pricing" className="text-xs font-bold text-gray-800 hover:text-blue-700 transition p-2">⭐ Pricing</Link>
                         {userData && (
-                            <div className="hidden sm:flex gap-1 text-[9px] font-black">
-                                <span className={`px-2 py-1 rounded-full ${userData.shortCredits > 0 ? "bg-green-100 text-amber-800" : "bg-red-100 text-red-600"}`} title="Short Credits">S:{userData.shortCredits}</span>
-                                <span className={`px-2 py-1 rounded-full ${userData.mediumCredits > 0 ? "bg-teal-100 text-teal-700" : "bg-red-100 text-red-600"}`} title="Medium Credits">M:{userData.mediumCredits}</span>
+                            <div className="hidden sm:flex items-center gap-2">
+                                <span className={`px-2 py-1 rounded-full text-[10px] font-bold ${userData.tier === 'free' ? 'bg-gray-200 text-gray-700' : userData.tier === 'pro' ? 'bg-gradient-to-r from-yellow-400 to-amber-500 text-white' : 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white'}`}>
+                                    {userData.tier.toUpperCase()}
+                                </span>
+                                <div className="flex gap-1 text-[9px] font-black">
+                                    <span className={`px-2 py-1 rounded-full ${userData.shortCredits > 0 ? "bg-green-100 text-amber-800" : "bg-red-100 text-red-600"}`} title="Short Credits">S:{userData.shortCredits}</span>
+                                    <span className={`px-2 py-1 rounded-full ${userData.mediumCredits > 0 ? "bg-teal-100 text-teal-700" : "bg-red-100 text-red-600"}`} title="Medium Credits">M:{userData.mediumCredits}</span>
+                                </div>
                             </div>
                         )}
                     </div>
