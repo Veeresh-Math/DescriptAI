@@ -1,14 +1,12 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { db } from '@/lib/db';
 
 // This endpoint keeps the database active by doing a simple query
 // Call this via Vercel Cron job every 3 days to prevent Supabase pause
 export async function GET() {
   try {
     // Do a simple query to keep database active
-    await prisma.user.count();
+    await db.user.count();
     
     return NextResponse.json({ 
       status: 'ok', 
