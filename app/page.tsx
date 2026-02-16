@@ -4,6 +4,8 @@ import Link from "next/link";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import { useState, useEffect, useRef } from "react";
 
+// Tier Badge Component - shows Free/Pro/Agency next to profile
+
 // Animated Counter Component
 function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
   const [count, setCount] = useState(0);
