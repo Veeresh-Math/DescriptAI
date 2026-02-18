@@ -121,8 +121,8 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Parse CSV text to products array
-export async function parseCSV(csvText: string): Promise<BulkProduct[]> {
+// Parse CSV text to products array (internal helper)
+async function parseCSV(csvText: string): Promise<BulkProduct[]> {
   const lines = csvText.trim().split('\n');
   if (lines.length < 2) {
     throw new Error('CSV must have header row and at least one product');
