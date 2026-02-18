@@ -1,26 +1,18 @@
 /**
  * DescriptAI - AI Image Generation API
- * Generate product images using Stability AI or fallback to placeholder
+ * Using Hugging Face Inference API (FREE) as primary
+ * Fallback to placeholder images
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 
-// Stability AI API endpoint
-const STABILITY_API_URL = 'https://api.stability.ai/v1/generation/text-to-image';
-
-interface ImageGenerationRequest {
-  prompt: string;
-  negativePrompt?: string;
-  width?: number;
-  height?: number;
-  steps?: number;
-  seed?: number;
-}
+// Hugging Face Free Inference Endpoint
+const HF_API_URL = 'https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-3.5-medium';
 
 export async function POST(request: NextRequest) {
   try {
-    const body: ImageGenerationRequest = await request.json();
-    const { prompt, negativePrompt, width = 512, height = 512, steps = 30, seed } = body;
+    const body = await request.json();
+    const { prompt, width = 512, height = 512 } = body;
 
     if (!prompt) {
       return NextResponse.json(
@@ -29,70 +21,50 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check for Stability AI API key
-    const stabilityKey = process.env.STABILITY_API_KEY;
-
-    if (stabilityKey) {
+    // Try Hugging Face first (FREE)
+    const hfToken = process.env.HF_API_KEY;
+    
+    if (hfToken) {
       try {
-        const response = await fetch(STABILITY_API_URL, {
+        const response = await fetch(HF_API_URL, {
           method: 'POST',
           headers: {
+            'Authorization': `Bearer ${hfToken}`,
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${stabilityKey}`,
-            'Accept': 'application/json',
           },
           body: JSON.stringify({
-            text_prompts: [
-              {
-                text: prompt,
-                weight: 1,
-              },
-              ...(negativePrompt ? [{
-                text: negativePrompt,
-                weight: -1,
-              }] : []),
-            ],
-            cfg_scale: 7,
-            height,
-            width,
-            steps,
-            samples: 1,
-            seed,
+            inputs: prompt,
+            parameters: {
+              width,
+              height,
+              num_inference_steps: 20,
+            },
           }),
         });
 
-        if (!response.ok) {
-          throw new Error(`Stability API error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        
-        if (data.artifacts && data.artifacts.length > 0) {
-          const base64Image = data.artifacts[0].base64;
+        if (response.ok) {
+          const buffer = await response.arrayBuffer();
+          const base64 = Buffer.from(buffer).toString('base64');
           
           return NextResponse.json({
             success: true,
-            image: `data:image/png;base64,${base64Image}`,
-            provider: 'stability-ai',
-            seed: data.artifacts[0].seed,
+            image: `data:image/png;base64,${base64}`,
+            provider: 'huggingface',
           });
         }
-        
-        throw new Error('No image generated');
       } catch (apiError) {
-        console.error('[STABILITY_API_ERROR]', apiError);
-        // Fall through to placeholder generation
+        console.error('[HF_API_ERROR]', apiError);
       }
     }
 
-    // Fallback: Generate a placeholder SVG with product visualization
-    const placeholderSvg = generatePlaceholderImage(prompt, width, height);
+    // Fallback: Generate a creative placeholder SVG
+    const placeholderSvg = generateCreativePlaceholder(prompt, width, height);
     
     return NextResponse.json({
       success: true,
       image: placeholderSvg,
       provider: 'placeholder',
-      message: 'Using placeholder (configure STABILITY_API_KEY for AI generation)',
+      message: 'Add HF_API_KEY to .env for free AI images',
     });
 
   } catch (error) {
@@ -104,51 +76,88 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function generatePlaceholderImage(prompt: string, width: number, height: number): string {
-  // Extract keywords from prompt for a more relevant placeholder
-  const keywords = prompt.split(/[,.]/)
+function generateCreativePlaceholder(prompt: string, width: number, height: number): string {
+  // Extract keywords from prompt
+  const keywords = prompt
+    .split(/[,.\-()]/)
     .map(w => w.trim())
-    .filter(w => w.length > 2)
-    .slice(0, 3)
-    .join(', ');
+    .filter(w => w.length > 2 && w.length < 20)
+    .slice(0, 4);
+
+  const productName = keywords[0] || 'Product';
+  const secondary = keywords.slice(1).join(', ') || 'High Quality';
+
+  const colors = [
+    ['#6366F1', '#8B5CF6', '#A855F7'],
+    ['#EC4899', '#F43F5E', '#E11D48'],
+    ['#14B8A6', '#0D9488', '#0F766E'],
+    ['#F59E0B', '#D97706', '#B45309'],
+    ['#3B82F6', '#2563EB', '#1D4ED8'],
+  ];
+  
+  const colorSet = colors[Math.floor(Math.random() * colors.length)];
 
   const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4F46E5"/>
-      <stop offset="100%" style="stop-color:#7C3AED"/>
+      <stop offset="0%" style="stop-color:${colorSet[0]}"/>
+      <stop offset="50%" style="stop-color:${colorSet[1]}"/>
+      <stop offset="100%" style="stop-color:${colorSet[2]}"/>
     </linearGradient>
     <linearGradient id="product" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FFFFFF" stop-opacity="0.9"/>
-      <stop offset="100%" style="stop-color:#E0E7FF" stop-opacity="0.7"/>
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95"/>
+      <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:0.85"/>
     </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity="0.3"/>
+    </filter>
   </defs>
   
-  <!-- Background -->
+  <!-- Animated Background -->
   <rect width="${width}" height="${height}" fill="url(#bg)"/>
   
-  <!-- Product Box -->
-  <rect x="${width * 0.2}" y="${height * 0.15}" width="${width * 0.6}" height="${height * 0.5}" rx="20" fill="url(#product)"/>
+  <!-- Decorative circles -->
+  <circle cx="${width * 0.1}" cy="${height * 0.15}" r="40" fill="white" opacity="0.1"/>
+  <circle cx="${width * 0.9}" cy="${height * 0.8}" r="60" fill="white" opacity="0.08"/>
+  <circle cx="${width * 0.85}" cy="${height * 0.2}" r="25" fill="white" opacity="0.1"/>
+  
+  <!-- Main Product Box -->
+  <rect x="${width * 0.15}" y="${height * 0.1}" width="${width * 0.7}" height="${height * 0.55}" rx="24" fill="url(#product)" filter="url(#shadow)"/>
   
   <!-- Product Details -->
-  <rect x="${width * 0.25}" y="${height * 0.2}" width="${width * 0.5}" height="${height * 0.08}" rx="4" fill="#4F46E5" opacity="0.3"/>
-  <rect x="${width * 0.25}" y="${height * 0.32}" width="${width * 0.4}" height="${height * 0.05}" rx="2" fill="#4F46E5" opacity="0.2"/>
-  <rect x="${width * 0.25}" y="${height * 0.4}" width="${width * 0.35}" height="${height * 0.05}" rx="2" fill="#4F46E5" opacity="0.2"/>
+  <!-- Title line -->
+  <rect x="${width * 0.2}" y="${height * 0.18}" width="${width * 0.6}" height="${height * 0.08}" rx="6" fill="${colorSet[0]}" opacity="0.15"/>
+  <!-- Description lines -->
+  <rect x="${width * 0.2}" y="${height * 0.3}" width="${width * 0.5}" height="${height * 0.04}" rx="3" fill="${colorSet[0]}" opacity="0.1"/>
+  <rect x="${width * 0.2}" y="${height * 0.37}" width="${width * 0.45}" height="${height * 0.04}" rx="3" fill="${colorSet[0]}" opacity="0.1"/>
+  <rect x="${width * 0.2}" y="${height * 0.44}" width="${width * 0.4}" height="${height * 0.04}" rx="3" fill="${colorSet[0]}" opacity="0.1"/>
   
-  <!-- Sparkles -->
-  <circle cx="${width * 0.15}" cy="${height * 0.2}" r="4" fill="#FFD700" opacity="0.8"/>
-  <circle cx="${width * 0.85}" cy="${height * 0.3}" r="3" fill="#FFD700" opacity="0.6"/>
-  <circle cx="${width * 0.8}" cy="${height * 0.7}" r="5" fill="#FFD700" opacity="0.7"/>
+  <!-- Feature badges -->
+  <rect x="${width * 0.2}" y="${height * 0.55}" width="70" height="22" rx="11" fill="${colorSet[0]}" opacity="0.2"/>
+  <rect x="${width * 0.35}" y="${height * 0.55}" width="90" height="22" rx="11" fill="${colorSet[1]}" opacity="0.2"/>
+  <rect x="${width * 0.5}" y="${height * 0.55}" width="60" height="22" rx="11" fill="${colorSet[2]}" opacity="0.2"/>
   
-  <!-- Text -->
-  <text x="${width/2}" y="${height * 0.8}" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="${Math.min(16, width/20)}" font-weight="bold">
-    ${keywords.substring(0, 30)}
+  <!-- Sparkle effects -->
+  <text x="${width * 0.12}" y="${height * 0.25}" font-size="20" fill="white" opacity="0.8">✨</text>
+  <text x="${width * 0.88}" y="${height * 0.35}" font-size="16" fill="white" opacity="0.6">✨</text>
+  <text x="${width * 0.82}" y="${height * 0.72}" font-size="24" fill="white" opacity="0.7">✨</text>
+  
+  <!-- Product Name -->
+  <text x="${width * 0.5}" y="${height * 0.78}" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="${Math.min(24, width/18)}" font-weight="700">
+    ${productName.substring(0, 25)}
+  </text>
+  
+  <!-- Tagline -->
+  <text x="${width * 0.5}" y="${height * 0.86}" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="${Math.min(14, width/30)}" opacity="0.8">
+    ${secondary.substring(0, 35)}
   </text>
   
   <!-- AI Badge -->
-  <rect x="${width * 0.05}" y="${height * 0.85}" width="50" height="20" rx="10" fill="rgba(255,255,255,0.2)"/>
-  <text x="${width * 0.075}" y="${height * 0.92}" fill="white" font-family="Arial, sans-serif" font-size="10">AI</text>
+  <g>
+    <rect x="${width * 0.04}" y="${height * 0.9}" width="45" height="20" rx="10" fill="rgba(255,255,255,0.2)"/>
+    <text x="${width * 0.065}" y="${height * 0.96}" fill="white" font-family="system-ui, sans-serif" font-size="10" font-weight="600">AI</text>
+  </g>
 </svg>`.trim();
 
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
@@ -157,18 +166,12 @@ function generatePlaceholderImage(prompt: string, width: number, height: number)
 export async function GET() {
   return NextResponse.json({
     name: 'DescriptAI Image Generation',
-    version: '1.0.0',
-    features: {
-      stability_ai: !!process.env.STABILITY_API_KEY,
+    version: '2.0.0',
+    providers: {
+      huggingface: !!process.env.HF_API_KEY,
       placeholder: true,
     },
-    parameters: {
-      prompt: 'required - Description of the image to generate',
-      negativePrompt: 'optional - What to avoid in the image',
-      width: 'optional - Image width (default: 512)',
-      height: 'optional - Image height (default: 512)',
-      steps: 'optional - Generation steps (default: 30)',
-      seed: 'optional - Random seed for reproducibility',
-    },
+    usage: 'POST with { prompt, width, height }',
+    note: 'Add HF_API_KEY to .env for free AI-generated images',
   });
 }
