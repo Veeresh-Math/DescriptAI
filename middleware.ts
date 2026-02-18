@@ -1,4 +1,4 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { createRouteMatcher } from "@clerk/nextjs/server";
 
 const isPublicRoute = createRouteMatcher([
     '/api/admin/(.*)',
@@ -33,26 +33,17 @@ const isPublicRoute = createRouteMatcher([
     '/team',
 ]);
 
-export default clerkMiddleware(async (auth, req) => {
-    // Skip auth for public routes - allow all access
-    if (isPublicRoute(req)) {
-        return;
-    }
-    
-    // For protected routes, try to authenticate but don't fail if Clerk is not configured
-    try {
-        await auth.protect();
-    } catch (error) {
-        // If auth fails, redirect to sign-in
-        return Response.redirect(new URL('/sign-in', req.url));
-    }
-});
-
+// Simplified middleware - just allow all requests
+// Clerk authentication is handled in individual API routes
+export default function middleware(request: Request) {
+    // Allow all requests through
+    // Auth is handled per-route
+    return;
+}
 
 export const config = {
     matcher: [
-        '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+        '/((?!_next|[^?]*\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
         '/(api|trpc)(.*)',
     ],
 };
-
