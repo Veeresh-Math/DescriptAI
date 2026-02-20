@@ -21,16 +21,18 @@ model Generation {
 }
 
 model User {
-  id            String         @id
-  email         String         @unique
-  tier          String         @default("free")
-  shortCredits  Int            @default(3)
-  mediumCredits Int            @default(2)
-  referralCode  String         @unique @default(cuid())
-  referredById  String?
-  lastResetDate DateTime       @default(now())
-  createdAt     DateTime       @default(now())
-  presets       BrandPreset[]
+  id                    String         @id
+  email                 String         @unique
+  tier                  String         @default("free")
+  shortCredits          Int            @default(3)
+  mediumCredits         Int            @default(2)
+  generationsThisMonth  Int            @default(0)
+  lastMonthReset        DateTime       @default(now())
+  referralCode          String         @unique @default(cuid())
+  referredById          String?
+  lastResetDate         DateTime       @default(now())
+  createdAt             DateTime       @default(now())
+  presets               BrandPreset[]
 }
 
 model Referral {

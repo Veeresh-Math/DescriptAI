@@ -187,9 +187,49 @@ export async function POST(req: Request) {
 
 
 
-        // --- FREE FOREVER: NO CREDIT OR TIER RESTRICTIONS ---
-        // All features are available to all users
-        console.log(`[USER] ${user.email} (${user.tier}) - Generating description for ${productName}`);
+        // --- GENERATION LIMIT ENFORCEMENT ---
+        // Check and reset monthly counter if needed
+        const now = new Date();
+        const lastReset = user.lastMonthReset ? new Date(user.lastMonthReset) : now;
+        const isNewMonth = lastReset.getMonth() !== now.getMonth() || lastReset.getFullYear() !== now.getFullYear();
+        
+        if (isNewMonth) {
+            // Reset monthly counter
+            try {
+                await db.user.update({
+                    where: { id: user.id },
+                    data: {
+                        generationsThisMonth: 0,
+                        lastMonthReset: now
+                    }
+                });
+                console.log(`[MONTHLY_RESET] Reset counter for ${user.email}`);
+            } catch (resetError) {
+                console.warn("[MONTHLY_RESET] Failed to reset:", resetError);
+            }
+        }
+        
+        // Check generation limits based on tier
+        const currentCount = user.generationsThisMonth || 0;
+        const tierLimits: Record<string, number> = {
+            free: 5,      // 5 generations/month
+            pro: 100,     // 100 generations/month
+            agency: 1000  // 1000 generations/month (effectively unlimited)
+        };
+        
+        const limit = tierLimits[user.tier] || 5;
+        
+        if (currentCount >= limit) {
+            return NextResponse.json({
+                error: "MONTHLY_LIMIT_REACHED",
+                message: `You've reached your monthly limit of ${limit} generations. Upgrade to increase your limit.`,
+                currentUsage: currentCount,
+                limit: limit,
+                upgradeUrl: "/pricing"
+            }, { status: 429 });
+        }
+        
+        console.log(`[USER] ${user.email} (${user.tier}) - ${currentCount + 1}/${limit} generations this month`);
 
 
 
@@ -456,6 +496,19 @@ REMEMBER: You're not writing a description - you're writing a SALES MACHINE that
                     }
                 });
             } catch { /* Silent fail for history save */ }
+            
+            // --- INCREMENT MONTHLY GENERATION COUNT ---
+            try {
+                await db.user.update({
+                    where: { id: user.id },
+                    data: {
+                        generationsThisMonth: { increment: 1 }
+                    }
+                });
+                console.log(`[COUNTER] Incremented generation count for ${user.email}`);
+            } catch (counterError) {
+                console.warn("[COUNTER] Failed to increment:", counterError);
+            }
             
             // --- SAVE TO CACHE (for future requests) ---
             if (productName) {
