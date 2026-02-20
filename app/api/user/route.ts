@@ -27,7 +27,9 @@ export async function GET() {
                         email: email,
                         tier: "free",
                         shortCredits: 3,
-                        mediumCredits: 2
+                        mediumCredits: 2,
+                        generationsThisMonth: 0,
+                        lastMonthReset: new Date()
                     }
                 });
             }
@@ -40,6 +42,8 @@ export async function GET() {
                 tier: "agency",
                 shortCredits: 999,
                 mediumCredits: 999,
+                generationsThisMonth: 0,
+                lastMonthReset: new Date(),
                 referralCode: `dai_${userId.slice(-6)}`
             };
             console.log("[TESTING_MODE] Database unreachable, granting temporary Agency access.");
@@ -51,8 +55,19 @@ export async function GET() {
             tier: string;
             shortCredits: number;
             mediumCredits: number;
+            generationsThisMonth: number;
+            lastMonthReset: Date;
             referralCode?: string;
         }
+
+        // Calculate remaining generations
+        const tierLimits: Record<string, number> = {
+            free: 5,
+            pro: 100,
+            agency: 1000
+        };
+        const limit = tierLimits[user.tier] || 5;
+        const remaining = Math.max(0, limit - (user.generationsThisMonth || 0));
 
         return NextResponse.json({
             id: user.id,
@@ -60,6 +75,9 @@ export async function GET() {
             tier: user.tier,
             shortCredits: user.shortCredits,
             mediumCredits: user.mediumCredits,
+            generationsThisMonth: user.generationsThisMonth,
+            remainingGenerations: remaining,
+            monthlyLimit: limit,
             referralCode: (user as UserWithReferral).referralCode
         });
 
