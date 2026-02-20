@@ -508,12 +508,10 @@ export default function Home() {
                 Dashboard
               </Link>
               <div className="flex items-center gap-2">
-                {userData ? (
+                {userData && (
                   <span className={`px-2 py-1 rounded-full text-[10px] font-bold ${userData.tier === 'free' ? 'bg-gray-200 text-gray-700' : userData.tier === 'pro' ? 'bg-gradient-to-r from-yellow-400 to-amber-500 text-white' : 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white'}`}>
                     {userData.tier.toUpperCase()}
                   </span>
-                ) : (
-                  <span className="px-2 py-1 rounded-full text-[10px] font-bold bg-gray-200 text-gray-700">LOADING...</span>
                 )}
                 <UserButton afterSignOutUrl="/" appearance={{
                   elements: {
