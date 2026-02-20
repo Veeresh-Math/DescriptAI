@@ -66,3 +66,18 @@ model KnowledgeSync {
 
   @@index([tags])
 }
+
+model DescriptionCache {
+  id          String   @id @default(uuid())
+  cacheKey    String   @unique
+  productName String
+  platform    String
+  tone        String?
+  description String
+  provider    String   // deepseek, groq, gemini, template
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime
+
+  @@index([cacheKey])
+  @@index([createdAt])
+}

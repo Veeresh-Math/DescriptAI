@@ -10,7 +10,41 @@ import { findSyncInsights } from "@/lib/intelligence-sync";
 
 export const dynamic = "force-dynamic";
 
-// Google Gemini API call
+// DeepSeek API call (PRIMARY - FREE)
+async function generateWithDeepSeek(prompt: string, systemPrompt: string): Promise<string | null> {
+    try {
+        const response = await fetch(
+            'https://api.deepseek.com/v1/chat/completions',
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    model: 'deepseek-chat',
+                    messages: [
+                        { role: 'system', content: systemPrompt },
+                        { role: 'user', content: prompt }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 2048,
+                }),
+            }
+        );
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("[DEEPSEEK_API_ERROR]", errorText);
+            return null;
+        }
+
+        const data = await response.json();
+        return data.choices?.[0]?.message?.content || null;
+    } catch (error) {
+        console.error("[DEEPSEEK_GENERATION_FAILED]", error);
+        return null;
+    }
+}
+
+// Google Gemini API call (FALLBACK)
 async function generateWithGemini(prompt: string, systemPrompt: string): Promise<string | null> {
     const geminiKey = process.env.GEMINI_API_KEY;
     if (!geminiKey) return null;
@@ -18,7 +52,6 @@ async function generateWithGemini(prompt: string, systemPrompt: string): Promise
     try {
         const response = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${geminiKey}`,
-
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -111,6 +144,32 @@ export async function POST(req: Request) {
             platform?: string;
         };
 
+        // --- CHECK CACHE FIRST (Reduce API calls) ---
+        if (productName) {
+            const cacheKey = `${productName}_${platform || 'amazon'}_${tone || 'professional'}_${length || 'medium'}`;
+            try {
+                const cached = await db.descriptionCache.findUnique({
+                    where: {
+                        cacheKey,
+                        expiresAt: { gt: new Date() } // Only use if not expired
+                    }
+                });
+                
+                if (cached) {
+                    console.log(`[CACHE] HIT for ${cacheKey} (provider: ${cached.provider})`);
+                    return NextResponse.json({
+                        generated_text: cached.description,
+                        provider: cached.provider,
+                        fromCache: true,
+                        cachedAt: cached.createdAt
+                    });
+                }
+            } catch (cacheError) {
+                console.warn("[CACHE] Error checking cache:", cacheError);
+                // Continue without cache
+            }
+        }
+
 
 
         // --- AGENCY ENHANCEMENT ---
@@ -128,39 +187,16 @@ export async function POST(req: Request) {
 
 
 
-        // --- CREDIT ENFORCEMENT ---
-        if (user.tier === "free") {
-            if (length === "long") {
-                return NextResponse.json({ error: "PREMIUM_FEATURE", message: "The 500-word 'Long' mode is a Pro feature." }, { status: 403 });
-            }
-            if (length === "medium") {
-                return NextResponse.json({ error: "PREMIUM_FEATURE", message: "The 250-word 'Medium' mode is a Pro feature. Upgrade for SEO-optimized descriptions!" }, { status: 403 });
-            }
-            if (length === "mini") {
-                return NextResponse.json({ error: "PREMIUM_FEATURE", message: "The 150-word 'Mini' mode is a Pro feature." }, { status: 403 });
-            }
-
-            if (tone === "professional" || tone === "enthusiastic") {
-                return NextResponse.json({ error: "PREMIUM_FEATURE", message: "The 'Professional' and 'Bold' tones are Pro features." }, { status: 403 });
-            }
-            // --- PLATFORM ENFORCEMENT: Free users only get Amazon + Shopify ---
-            if (platform === "etsy" || platform === "ebay") {
-                return NextResponse.json({ error: "PREMIUM_FEATURE", message: "Etsy and eBay optimization are Pro features. Upgrade to unlock all platforms!" }, { status: 403 });
-            }
-            if (length === "short" && user.shortCredits <= 0) {
-                return NextResponse.json({ error: "OUT_OF_CREDITS", message: "Out of short credits." }, { status: 403 });
-            }
-            if ((length === "micro" || length === "tiny" || !length) && user.mediumCredits <= 0) {
-                return NextResponse.json({ error: "OUT_OF_CREDITS", message: "Out of credits." }, { status: 403 });
-            }
-        }
+        // --- FREE FOREVER: NO CREDIT OR TIER RESTRICTIONS ---
+        // All features are available to all users
+        console.log(`[USER] ${user.email} (${user.tier}) - Generating description for ${productName}`);
 
 
 
+        // Note: DeepSeek doesn't require API key (currently free)
+        // Groq fallback uses GROQ_API_KEY from env (optional)
         const finalApiKey = (apiKey && apiKey.startsWith("gsk_")) ? apiKey : process.env.GROQ_API_KEY;
-        if (!finalApiKey) {
-            return NextResponse.json({ error: "MISSING_API_KEY", message: "No API key found." }, { status: 401 });
-        }
+        // No error if no API key - DeepSeek will be used as primary
 
         // --- CONTENT QUALITY TIERING ---
         const isPremiumTier = user.tier === "pro" || user.tier === "agency";
@@ -338,42 +374,54 @@ REMEMBER: You're not writing a description - you're writing a SALES MACHINE that
         let usedProvider = "";
         const usedModel = "llama-3.3-70b-versatile";
 
-        // Try Groq first
-        try {
-            const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", Authorization: `Bearer ${finalApiKey}` },
-                body: JSON.stringify({
-                    model: usedModel,
-                    messages: [
-                        { role: "system", content: systemPrompt },
-                        { role: "user", content: userPrompt }
-                    ],
-                    temperature: 0.7,
-                }),
-            });
+        // Try DeepSeek first (PRIMARY - FREE)
+        console.log("[AI_PROVIDER] Attempting DeepSeek (Primary)...");
+        const deepSeekText = await generateWithDeepSeek(userPrompt, systemPrompt);
+        
+        if (deepSeekText) {
+            generatedText = deepSeekText;
+            usedProvider = "deepseek";
+            console.log("[AI_PROVIDER] Using DeepSeek (Primary)");
+        } else {
+            console.warn("[DEEPSEEK_FAILED] DeepSeek failed, trying Groq...");
+            
+            // Fallback to Groq
+            try {
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", Authorization: `Bearer ${finalApiKey}` },
+                    body: JSON.stringify({
+                        model: usedModel,
+                        messages: [
+                            { role: "system", content: systemPrompt },
+                            { role: "user", content: userPrompt }
+                        ],
+                        temperature: 0.7,
+                    }),
+                });
 
-            if (response.ok) {
-                const json = await response.json();
-                generatedText = json.choices?.[0]?.message?.content || "";
-                usedProvider = "groq";
-                console.log("[AI_PROVIDER] Using Groq (Primary)");
-            } else {
-                throw new Error("Groq API Failed");
-            }
-        } catch (groqError) {
-            console.error("[GROQ_FAILED]", groqError);
-            
-            // Fallback to Google Gemini
-            console.log("[AI_PROVIDER] Falling back to Google Gemini...");
-            const geminiText = await generateWithGemini(userPrompt, systemPrompt);
-            
-            if (geminiText) {
-                generatedText = geminiText;
-                usedProvider = "gemini";
-                console.log("[AI_PROVIDER] Using Google Gemini (Fallback)");
-            } else {
-                throw new Error("Both AI providers failed");
+                if (response.ok) {
+                    const json = await response.json();
+                    generatedText = json.choices?.[0]?.message?.content || "";
+                    usedProvider = "groq";
+                    console.log("[AI_PROVIDER] Using Groq (Fallback 1)");
+                } else {
+                    throw new Error("Groq API Failed");
+                }
+            } catch (groqError) {
+                console.error("[GROQ_FAILED]", groqError);
+                
+                // Fallback to Google Gemini
+                console.log("[AI_PROVIDER] Falling back to Google Gemini...");
+                const geminiText = await generateWithGemini(userPrompt, systemPrompt);
+                
+                if (geminiText) {
+                    generatedText = geminiText;
+                    usedProvider = "gemini";
+                    console.log("[AI_PROVIDER] Using Google Gemini (Fallback 2)");
+                } else {
+                    throw new Error("All AI providers failed");
+                }
             }
         }
 
@@ -398,7 +446,6 @@ REMEMBER: You're not writing a description - you're writing a SALES MACHINE that
             try {
                 const variantsArray = enhancedResult.content.split("[[NEXT_VARIANT]]").map((v: string) => v.trim());
 
-
                 await db.generation.create({
                     data: {
                         userId: user.id,
@@ -409,15 +456,42 @@ REMEMBER: You're not writing a description - you're writing a SALES MACHINE that
                     }
                 });
             } catch { /* Silent fail for history save */ }
-
-
-            // Credit Deduction
-            if (user.tier === "free") {
+            
+            // --- SAVE TO CACHE (for future requests) ---
+            if (productName) {
                 try {
-                    const creditField = length === "short" ? "shortCredits" : "mediumCredits";
-                    await db.user.update({ where: { id: user.id }, data: { [creditField]: { decrement: 1 } } });
-                } catch { /* Silent fail for credit update */ }
+                    const cacheKey = `${productName}_${platform || 'amazon'}_${tone || 'professional'}_${length || 'medium'}`;
+                    const expiresAt = new Date();
+                    expiresAt.setDate(expiresAt.getDate() + 7); // Cache for 7 days
+                    
+                    await db.descriptionCache.upsert({
+                        where: { cacheKey },
+                        update: {
+                            description: enhancedResult.content,
+                            provider: usedProvider,
+                            expiresAt: expiresAt,
+                            productName: productName,
+                            platform: platform || 'amazon',
+                            tone: tone || 'professional'
+                        },
+                        create: {
+                            cacheKey,
+                            productName: productName,
+                            platform: platform || 'amazon',
+                            tone: tone || 'professional',
+                            description: enhancedResult.content,
+                            provider: usedProvider,
+                            expiresAt: expiresAt
+                        }
+                    });
+                    console.log(`[CACHE] SAVED for ${cacheKey} (provider: ${usedProvider})`);
+                } catch (cacheError) {
+                    console.warn("[CACHE] Failed to save cache:", cacheError);
+                }
             }
+
+
+            // No credit deduction - everything is free!
 
         }
 
