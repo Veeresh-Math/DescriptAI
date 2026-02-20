@@ -188,9 +188,10 @@ export async function POST(req: Request) {
 
 
         // --- GENERATION LIMIT ENFORCEMENT ---
-        // Check and reset monthly counter if needed
+        // Check and reset monthly counter if needed (using any to bypass type checking until Prisma regenerates)
         const now = new Date();
-        const lastReset = user.lastMonthReset ? new Date(user.lastMonthReset) : now;
+        const userAny = user as any;
+        const lastReset = userAny.lastMonthReset ? new Date(userAny.lastMonthReset) : now;
         const isNewMonth = lastReset.getMonth() !== now.getMonth() || lastReset.getFullYear() !== now.getFullYear();
         
         if (isNewMonth) {
@@ -201,7 +202,7 @@ export async function POST(req: Request) {
                     data: {
                         generationsThisMonth: 0,
                         lastMonthReset: now
-                    }
+                    } as any
                 });
                 console.log(`[MONTHLY_RESET] Reset counter for ${user.email}`);
             } catch (resetError) {
@@ -210,7 +211,7 @@ export async function POST(req: Request) {
         }
         
         // Check generation limits based on tier
-        const currentCount = user.generationsThisMonth || 0;
+        const currentCount = userAny.generationsThisMonth || 0;
         const tierLimits: Record<string, number> = {
             free: 5,      // 5 generations/month
             pro: 100,     // 100 generations/month

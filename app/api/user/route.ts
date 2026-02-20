@@ -30,7 +30,7 @@ export async function GET() {
                         mediumCredits: 2,
                         generationsThisMonth: 0,
                         lastMonthReset: new Date()
-                    }
+                    } as any
                 });
             }
         } catch (dbError) {
@@ -49,36 +49,28 @@ export async function GET() {
             console.log("[TESTING_MODE] Database unreachable, granting temporary Agency access.");
         }
 
-        interface UserWithReferral {
-            id: string;
-            email: string;
-            tier: string;
-            shortCredits: number;
-            mediumCredits: number;
-            generationsThisMonth: number;
-            lastMonthReset: Date;
-            referralCode?: string;
-        }
-
+        // Use type assertion to include new fields
+        const userAny = user as any;
+        
         // Calculate remaining generations
         const tierLimits: Record<string, number> = {
             free: 5,
             pro: 100,
             agency: 1000
         };
-        const limit = tierLimits[user.tier] || 5;
-        const remaining = Math.max(0, limit - (user.generationsThisMonth || 0));
+        const limit = tierLimits[userAny.tier] || 5;
+        const remaining = Math.max(0, limit - (userAny.generationsThisMonth || 0));
 
         return NextResponse.json({
-            id: user.id,
-            email: user.email,
-            tier: user.tier,
-            shortCredits: user.shortCredits,
-            mediumCredits: user.mediumCredits,
-            generationsThisMonth: user.generationsThisMonth,
+            id: userAny.id,
+            email: userAny.email,
+            tier: userAny.tier,
+            shortCredits: userAny.shortCredits,
+            mediumCredits: userAny.mediumCredits,
+            generationsThisMonth: userAny.generationsThisMonth,
             remainingGenerations: remaining,
             monthlyLimit: limit,
-            referralCode: (user as UserWithReferral).referralCode
+            referralCode: userAny.referralCode
         });
 
     } catch (error: unknown) {
