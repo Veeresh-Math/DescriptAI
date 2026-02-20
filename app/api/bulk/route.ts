@@ -4,6 +4,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@clerk/nextjs/server';
+import { db } from '@/lib/db';
 import { generateDescription, GenerationRequest, GenerationResult } from '@/lib/description-generation-engine';
 
 interface BulkProduct {
@@ -24,6 +26,26 @@ interface BulkResult {
 
 export async function POST(request: NextRequest) {
   try {
+    // Authentication check
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json(
+        { error: 'UNAUTHORIZED', message: 'Please sign in to use bulk generation.' },
+        { status: 401 }
+      );
+    }
+
+    // Get user tier from database
+    let user;
+    try {
+      user = await db.user.findUnique({ where: { id: userId } });
+    } catch (e) {
+      // If DB fails, continue with free tier limits
+      user = { tier: 'free' as const };
+    }
+    
+    const userTier = user?.tier || 'free';
+
     const body = await request.json();
     const { products, options } = body as {
       products: BulkProduct[];
@@ -43,12 +65,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Limit to prevent abuse
-    const maxProducts = 100;
+    // Tier-based bulk limits
+    const tierBulkLimits: Record<string, number> = {
+      free: 1,      // Single product only
+      pro: 50,      // Up to 50 products
+      agency: 1000  // Up to 1000 products
+    };
+    
+    const maxProducts = tierBulkLimits[userTier] || 1;
+    
     if (products.length > maxProducts) {
       return NextResponse.json(
-        { error: `Maximum ${maxProducts} products allowed per request.` },
-        { status: 400 }
+        {
+          error: `Bulk generation limit exceeded. Your tier (${userTier}) allows maximum ${maxProducts} products per request. Upgrade to increase your limit.`,
+          tier: userTier,
+          limit: maxProducts,
+          upgradeUrl: "/pricing"
+        },
+        { status: 403 }
       );
     }
 
@@ -101,6 +135,21 @@ export async function POST(request: NextRequest) {
       );
 
       results.push(...batchResults);
+    }
+
+    // Increment monthly generation count for successful generations
+    if (successCount > 0 && userId) {
+      try {
+        await db.user.update({
+          where: { id: userId },
+          data: {
+            generationsThisMonth: { increment: successCount }
+          } as any
+        });
+        console.log(`[BULK] Incremented ${successCount} generations for ${userId}`);
+      } catch (counterError) {
+        console.warn("[BULK] Failed to increment counter:", counterError);
+      }
     }
 
     return NextResponse.json({
