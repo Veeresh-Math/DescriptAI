@@ -286,9 +286,9 @@ export default function PricingPage() {
                 {/* Payment Gateway Badge */}
                 {paymentGateway && (
                     <div className="text-center mb-8">
-                        <span className="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-800 text-sm font-medium">
+                        <span className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 text-white border border-white/20 text-sm font-medium">
                             {isIndia ? "🇮🇳 Razorpay (India)" : "🌍 Stripe (Worldwide)"}
-                            {isIndia && <span className="ml-2 text-xs">UPI • Cards • NetBanking</span>}
+                            {isIndia && <span className="ml-2 text-xs text-gray-300">UPI • Cards • NetBanking</span>}
                         </span>
                     </div>
                 )}
@@ -410,7 +410,7 @@ export default function PricingPage() {
 
                 {/* Pro vs Agency Comparison Table */}
                 <div className="max-w-5xl mx-auto mb-20">
-                    <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
+                    <h2 className="text-3xl font-bold text-center mb-8 text-white">
                         Compare All Features
                     </h2>
 
@@ -472,7 +472,7 @@ export default function PricingPage() {
 
                 {/* FAQ Section */}
                 <div className="max-w-4xl mx-auto">
-                    <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Frequently Asked Questions</h2>
+                    <h2 className="text-3xl font-bold text-center mb-12 text-white">Frequently Asked Questions</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200">
                             <h4 className="font-semibold text-gray-900 mb-2">Can I cancel anytime?</h4>
