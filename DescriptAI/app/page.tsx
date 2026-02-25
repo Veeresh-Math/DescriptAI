@@ -890,7 +890,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
                 <p className="text-gray-400 text-sm mb-4">For serious sellers</p>
                 <div className="text-3xl font-black text-white mb-4">
-                  FREE<span className="text-lg text-gray-500">/mo</span>
+                  $19<span className="text-lg text-gray-500">/mo</span>
                 </div>
                 <ul className="space-y-2 text-sm text-gray-300 mb-6">
                   <li className="flex items-center gap-2"><span className="text-green-400">+</span> 100 generations/month</li>
@@ -899,7 +899,7 @@ export default function Home() {
                   <li className="flex items-center gap-2"><span className="text-green-400">+</span> SEO heatmap</li>
                 </ul>
                 <Link href="/pricing" className="block w-full py-3 rounded-xl bg-gradient-to-r from-red-700 to-red-600 text-white font-bold text-center hover:opacity-90 transition shadow-lg shadow-yellow-600/30">
-                  Try Pro - FREE!
+                  Get Pro
                 </Link>
               </TiltCard>
             </div>
@@ -909,7 +909,7 @@ export default function Home() {
               <h3 className="text-xl font-bold text-white mb-2">Agency</h3>
               <p className="text-gray-400 text-sm mb-4">For teams & agencies</p>
               <div className="text-3xl font-black text-white mb-4">
-                FREE<span className="text-lg text-gray-500">/mo</span>
+                $49<span className="text-lg text-gray-500">/mo</span>
               </div>
               <ul className="space-y-2 text-sm text-gray-400 mb-6">
                 <li className="flex items-center gap-2"><span className="text-green-400">+</span> Unlimited generations</li>
@@ -917,7 +917,7 @@ export default function Home() {
                 <li className="flex items-center gap-2"><span className="text-green-400">+</span> White-label</li>
               </ul>
               <Link href="/pricing" className="block w-full py-3 rounded-xl border border-white/20 text-white font-bold text-center hover:bg-white/5 transition">
-                Try Agency - FREE!
+                Get Agency
               </Link>
             </TiltCard>
           </div>
