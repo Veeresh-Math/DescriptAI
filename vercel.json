@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd DescriptAI && npm run build",
+  "installCommand": "cd DescriptAI && npm install",
+  "outputDirectory": "DescriptAI/.next",
+  "framework": "nextjs"
+}

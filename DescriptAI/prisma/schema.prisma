@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Generation {
+  id          String   @id @default(uuid())
+  userId      String
+  productName String
+  features    String
+  tone        String
+  variants    String
+  createdAt   DateTime @default(now())
+  imageUrls   String?
+
+  @@index([userId])
+}
+
+model User {
+  id                   String         @id
+  email                String         @unique
+  tier                 String         @default("free")
+  shortCredits         Int            @default(3)
+  mediumCredits        Int            @default(2)
+  generationsThisMonth Int            @default(0)
+  lastMonthReset       DateTime       @default(now())
+  referralCode         String         @unique @default(cuid())
+  referredById         String?
+  lastResetDate        DateTime       @default(now())
+  createdAt            DateTime       @default(now())
+  
+  // Trial System
+  trialStartDate       DateTime?      // When trial started
+  trialEndDate         DateTime?      // When trial ends (30 days from start)
+  isOnTrial            Boolean        @default(false)
+  tierBeforeTrial      String?        // Tier before trial (restored after trial ends)
+  
+  presets              BrandPreset[]
+}
+
+model Referral {
+  id          String   @id @default(uuid())
+  referrerId  String
+  referredId  String   @unique
+  status      String   @default("pending") // pending, rewarded
+  createdAt   DateTime @default(now())
+
+  @@index([referrerId])
+}
+
+model BrandPreset {
+  id           String   @id @default(uuid())
+  userId       String
+  name         String
+  instructions String
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model KnowledgeSync {
+  id          String   @id @default(uuid())
+  sourceUrl   String
+  category    String
+  title       String
+  content     String
+  tags        String
+  createdAt   DateTime @default(now())
+
+  @@index([tags])
+}
+
+model DescriptionCache {
+  id           String   @id @default(uuid())
+  cacheKey     String   @unique
+  productName  String
+  features     String?
+  platform     String
+  tone         String?
+  length       String?
+  description  String
+  provider     String   // deepseek, groq, gemini, template
+  usageCount   Int      @default(1)
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime
+  lastUsedAt   DateTime @default(now())
+
+  @@index([cacheKey])
+  @@index([createdAt])
+  @@index([productName])
+}
+
+model TeamMember {
+  id          String   @id @default(uuid())
+  ownerId     String   // The user who owns/created this team
+  email       String
+  name        String
+  role        String   @default("member") // admin, member
+  status      String   @default("active") // active, pending, removed
+  joinedAt    DateTime @default(now())
+  lastActive  DateTime @default(now())
+  creditsUsed Int      @default(0)
+
+  @@index([ownerId])
+  @@index([email])
+}
