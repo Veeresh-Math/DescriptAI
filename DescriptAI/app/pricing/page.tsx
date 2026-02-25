@@ -21,29 +21,6 @@ interface PricingTier {
 // Pricing display configuration - INR + USD (Razorpay for all countries)
 const getPricingTiers = (isIndia: boolean, isAnnual: boolean): PricingTier[] => [
     {
-        name: "Free Trial",
-        priceMonthly: isIndia ? "₹0" : "$0",
-        priceYearly: isIndia ? "₹0" : "$0",
-        period: "- 1 Month Only!",
-        description: "🎉 Try ALL Premium Features FREE for 1 Month!",
-        features: [
-            "🚀 Unlimited AI Generations (30 days)",
-            "🔥 ALL Pro Features Included",
-            "♾️ Agency Features Unlocked",
-            "🌍 All 25+ Languages",
-            "🛍️ All 9 Platforms (Amazon/Shopify/Etsy/eBay/TikTok/Instagram/Twitter/Facebook/LinkedIn)",
-            "📏 All Lengths (Short/Medium/Long/Extended)",
-            "⚡ Full Social Media Kit",
-            "🔥 Advanced SEO Heatmap",
-            "🎨 Custom Brand Voice Presets",
-            "📥 Platform-Specific Exports",
-            "💰 No Credit Card Required"
-        ],
-        buttonText: "Start Free Trial",
-        highlight: true,
-        buttonClass: "bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
-    },
-    {
         name: "Free",
         priceMonthly: isIndia ? "₹0" : "$0",
         priceYearly: isIndia ? "₹0" : "$0",
