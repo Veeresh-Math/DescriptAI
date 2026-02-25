@@ -216,29 +216,29 @@ export default function PricingPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-[#0a0a0f] text-white">
             {/* Header */}
-            <header className="container mx-auto px-4 py-6 bg-white shadow-sm sticky top-0 z-50">
+            <header className="container mx-auto px-4 py-6 bg-black/50 backdrop-blur-sm sticky top-0 z-50 border-b border-white/10">
                 <nav className="flex items-center justify-between">
                     <Link href="/" className="flex items-center space-x-2">
-                        <div className="text-2xl font-bold text-gray-900">
+                        <div className="text-2xl font-bold text-white">
                             ⚡ DescriptAI
                         </div>
-                        <span className="text-xs bg-indigo-600 text-white px-2 py-1 rounded-full font-semibold">
+                        <span className="text-xs bg-gradient-to-r from-red-600 to-amber-500 text-white px-2 py-1 rounded-full font-semibold">
                             PREMIUM AI
                         </span>
                     </Link>
                     <div className="hidden md:flex items-center space-x-6">
-                        <Link href="/" className="text-gray-600 hover:text-indigo-600 font-medium transition">
+                        <Link href="/" className="text-gray-400 hover:text-white font-medium transition">
                             Home
                         </Link>
-                        <Link href="/pricing" className="text-indigo-600 font-bold transition">
+                        <Link href="/pricing" className="text-white font-bold transition">
                             ⭐ Pricing
                         </Link>
-                        <Link href="/help" className="text-gray-600 hover:text-indigo-600 font-medium transition">
+                        <Link href="/help" className="text-gray-400 hover:text-white font-medium transition">
                             Help
                         </Link>
-                        <Link href="/generate" className="text-gray-600 hover:text-indigo-600 font-medium transition">
+                        <Link href="/generate" className="text-gray-400 hover:text-white font-medium transition">
                             Dashboard
                         </Link>
                     </div>
@@ -247,37 +247,37 @@ export default function PricingPage() {
 
             <div className="container mx-auto px-4 py-20">
                 <div className="text-center mb-12">
-                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
                         Simple, Transparent Pricing
                     </h1>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Choose the plan that fits your growth. Scale your product descriptions with the power of Elite AI Engines.
                     </p>
                 </div>
 
                 {/* Trust Signals */}
                 <div className="max-w-4xl mx-auto mb-12">
-                    <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                    <div className="bg-white/5 rounded-xl shadow-sm p-6 border border-white/10">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                             <div className="flex flex-col items-center">
                                 <div className="text-2xl mb-2">🔒</div>
-                                <div className="text-sm font-semibold text-gray-900">256-bit SSL</div>
-                                <div className="text-xs text-gray-500">Secure Payment</div>
+                                <div className="text-sm font-semibold text-white">256-bit SSL</div>
+                                <div className="text-xs text-gray-400">Secure Payment</div>
                             </div>
                             <div className="flex flex-col items-center">
                                 <div className="text-2xl mb-2">💰</div>
-                                <div className="text-sm font-semibold text-gray-900">30-Day Guarantee</div>
-                                <div className="text-xs text-gray-500">Money Back</div>
+                                <div className="text-sm font-semibold text-white">30-Day Guarantee</div>
+                                <div className="text-xs text-gray-400">Money Back</div>
                             </div>
                             <div className="flex flex-col items-center">
                                 <div className="text-2xl mb-2">🚫</div>
-                                <div className="text-sm font-semibold text-gray-900">No Hidden Fees</div>
-                                <div className="text-xs text-gray-500">Cancel Anytime</div>
+                                <div className="text-sm font-semibold text-white">No Hidden Fees</div>
+                                <div className="text-xs text-gray-400">Cancel Anytime</div>
                             </div>
                             <div className="flex flex-col items-center">
                                 <div className="text-2xl mb-2">⚡</div>
-                                <div className="text-sm font-semibold text-gray-900">99.9% Uptime</div>
-                                <div className="text-xs text-gray-500">Reliable Service</div>
+                                <div className="text-sm font-semibold text-white">99.9% Uptime</div>
+                                <div className="text-xs text-gray-400">Reliable Service</div>
                             </div>
                         </div>
                     </div>
@@ -295,13 +295,13 @@ export default function PricingPage() {
 
                 {/* Billing Toggle */}
                 <div className="flex justify-center mb-12">
-                    <div className="bg-white rounded-lg p-1 shadow-sm border border-gray-200 inline-flex items-center">
+                    <div className="bg-white/10 rounded-lg p-1 shadow-sm border border-white/10 inline-flex items-center">
                         <button
                             onClick={() => setIsAnnual(false)}
                             className={`px-6 py-2.5 rounded-md font-medium text-sm transition-all ${
                                 !isAnnual 
-                                    ? "bg-indigo-600 text-white shadow-sm" 
-                                    : "text-gray-600 hover:text-indigo-600"
+                                    ? "bg-gradient-to-r from-red-600 to-amber-500 text-white shadow-sm" 
+                                    : "text-gray-400 hover:text-white"
                             }`}
                         >
                             Monthly
@@ -310,12 +310,12 @@ export default function PricingPage() {
                             onClick={() => setIsAnnual(true)}
                             className={`px-6 py-2.5 rounded-md font-medium text-sm transition-all flex items-center gap-2 ${
                                 isAnnual 
-                                    ? "bg-indigo-600 text-white shadow-sm" 
-                                    : "text-gray-600 hover:text-indigo-600"
+                                    ? "bg-gradient-to-r from-red-600 to-amber-500 text-white shadow-sm" 
+                                    : "text-gray-400 hover:text-white"
                             }`}
                         >
                             Annual
-                            <span className="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full font-medium">Save 20%</span>
+                            <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">Save 20%</span>
                         </button>
                     </div>
                 </div>
@@ -396,13 +396,13 @@ export default function PricingPage() {
 
                 {/* Money Back Guarantee Banner */}
                 <div className="max-w-4xl mx-auto mb-20">
-                    <div className="bg-white rounded-xl p-8 border border-gray-200 text-center">
+                    <div className="bg-white/5 rounded-xl p-8 border border-white/10 text-center">
                         <div className="text-3xl mb-3">💯</div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">30-Day Money-Back Guarantee</h3>
-                        <p className="text-gray-600 mb-4">
+                        <h3 className="text-xl font-bold text-white mb-2">30-Day Money-Back Guarantee</h3>
+                        <p className="text-gray-400 mb-4">
                             Not satisfied? Get a full refund within 30 days. No questions asked.
                         </p>
-                        <Link href="/refund" className="text-indigo-600 hover:underline font-medium">
+                        <Link href="/refund" className="text-amber-400 hover:underline font-medium">
                             View Refund Policy →
                         </Link>
                     </div>
