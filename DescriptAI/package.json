@@ -13,7 +13,6 @@
     "dev:clean": "powershell -Command \"if (Test-Path .next/dev/lock) { Remove-Item .next/dev/lock -Force }; npm run dev\""
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.37.1",
     "@huggingface/inference": "^4.13.11",
     "@prisma/client": "^5.10.0",
     "@upstash/redis": "^1.36.2",
