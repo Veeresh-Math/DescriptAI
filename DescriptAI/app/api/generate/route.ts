@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@/lib/auth-server";
 import { db } from "@/lib/db";
 import { getRandomPremiumSecret } from "@/lib/knowledge-vault";
 import { getStaticFallback } from "@/lib/resource-fallback";

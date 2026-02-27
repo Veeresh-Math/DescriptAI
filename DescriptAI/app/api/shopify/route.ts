@@ -1,6 +1,6 @@
 // Shopify Integration API
 
-import { auth } from '@clerk/nextjs/server';
+import { auth } from '@/lib/auth-server';
 import { NextResponse } from 'next/server';
 
 export async function GET(req: Request) {

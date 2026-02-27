@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth-server";
 import { PRICING } from "@/lib/payments";
 
 // UPI Payment API - Supports PhonePe, Google Pay, Paytm via Razorpay

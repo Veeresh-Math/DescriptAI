@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Groq } from "groq-sdk";
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth-server";
 import { db } from "@/lib/db";
 export const dynamic = "force-dynamic";
 

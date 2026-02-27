@@ -1,53 +1,54 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
 
-const isPublicRoute = createRouteMatcher([
-    '/api/admin/(.*)',
-    '/api/webhook/(.*)',
-    '/api/checkout/(.*)',
-    '/api/generate',
-    '/api/history',
-    '/api/user',
-    '/api/keywords',
-    '/api/presets',
-    '/api/referral',
-    '/api/shopify',
-    '/api/bulk',
-    '/api/analytics',
-    '/api/image',
-    '/api/team',
-    '/api/tools',
-    '/api/freemium',
-    '/api/cron/keep-alive', // Keep cron endpoint public (no auth required)
-    '/sign-in(.*)',
-    '/sign-up(.*)',
-    '/',
-    '/pricing',
-    '/generate',
-    '/history',
-    '/help',
-    '/contact',
-    '/privacy',
-    '/terms',
-    '/refund',
-    '/bulk',
-    '/analytics',
-    '/team',
-]);
-
-export default clerkMiddleware((auth, req) => {
-    // Public routes are allowed without authentication
-    if (isPublicRoute(req)) {
-        return;
-    }
-
-    // Protected routes require authentication
-    // auth() will throw if user is not authenticated
-    // The error is caught by Clerk's error handler
-});
+export default withAuth(
+  function middleware(req) {
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized({ req, token }) {
+        // Public paths that don't require authentication
+        const publicPaths = [
+          "/",
+          "/pricing",
+          "/sign-in",
+          "/sign-up",
+          "/help",
+          "/contact",
+          "/privacy",
+          "/terms",
+          "/refund",
+        ];
+        
+        const isPublicPath = publicPaths.some(path => 
+          req.nextUrl.pathname === path || req.nextUrl.pathname.startsWith(path + "/")
+        );
+        
+        // API routes that are public
+        const publicApiPaths = [
+          "/api/auth",
+          "/api/checkout",
+          "/api/webhook",
+        ];
+        
+        const isPublicApi = publicApiPaths.some(path =>
+          req.nextUrl.pathname.startsWith(path)
+        );
+        
+        if (isPublicPath || isPublicApi) {
+          return true;
+        }
+        
+        // All other routes require auth
+        return token !== null;
+      },
+    },
+  }
+);
 
 export const config = {
-    matcher: [
-        '/((?!_next|[^?]*\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-        '/(api|trpc)(.*)',
-    ],
+  matcher: [
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+  ],
 };

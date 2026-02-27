@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useUser } from "@/lib/auth-compat";
 import { useState, useEffect, useRef } from "react";
 
 // Tier Badge Component - shows Free/Pro/Agency next to profile

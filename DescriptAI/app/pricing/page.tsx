@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useUser } from "@clerk/nextjs";
+import { useUser } from "@/lib/auth-compat";
 import { PRICING, detectPaymentGateway } from "@/lib/payments";
 
 interface PricingTier {

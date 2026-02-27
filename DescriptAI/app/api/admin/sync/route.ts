@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { runGlobalIntelligenceSync } from "@/lib/intelligence-sync";
-import { auth } from "@clerk/nextjs/server";
+import { auth } from "@/lib/auth-server";
 
 export const dynamic = 'force-dynamic';
 
