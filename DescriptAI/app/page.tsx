@@ -36,7 +36,9 @@ function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; d
     const animate = (currentTime: number) => {
       if (!startTime) startTime = currentTime;
       const progress = Math.min((currentTime - startTime) / duration, 1);
-      setCount(Math.floor(progress * end));
+      const currentValue = progress * end;
+      // Format: show 1 decimal for small numbers, whole numbers for large
+      setCount(end < 10 ? Math.round(currentValue * 10) / 10 : Math.floor(currentValue));
       if (progress < 1) {
         requestAnimationFrame(animate);
       }
@@ -44,7 +46,9 @@ function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; d
     requestAnimationFrame(animate);
   }, [isVisible, end, duration]);
 
-  return <div ref={ref}>{count}{suffix}</div>;
+  // Format display value
+  const displayValue = end < 10 ? count.toFixed(1) : count.toString();
+  return <div ref={ref}>{displayValue}{suffix}</div>;
 }
 
 // Typing Animation Component
@@ -475,23 +479,6 @@ export default function Home() {
 
       {/* Header */}
       
-      {/* Moving Promotion Banner */}
-      <div className="w-full bg-gradient-to-r from-red-600 via-pink-500 to-amber-500 py-3 overflow-hidden">
-        <div className="whitespace-nowrap animate-marquee">
-          <span className="inline-block mx-4 text-white font-bold text-lg">
-            🎉 FREE FOR 1 MONTH! Try all premium features - Generate unlimited AI descriptions, Social Media Kits, SEO Heatmaps & more! 
-          </span>
-          <span className="inline-block mx-4 text-white font-bold text-lg">
-            🚀 No credit card required! Sign up now and start generating! 
-          </span>
-          <span className="inline-block mx-4 text-white font-bold text-lg">
-            💰 Save 47% on your product descriptions with AI! 
-          </span>
-          <span className="inline-block mx-4 text-white font-bold text-lg">
-            ⚡ 10x faster than writing manually! 
-          </span>
-        </div>
-      </div>
 
       <header className="container mx-auto px-4 py-6 sticky top-0 z-50 backdrop-blur-xl bg-black/20 border-b border-white/5">
         <nav className="flex items-center justify-between">

@@ -416,6 +416,7 @@ export default function GeneratePage() {
                     length,
                     profession,
                     platform,
+                    language,
                     // Agency exclusive parameters
                     customKeywords: userData?.tier === 'agency' ? customKeywords : null,
                     brandVoice: userData?.tier === 'agency' ? brandVoice : null
@@ -707,6 +708,56 @@ export default function GeneratePage() {
                             )}
                         </div>
 
+                        {/* Language Selector */}
+                        <div>
+                            <label className="block text-xs font-bold text-gray-700 uppercase mb-2">
+                                Language 🌐
+                                {!isPremium && <span className="text-red-500 ml-1">(Pro+)</span>}
+                            </label>
+                            <div className="grid grid-cols-4 gap-2">
+                                {[
+                                    { id: 'english', label: '🇺🇸 English', tier: 'free' },
+                                    { id: 'spanish', label: '🇪🇸 Español', tier: 'free' },
+                                    { id: 'french', label: '🇫🇷 Français', tier: 'free' },
+                                    { id: 'german', label: '🇩🇪 Deutsch', tier: 'pro' },
+                                    { id: 'italian', label: '🇮🇹 Italiano', tier: 'pro' },
+                                    { id: 'portuguese', label: '🇧🇷 Português', tier: 'pro' },
+                                    { id: 'japanese', label: '🇯🇵 日本語', tier: 'pro' },
+                                    { id: 'chinese', label: '🇨🇳 中文', tier: 'pro' },
+                                    { id: 'korean', label: '🇰🇷 한국어', tier: 'agency' },
+                                    { id: 'arabic', label: '🇸🇦 العربية', tier: 'agency' },
+                                    { id: 'hindi', label: '🇮🇳 हिंदी', tier: 'agency' },
+                                    { id: 'russian', label: '🇷🇺 Русский', tier: 'agency' }
+                                ].map(lang => {
+                                    const isLocked = (lang.tier === 'pro' && !isPremium) || (lang.tier === 'agency' && !isAgency);
+                                    return (
+                                        <button
+                                            key={lang.id}
+                                            onClick={() => !isLocked && setLanguage(lang.id)}
+                                            disabled={isLocked}
+                                            className={`flex flex-col items-center p-2 rounded-xl border-2 transition relative ${language === lang.id ? "border-cyan-600 bg-cyan-50" : "border-gray-100 hover:border-cyan-200"} ${isLocked ? "cursor-not-allowed opacity-60 bg-gray-50" : ""}`}
+                                        >
+                                            {isLocked && (
+                                                <div className={`absolute -top-1 -right-1 text-white text-[6px] font-black px-1 py-0.5 rounded-full ${lang.tier === 'agency' ? 'bg-teal-600' : 'bg-red-600'}`}>
+                                                    {lang.tier.toUpperCase()}
+                                                </div>
+                                            )}
+                                            <span className="text-[10px] font-bold text-gray-700">{lang.label}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            {!isPremium && (
+                                <div className="mt-2 flex items-center gap-2 text-[10px] text-cyan-700 font-bold bg-cyan-50 px-3 py-2 rounded-lg border border-cyan-100">
+                                    <span>🔐</span>
+                                    <span>Upgrade to Pro for 25+ languages!</span>
+                                    <Link href="/pricing" className="ml-auto text-[9px] bg-cyan-600 text-white px-2 py-1 rounded hover:bg-cyan-700 transition">
+                                        Upgrade
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+
                         <div>
                             <label className="block text-xs font-bold text-gray-700 uppercase mb-2">AI Persona (Your Role)</label>
                             <div className="flex flex-wrap gap-2">
@@ -804,6 +855,34 @@ export default function GeneratePage() {
                                             </div>
                                         </div>
                                     )}
+                                </div>
+
+                                {/* API Access Section */}
+                                <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-4 border border-purple-200 mt-4">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <span className="text-lg">🔌</span>
+                                        <h4 className="font-black text-purple-900 uppercase text-xs tracking-wider">API Access</h4>
+                                    </div>
+                                    <p className="text-[10px] text-gray-600 mb-3">Use our API to generate descriptions for your apps</p>
+                                    <div className="bg-gray-900 rounded-lg p-3 font-mono text-[9px] text-green-400 overflow-x-auto">
+                                        <div className="mb-1"><span className="text-purple-400">POST</span> /api/v1/describe</div>
+                                        <div className="text-gray-400">{'{'} productName, features... {'}'}</div>
+                                    </div>
+                                </div>
+
+                                {/* Dedicated Account Manager */}
+                                <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 border border-amber-200 mt-4">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <span className="text-lg">👤</span>
+                                        <h4 className="font-black text-amber-800 uppercase text-xs tracking-wider">Account Manager</h4>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-white text-lg font-bold">SM</div>
+                                        <div>
+                                            <p className="font-bold text-gray-900 text-sm">Sarah Mitchell</p>
+                                            <p className="text-[10px] text-gray-600">senior@descriptai.com</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         )}

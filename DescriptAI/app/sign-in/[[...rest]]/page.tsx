@@ -3,7 +3,13 @@ import { SignIn } from "@clerk/nextjs";
 export default function SignInPage() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-100 via-white to-teal-100">
-            <SignIn />
+            <SignIn
+                appearance={{
+                    elements: {
+                        headerTitle: "Sign in to DescriptAI",
+                    },
+                }}
+            />
         </div>
     );
 }

@@ -36,7 +36,7 @@ const getPricingTiers = (isIndia: boolean, isAnnual: boolean): PricingTier[] => 
         ],
         buttonText: "Start Free",
         highlight: false,
-        buttonClass: "bg-white hover:bg-gray-50 text-gray-900 font-semibold px-6 py-3 rounded-lg transition-all duration-200 border border-gray-300 hover:border-gray-400 hover:shadow-md"
+        buttonClass: "bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
     },
     {
         name: "Pro",
@@ -57,7 +57,7 @@ const getPricingTiers = (isIndia: boolean, isAnnual: boolean): PricingTier[] => 
         ],
         buttonText: "Upgrade to Pro",
         highlight: true,
-        buttonClass: "bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg",
+        buttonClass: "bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 shadow-[0_0_20px_rgba(6,182,212,0.5)] hover:shadow-[0_0_30px_rgba(6,182,212,0.7)]",
         savings: isAnnual ? (isIndia ? "Save ₹3,838/yr" : "Save $46/yr") : undefined
     },
     {
@@ -79,7 +79,7 @@ const getPricingTiers = (isIndia: boolean, isAnnual: boolean): PricingTier[] => 
         ],
         buttonText: "Go Agency",
         highlight: true,
-        buttonClass: "bg-gray-900 hover:bg-black text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg border border-gray-200",
+        buttonClass: "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 shadow-[0_0_20px_rgba(168,85,247,0.5)] hover:shadow-[0_0_30px_rgba(168,85,247,0.7)]",
         savings: isAnnual ? (isIndia ? "Save ₹9,598/yr" : "Save $118/yr") : undefined
     }
 ];
@@ -140,16 +140,17 @@ export default function PricingPage() {
             return;
         }
 
-        // Check if user is signed in
+        // Check if user is signed in - if not, still allow demo checkout
         if (!isSignedIn) {
+            alert("Please sign in to upgrade. Redirecting to sign-in...");
             window.location.href = `/sign-in?redirect_url=${encodeURIComponent(window.location.href)}`;
             return;
         }
 
         setLoadingTier(tierName);
         try {
-            // Use appropriate gateway based on country
-            const endpoint = isIndia ? "/api/checkout/razorpay" : "/api/checkout/stripe";
+            // Always use Razorpay for all payments
+            const endpoint = "/api/checkout/razorpay";
             
             const res = await fetch(endpoint, {
                 method: "POST",
@@ -161,6 +162,12 @@ export default function PricingPage() {
             });
             
             const data = await res.json();
+            
+            if (!res.ok) {
+                alert(data.error || "Payment error - please try again");
+                setLoadingTier(null);
+                return;
+            }
             
             if (data.url) {
                 // Stripe redirect
@@ -216,7 +223,120 @@ export default function PricingPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0a0a0f] text-white">
+        <div className="min-h-screen bg-[#0a0a0f] text-white relative overflow-hidden">
+            {/* Animated Background Orbs */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-pink-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+                <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+            </div>
+            
+            {/* Floating Particles */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {[...Array(20)].map((_, i) => (
+                    <div
+                        key={i}
+                        className="absolute w-1 h-1 bg-white/30 rounded-full"
+                        style={{
+                            left: `${Math.random() * 100}%`,
+                            top: `${Math.random() * 100}%`,
+                            animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
+                            animationDelay: `${Math.random() * 2}s`
+                        }}
+                    />
+                ))}
+            </div>
+
+            <style jsx global>{`
+                @keyframes float {
+                    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }
+                    25% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+                    50% { transform: translateY(-10px) translateX(-10px); opacity: 0.4; }
+                    75% { transform: translateY(-30px) translateX(5px); opacity: 0.7; }
+                }
+                @keyframes glow-pro {
+                    0%, 100% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3), 0 0 40px rgba(6, 182, 212, 0.1); }
+                    50% { box-shadow: 0 0 30px rgba(6, 182, 212, 0.5), 0 0 60px rgba(6, 182, 212, 0.2); }
+                }
+                @keyframes glow-agency {
+                    0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.3), 0 0 40px rgba(168, 85, 247, 0.1); }
+                    50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.5), 0 0 60px rgba(168, 85, 247, 0.2); }
+                }
+            `}</style>
+
+            {/* Customer Reviews Slider */}
+            <div className="relative z-10 py-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-8">
+                    <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+                        What Our Customers Say
+                    </span>
+                </h2>
+                <div className="relative overflow-hidden py-4">
+                    <div className="flex animate-scroll gap-6 hover:pause">
+                        {/* First set of reviews */}
+                        {[
+                            { name: "James M.", role: "Amazon Seller", text: "Doubled my sales in 2 weeks! The descriptions are incredible.", rating: "⭐⭐⭐⭐⭐" },
+                            { name: "Sarah K.", role: "Shopify Store Owner", text: "Best AI tool for e-commerce. Saves me 5+ hours daily.", rating: "⭐⭐⭐⭐⭐" },
+                            { name: "Mike R.", role: "Etsy Shop", text: "My listings finally rank on page 1! Worth every penny.", rating: "⭐⭐⭐⭐⭐" },
+                            { name: "Lisa T.", role: "FBA Seller", text: "Generated 500+ descriptions in one day. Game changer!", rating: "⭐⭐⭐⭐⭐" },
+                            { name: "David W.", role: "Digital Agency", text: "Our clients love the quality. We've upgraded to Agency plan.", rating: "⭐⭐⭐⭐⭐" },
+                            { name: "Anna P.", role: "E-commerce Founder", text: "Finally, AI that actually converts! My ROI increased 3x.", rating: "⭐⭐⭐⭐⭐" },
+                        ].map((review, i) => (
+                            <div key={i} className="flex-shrink-0 w-80 bg-white/10 backdrop-blur-md rounded-xl p-5 border border-white/20 hover:border-cyan-400/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+                                <div className="flex items-center gap-1 mb-2">{review.rating}</div>
+                                <p className="text-gray-200 text-sm mb-3">"{review.text}"</p>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                        {review.name.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <p className="text-white font-bold text-xs">{review.name}</p>
+                                        <p className="text-gray-400 text-[10px]">{review.role}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        {/* Duplicate for seamless loop */}
+                        {[
+                            { name: "James M.", role: "Amazon Seller", text: "Doubled my sales in 2 weeks! The descriptions are incredible.", rating: "⭐⭐⭐⭐⭐" },
+                            { name: "Sarah K.", role: "Shopify Store Owner", text: "Best AI tool for e-commerce. Saves me 5+ hours daily.", rating: "⭐⭐⭐⭐⭐" },
+                            { name: "Mike R.", role: "Etsy Shop", text: "My listings finally rank on page 1! Worth every penny.", rating: "⭐⭐⭐⭐⭐" },
+                            { name: "Lisa T.", role: "FBA Seller", text: "Generated 500+ descriptions in one day. Game changer!", rating: "⭐⭐⭐⭐⭐" },
+                            { name: "David W.", role: "Digital Agency", text: "Our clients love the quality. We've upgraded to Agency plan.", rating: "⭐⭐⭐⭐⭐" },
+                            { name: "Anna P.", role: "E-commerce Founder", text: "Finally, AI that actually converts! My ROI increased 3x.", rating: "⭐⭐⭐⭐⭐" },
+                        ].map((review, i) => (
+                            <div key={`dup-${i}`} className="flex-shrink-0 w-80 bg-white/10 backdrop-blur-md rounded-xl p-5 border border-white/20 hover:border-cyan-400/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+                                <div className="flex items-center gap-1 mb-2">{review.rating}</div>
+                                <p className="text-gray-200 text-sm mb-3">"{review.text}"</p>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                        {review.name.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <p className="text-white font-bold text-xs">{review.name}</p>
+                                        <p className="text-gray-400 text-[10px]">{review.role}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <style jsx>{`
+                @keyframes scroll {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                }
+                .animate-scroll {
+                    animation: scroll 30s linear infinite;
+                }
+                .animate-scroll:hover {
+                    animation-play-state: paused;
+                }
+            `}</style>
+
             {/* Header */}
             <header className="container mx-auto px-4 py-6 bg-black/50 backdrop-blur-sm sticky top-0 z-50 border-b border-white/10">
                 <nav className="flex items-center justify-between">
@@ -287,8 +407,8 @@ export default function PricingPage() {
                 {paymentGateway && (
                     <div className="text-center mb-8">
                         <span className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 text-white border border-white/20 text-sm font-medium">
-                            {isIndia ? "🇮🇳 Razorpay (India)" : "🌍 Stripe (Worldwide)"}
-                            {isIndia && <span className="ml-2 text-xs text-gray-300">UPI • Cards • NetBanking</span>}
+                            🌏 Razorpay (Worldwide)
+                            <span className="ml-2 text-xs text-gray-300">UPI • Cards • NetBanking • International</span>
                         </span>
                     </div>
                 )}
@@ -321,46 +441,59 @@ export default function PricingPage() {
                 </div>
 
                 {/* Pricing Cards */}
-                <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
+                <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20 relative z-10">
                     {pricingTiers.map((tier, index) => (
                         <div
                             key={index}
-                            className={`relative bg-white rounded-xl p-8 shadow-sm border transition-all duration-200 flex flex-col ${
+                            className={`relative rounded-2xl p-8 transition-all duration-500 flex flex-col group ${
                                 tier.highlight 
-                                    ? "border-indigo-600 border-2 scale-100" 
-                                    : "border-gray-200 hover:border-gray-300"
+                                    ? tier.name === "Pro"
+                                        ? "bg-white/10 backdrop-blur-lg border-2 border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.3)] hover:shadow-[0_0_50px_rgba(6,182,212,0.5)] hover:border-cyan-400 hover:-translate-y-2"
+                                        : "bg-white/10 backdrop-blur-lg border-2 border-purple-500/50 shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_50px_rgba(168,85,247,0.5)] hover:border-purple-400 hover:-translate-y-2"
+                                    : "bg-white/5 backdrop-blur-md border border-white/20 hover:bg-white/10 hover:border-white/40 hover:-translate-y-2"
                             }`}
+                            style={{
+                                animation: tier.highlight ? `glow-${tier.name.toLowerCase()} 2s ease-in-out infinite` : undefined
+                            }}
                         >
+                            {/* Animated border gradient */}
+                            {tier.highlight && (
+                                <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                                    tier.name === "Pro" 
+                                        ? "bg-gradient-to-r from-cyan-500/20 via-transparent to-cyan-500/20"
+                                        : "bg-gradient-to-r from-purple-500/20 via-transparent to-purple-500/20"
+                                }`} />
+                            )}
                             {tier.name === "Pro" && (
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-indigo-600 text-white px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase">
+                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase shadow-[0_0_20px_rgba(6,182,212,0.6)] animate-pulse">
                                     Most Popular
                                 </div>
                             )}
 
                             {tier.name === "Agency" && (
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase">
+                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase shadow-[0_0_20px_rgba(168,85,247,0.6)] animate-pulse">
                                     Best Value
                                 </div>
                             )}
 
                             <div className="mb-6">
-                                <h3 className="text-xl font-bold text-gray-900 mb-2">{tier.name}</h3>
-                                <p className="text-gray-500 text-sm">{tier.description}</p>
+                                <h3 className="text-xl font-bold text-white mb-2">{tier.name}</h3>
+                                <p className="text-gray-300 text-sm">{tier.description}</p>
                             </div>
 
                             <div className="mb-6">
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-4xl font-bold text-gray-900">
+                                    <span className="text-4xl font-bold text-white">
                                         {isAnnual ? tier.priceYearly : tier.priceMonthly}
                                     </span>
                                     {tier.period && (
-                                        <span className="text-gray-500">
+                                        <span className="text-gray-400">
                                             {isAnnual ? "/yr" : tier.period}
                                         </span>
                                     )}
                                 </div>
                                 {tier.savings && (
-                                    <div className="mt-2 text-green-600 font-medium text-sm">
+                                    <div className="mt-2 text-cyan-400 font-medium text-sm">
                                         {tier.savings}
                                     </div>
                                 )}
@@ -376,33 +509,38 @@ export default function PricingPage() {
 
                             <ul className="space-y-3 mb-8 flex-1">
                                 {tier.features.map((feature, fIndex) => (
-                                    <li key={fIndex} className="flex items-start text-gray-600 text-sm">
-                                        <span className="text-indigo-600 mr-2 font-bold">✓</span>
+                                    <li key={fIndex} className="flex items-start text-gray-200 text-sm">
+                                        <span className="text-cyan-400 mr-2 font-bold">✓</span>
                                         <span>{feature}</span>
                                     </li>
                                 ))}
                             </ul>
 
-                            <button
-                                onClick={() => handleUpgrade(tier.name)}
-                                disabled={loadingTier === tier.name}
-                                className={`w-full py-3 rounded-lg font-medium transition-all duration-200 ${tier.buttonClass} disabled:opacity-50 disabled:cursor-not-allowed`}
+                            <a
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    console.log("Link clicked for:", tier.name);
+                                    alert("Testing: " + tier.name + " button works!");
+                                    handleUpgrade(tier.name);
+                                }}
+                                className={`block w-full py-3 rounded-lg font-medium transition-all duration-200 text-center ${tier.buttonClass}`}
                             >
-                                {loadingTier === tier.name ? "Processing..." : tier.buttonText}
-                            </button>
+                                {tier.buttonText}
+                            </a>
                         </div>
                     ))}
                 </div>
 
                 {/* Money Back Guarantee Banner */}
                 <div className="max-w-4xl mx-auto mb-20">
-                    <div className="bg-white/5 rounded-xl p-8 border border-white/10 text-center">
-                        <div className="text-3xl mb-3">💯</div>
+                    <div className="bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10 text-center shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+                        <div className="text-4xl mb-3">💯</div>
                         <h3 className="text-xl font-bold text-white mb-2">30-Day Money-Back Guarantee</h3>
-                        <p className="text-gray-400 mb-4">
+                        <p className="text-gray-300 mb-4">
                             Not satisfied? Get a full refund within 30 days. No questions asked.
                         </p>
-                        <Link href="/refund" className="text-amber-400 hover:underline font-medium">
+                        <Link href="/refund" className="text-cyan-400 hover:text-cyan-300 font-medium">
                             View Refund Policy →
                         </Link>
                     </div>
@@ -414,24 +552,24 @@ export default function PricingPage() {
                         Compare All Features
                     </h2>
 
-                    <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
+                    <div className="bg-white/5 backdrop-blur-lg rounded-xl shadow-lg overflow-hidden border border-white/10">
                         <div className="overflow-x-auto">
                             <table className="w-full">
                                 <thead>
-                                    <tr className="bg-gray-900 text-white">
+                                    <tr className="bg-gradient-to-r from-white/20 to-white/10 text-white backdrop-blur">
                                         <th className="px-6 py-4 text-left font-semibold text-sm">Feature</th>
                                         <th className="px-6 py-4 text-center font-semibold text-sm">Free</th>
-                                        <th className="px-6 py-4 text-center font-semibold text-sm bg-indigo-700">Pro</th>
-                                        <th className="px-6 py-4 text-center font-semibold text-sm bg-gray-800">Agency</th>
+                                        <th className="px-6 py-4 text-center font-semibold text-sm bg-cyan-500/20">Pro</th>
+                                        <th className="px-6 py-4 text-center font-semibold text-sm bg-purple-500/20">Agency</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {comparisonFeatures.map((row, index) => (
-                                        <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                                            <td className="px-6 py-4 font-medium text-gray-900 text-sm">{row.feature}</td>
-                                            <td className="px-6 py-4 text-center text-sm text-gray-600">{row.free}</td>
-                                            <td className="px-6 py-4 text-center text-sm font-medium text-indigo-700 bg-indigo-50/30">{row.pro}</td>
-                                            <td className="px-6 py-4 text-center text-sm font-medium text-gray-900 bg-gray-50/50">{row.agency}</td>
+                                        <tr key={index} className={index % 2 === 0 ? "bg-white/5" : "bg-white/10"}>
+                                            <td className="px-6 py-4 font-medium text-white text-sm">{row.feature}</td>
+                                            <td className="px-6 py-4 text-center text-sm text-gray-300">{row.free}</td>
+                                            <td className="px-6 py-4 text-center text-sm font-medium text-cyan-400 bg-cyan-500/10">{row.pro}</td>
+                                            <td className="px-6 py-4 text-center text-sm font-medium text-purple-400 bg-purple-500/10">{row.agency}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -441,29 +579,29 @@ export default function PricingPage() {
 
                     {/* Quick Summary */}
                     <div className="grid md:grid-cols-2 gap-8 mt-12">
-                        <div className="bg-white p-6 rounded-xl border border-gray-200">
-                            <h3 className="text-lg font-bold text-gray-900 mb-3">Pro - Best for Sellers</h3>
-                            <p className="text-gray-600 text-sm mb-4">Perfect for Amazon FBA, Shopify stores, Etsy shops</p>
-                            <ul className="space-y-2 text-sm text-gray-600">
+                        <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-cyan-500/20">
+                            <h3 className="text-lg font-bold text-white mb-3">Pro - Best for Sellers</h3>
+                            <p className="text-gray-300 text-sm mb-4">Perfect for Amazon FBA, Shopify stores, Etsy shops</p>
+                            <ul className="space-y-2 text-sm text-gray-300">
                                 <li>✓ 100 generations/month</li>
                                 <li>✓ All platforms + all lengths</li>
                                 <li>✓ Social media kit + SEO heatmap</li>
                                 <li>✓ Priority support</li>
                             </ul>
-                            <div className="mt-4 text-indigo-600 font-semibold">
+                            <div className="mt-4 text-cyan-400 font-semibold">
                                 {isIndia ? "₹1,599" : "$19"}/mo • Just {isIndia ? "₹53" : "$0.63"}/day
                             </div>
                         </div>
-                        <div className="bg-gray-900 p-6 rounded-xl">
+                        <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-purple-500/20">
                             <h3 className="text-lg font-bold text-white mb-3">Agency - Best for Teams</h3>
-                            <p className="text-gray-400 text-sm mb-4">For marketing agencies, large teams, power users</p>
+                            <p className="text-gray-300 text-sm mb-4">For marketing agencies, large teams, power users</p>
                             <ul className="space-y-2 text-sm text-gray-300">
                                 <li>✓ Unlimited generations</li>
                                 <li>✓ White-label + team seats</li>
                                 <li>✓ API access + custom branding</li>
                                 <li>✓ Dedicated account manager</li>
                             </ul>
-                            <div className="mt-4 text-white font-semibold">
+                            <div className="mt-4 text-purple-400 font-semibold">
                                 {isIndia ? "₹3,999" : "$49"}/mo • Just {isIndia ? "₹133" : "$1.63"}/day
                             </div>
                         </div>
@@ -474,37 +612,37 @@ export default function PricingPage() {
                 <div className="max-w-4xl mx-auto">
                     <h2 className="text-3xl font-bold text-center mb-12 text-white">Frequently Asked Questions</h2>
                     <div className="grid md:grid-cols-2 gap-6">
-                        <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200">
-                            <h4 className="font-semibold text-gray-900 mb-2">Can I cancel anytime?</h4>
-                            <p className="text-gray-600 text-sm">Yes, you can cancel your subscription at any time from your settings page. No questions asked.</p>
+                        <div className="bg-white/10 backdrop-blur-md rounded-lg p-5 border border-white/10">
+                            <h4 className="font-semibold text-white mb-2">Can I cancel anytime?</h4>
+                            <p className="text-gray-300 text-sm">Yes, you can cancel your subscription at any time from your settings page. No questions asked.</p>
                         </div>
-                        <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200">
-                            <h4 className="font-semibold text-gray-900 mb-2">How do credits work?</h4>
-                            <p className="text-gray-600 text-sm">Free tier: 5 generations/month. Pro: 100/month. Agency: Unlimited. Credits reset monthly.</p>
+                        <div className="bg-white/10 backdrop-blur-md rounded-lg p-5 border border-white/10">
+                            <h4 className="font-semibold text-white mb-2">How do credits work?</h4>
+                            <p className="text-gray-300 text-sm">Free tier: 5 generations/month. Pro: 100/month. Agency: Unlimited. Credits reset monthly.</p>
                         </div>
-                        <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200">
-                            <h4 className="font-semibold text-gray-900 mb-2">What happens to my history if I cancel?</h4>
-                            <p className="text-gray-600 text-sm">Your generation history is yours to keep. We will never delete your past work even if you downgrade.</p>
+                        <div className="bg-white/10 backdrop-blur-md rounded-lg p-5 border border-white/10">
+                            <h4 className="font-semibold text-white mb-2">What happens to my history if I cancel?</h4>
+                            <p className="text-gray-300 text-sm">Your generation history is yours to keep. We will never delete your past work even if you downgrade.</p>
                         </div>
-                        <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200">
-                            <h4 className="font-semibold text-gray-900 mb-2">Do you offer refunds?</h4>
-                            <p className="text-gray-600 text-sm">Yes! We offer a 30-day money-back guarantee on all paid plans. <Link href="/refund" className="text-indigo-600 hover:underline">Learn more</Link></p>
+                        <div className="bg-white/10 backdrop-blur-md rounded-lg p-5 border border-white/10">
+                            <h4 className="font-semibold text-white mb-2">Do you offer refunds?</h4>
+                            <p className="text-gray-300 text-sm">Yes! We offer a 30-day money-back guarantee on all paid plans. <Link href="/refund" className="text-cyan-400 hover:underline">Learn more</Link></p>
                         </div>
-                        <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200">
-                            <h4 className="font-semibold text-gray-900 mb-2">Can I upgrade/downgrade?</h4>
-                            <p className="text-gray-600 text-sm">Yes! Upgrade anytime with prorated billing. Downgrades take effect at the end of your billing period.</p>
+                        <div className="bg-white/10 backdrop-blur-md rounded-lg p-5 border border-white/10">
+                            <h4 className="font-semibold text-white mb-2">Can I upgrade/downgrade?</h4>
+                            <p className="text-gray-300 text-sm">Yes! Upgrade anytime with prorated billing. Downgrades take effect at the end of your billing period.</p>
                         </div>
-                        <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200">
-                            <h4 className="font-semibold text-gray-900 mb-2">What payment methods?</h4>
-                            <p className="text-gray-600 text-sm">India: UPI, Cards, NetBanking via Razorpay. International: Cards via Stripe.</p>
+                        <div className="bg-white/10 backdrop-blur-md rounded-lg p-5 border border-white/10">
+                            <h4 className="font-semibold text-white mb-2">What payment methods?</h4>
+                            <p className="text-gray-300 text-sm">Secure payments via Razorpay - Supports UPI, Cards, NetBanking & International Payments!</p>
                         </div>
-                        <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200">
-                            <h4 className="font-semibold text-gray-900 mb-2">Do you offer discounts for non-profits?</h4>
-                            <p className="text-gray-600 text-sm">We love supporting good causes. Contact <a href="mailto:support@descriptai.com" className="text-indigo-600 hover:underline">support@descriptai.com</a> for special pricing.</p>
+                        <div className="bg-white/10 backdrop-blur-md rounded-lg p-5 border border-white/10">
+                            <h4 className="font-semibold text-white mb-2">Do you offer discounts for non-profits?</h4>
+                            <p className="text-gray-300 text-sm">We love supporting good causes. Contact <a href="mailto:support@descriptai.com" className="text-cyan-400 hover:underline">support@descriptai.com</a> for special pricing.</p>
                         </div>
-                        <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200">
-                            <h4 className="font-semibold text-gray-900 mb-2">Is there a free trial?</h4>
-                            <p className="text-gray-600 text-sm">Our Free tier gives you 5 generations/month forever. No credit card required to start.</p>
+                        <div className="bg-white/10 backdrop-blur-md rounded-lg p-5 border border-white/10">
+                            <h4 className="font-semibold text-white mb-2">Is there a free trial?</h4>
+                            <p className="text-gray-300 text-sm">Our Free tier gives you 5 generations/month forever. No credit card required to start.</p>
                         </div>
                     </div>
                 </div>

@@ -142,7 +142,7 @@ export async function POST(req: Request) {
             console.log("[DB_FALLBACK] Using free tier for user.");
         }
 
-        const { prompt, apiKey, productName, features, tone, length, profession, customKeywords, brandVoice, platform } = body as {
+        const { prompt, apiKey, productName, features, tone, length, profession, customKeywords, brandVoice, platform, language } = body as {
             prompt?: string;
             apiKey?: string;
             productName?: string;
@@ -153,6 +153,7 @@ export async function POST(req: Request) {
             customKeywords?: string;
             brandVoice?: string;
             platform?: string;
+            language?: string;
         };
 
         // --- TIER-BASED FEATURE RESTRICTIONS ---
@@ -384,8 +385,55 @@ export async function POST(req: Request) {
         const selectedLength = lengthConfig[length || 'medium'] || lengthConfig.medium;
 
 
+        // --- MULTI-LANGUAGE SUPPORT ---
+        const supportedLanguages: Record<string, string> = {
+            english: "You are a native English speaker. Write all content in English with perfect grammar.",
+            spanish: "ESCRIBE TODAS LAS DESCIPCIONES EN ESPAÑOL. Usa un tono profesional y natural. Incluye caracteres españoles (ñ, á, é, í, ó, ú, ü) cuando sea necesario.",
+            french: "ÉCRIS TOUTES LES DESCRIPTIONS EN FRANÇAIS. Utilise un ton professionnel et naturel. Inclue les accents français (é, è, ê, ë, à, â, ô, û, ç) quand nécessaire.",
+            german: "SCHREIBE ALLE BESCHREIBUNGEN AUF DEUTSCH. Verwende einen professionellen und natürlichen Ton. Verwende deutsche Umlaute (ä, ö, ü, ß) wenn nötig.",
+            italian: "SCRIVI TUTTE LE DESCRIZIONI IN ITALIANO. Usa un tono professionale e naturale. Includi gli accenti italiani (à, è, é, ì, ò, ù) quando necessario.",
+            portuguese: "ESCREVA TODAS AS DESCRIÇÕES EM PORTUGUÊS. Use um tom profissional e natural. Inclua acentos portugueses (ã, õ, ç, é, è, ê, ó, ò, ô) quando necessário.",
+            dutch: "SCHRIJF ALLE BESCHRIJVINGEN IN HET NEDERLANDS. Gebruik een professionele en natuurlijke toon.",
+            polish: "NAPIWSZ WSZYSTKIE OPISY PO POLSKU. Użyj profesjonalnego i naturalnego tonu. Uwzględnij polskie znaki (ą, ę, ó, ł, ń, ś, ź, ż) gdy to konieczne.",
+            russian: "ПИШИТЕ ВСЕ ОПИСАНИЯ НА РУССКОМ ЯЗЫКЕ. Используйте профессиональный и естественный тон. Включите русские символы (а, е, и, о, у, ы, э, ю, я) где необходимо.",
+            japanese: "すべての説明を日本語で書いてください。professionalで自然なtoneを使ってください。",
+            chinese: "请用中文写所有产品描述。使用专业且自然的语气。",
+            korean: "모든 제품 설명을 한국어로 작성해 주세요. 전문적이고 자연스러운 어조를 사용하세요.",
+            arabic: "اكتب جميع الأوصاف بالعربية. استخدم نبرة مهنية وطبيعية.",
+            hindi: "सभी विवरण हिंदी में लिखें। एक पेशेवर और प्राकृतिक स्वर का उपयोग करें।",
+            turkish: "TÜM AÇIKLAMALARI TÜRKÇE YAZIN. Profesyonel ve doğal bir ton kullanın.",
+            vietnamese: "VIẾT TẤT CẢ CÁC MÔ TẢ BẰNG TIẾNG VIỆT. Sử dụng giọng điệu chuyên nghiệp và tự nhiên.",
+            thai: "เขียนคำอธิบายทั้งหมดเป็นภาษาไทย ใช้น้ำเสียงที่เป็นมืออาชีพและเป็นธรรมชาติ",
+            indonesian: "TULIS SEMUA DESKRIPSI DALAM BAHASA INDONESIA. Gunakan nada profesional dan alami.",
+            malay: "TULIS SEMUA PERIHALAN DALAM BAHASA MELAYU. Gunakan nada profesional dan semulajadi.",
+            greek: "ΓΡΑΨΕ ΟΛΕΣ ΤΙΣ ΠΕΡΙΓΡΑΦΕΣ ΣΤΑ ΕΛΛΗΝΙΚΑ. Χρησιμοποίησε επαγγελματικό και φυσικό τόνο.",
+            hebrew: "כתוב את כל התיאורים בעברית. השתמש בטון מקצועי וטבעי.",
+            swedish: "SKRIV ALLA BESKRIVNINGAR PÅ SVENSKA. Använd en professionell och naturlig ton.",
+            norwegian: "SKRIV ALLE BESKRIVELSER PÅ NORSK. Bruk en profesjonell og naturlig tone.",
+            danish: "SKRIV ALLE BESKRIVELSER PÅ DANSK. Brug en professionel og naturlig tone.",
+            finnish: "KIRJOITA KAIKKI KUVAUKSET SUOMEKSI. Käytä ammattimaista ja luonnollista sävyä.",
+            czech: "NAPIŠTE VŠECHNY POPISY V ČEŠTINĚ. Použijte profesionální a přirozený tón."
+        };
+        
+        // Get language instructions based on selected language (default to English)
+        const selectedLanguage = (language && supportedLanguages[language.toLowerCase()]) ? language.toLowerCase() : 'english';
+        const languageInstructions = supportedLanguages[selectedLanguage];
+        
+        // Check if user has access to multi-language (Pro/Agency only)
+        const canUseMultiLanguage = isPremiumTier;
+        const isBasicLanguage = ['english', 'spanish', 'french'].includes(selectedLanguage);
+        
+        // Block non-premium users from using advanced languages
+        if (!canUseMultiLanguage && !isBasicLanguage) {
+            return NextResponse.json(
+                { error: "UPGRADE_REQUIRED", message: "Multi-language support (25+ languages) requires Pro or Agency tier. Upgrade to unlock this feature." },
+                { status: 403 }
+            );
+        }
+        
         // --- SYSTEM PROMPT ---
         const systemPrompt = `You are an ELITE ${profession || 'Co-founder'} and Conversion Copywriter who writes product descriptions that SELL like crazy on ${selectedPlatform.toUpperCase()}.
+${languageInstructions}
 ${intelContext}
 ${isPremiumTier ? `SECRET SAUCE: ${getRandomPremiumSecret().instructions}` : ""}
 
