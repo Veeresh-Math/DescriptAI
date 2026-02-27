@@ -1,50 +1,30 @@
-# Google OAuth Setup Guide
+# Google OAuth Setup Guide - COMPLETE
 
-## Step 1: Go to Google Cloud Console
-Navigate to: https://console.cloud.google.com/
-
-## Step 2: Create/ Select Project
-- If you have a project, select it
-- If not, click "New Project" and create one named "DescriptAI"
-
-## Step 3: Enable Google+ API (OAuth)
-1. Go to: https://console.cloud.google.com/apis/library
-2. Search for "Google+ API" or "People API"
-3. Click on it and click "Enable"
-
-## Step 4: Create OAuth Credentials
+## Step 1: Get Your Client Secret
 1. Go to: https://console.cloud.google.com/apis/credentials
-2. Click "Create Credentials" → "OAuth client ID"
-3. Application type: "Web application"
-4. Name: "DescriptAI"
-5. Authorized redirect URIs: 
-   - `https://descriptai-tawny.vercel.app/api/auth/callback/google`
-   - (for local dev) `http://localhost:3000/api/auth/callback/google`
-6. Click "Create"
+2. Click on your OAuth 2.0 Client ID (you created this earlier)
+3. Copy the **Client secret** (it starts with "GOCSPX-")
 
-## Step 5: Get Credentials
-- Copy the **Client ID** (looks like: `xxxxx.apps.googleusercontent.com`)
-- Copy the **Client Secret**
+## Step 2: Add to Vercel (CRITICAL!)
+Go to: https://vercel.com/dashboard → DescriptAI project → Settings → Environment Variables
 
-## Step 6: Add to Vercel
-1. Go to: https://vercel.com/dashboard
-2. Click on your DescriptAI project
-3. Go to Settings → Environment Variables
-4. Add these two variables:
-   - `GOOGLE_CLIENT_ID` = [your client ID]
-   - `GOOGLE_CLIENT_SECRET` = [your client secret]
-5. Click "Save"
+Add these 3 variables:
+| Variable | Value |
+|----------|-------|
+| GOOGLE_CLIENT_ID | 924239282728-atm5gm46haqrg9k9uq9bscefcheph9ci.apps.googleusercontent.com |
+| GOOGLE_CLIENT_SECRET | [PASTE YOUR CLIENT SECRET HERE] |
+| NEXTAUTH_SECRET | IONrbU2lancyGjHd9wugk7JhW8EBXpFf |
 
-## Step 7: Redeploy
+**Important:** Click "Save" after adding each variable.
+
+## Step 3: Redeploy
 1. Go to Deployments in Vercel
-2. Click on the latest deployment
-3. Click "Redeploy"
+2. Click the latest deployment
+3. Click "Redeploy" (this ensures new env vars are used)
 
-## Important: Also Update .env.local
-Add these to your local `.env.local` file:
-```
-GOOGLE_CLIENT_ID=your_client_id_here
-GOOGLE_CLIENT_SECRET=your_client_secret_here
-```
+## Step 4: Test
+After 2-3 minutes, go to https://descriptai-tawny.vercel.app/sign-in and try clicking "Continue with Google"
 
-Then push to GitHub to trigger a new deployment.
+---
+
+The code is ready - you just need to paste your Google Client Secret into Vercel!
