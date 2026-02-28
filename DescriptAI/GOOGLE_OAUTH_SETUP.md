@@ -29,4 +29,4 @@ After 2-3 minutes, go to https://descriptai-tawny.vercel.app/sign-in and try cli
 
 The code is ready - you just need to paste your Google Client Secret into Vercel!
 
-# TRIGGER DEPLOY
+# TRIGGER DEPLOYMENT v2
