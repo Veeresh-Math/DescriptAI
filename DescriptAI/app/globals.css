@@ -1,0 +1,670 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   DYNAMIC THEME + SAAS PALETTE (CONSOLIDATED)
+   ============================================ */
+:root {
+  /* Dynamic Theme Variables - Premium Corporate Colors (Amazon, Rolex, Nike, Apple) */
+  --dynamic-bg: linear-gradient(135deg, #131921, #0f1922, #131921);
+  --dynamic-rgb: rgba(255, 153, 0, 0.25);
+  --dynamic-primary: #FF9900;
+  --dynamic-secondary: #ffad33;
+  --dynamic-accent: #ffc266;
+  --dynamic-text: #ffffff;
+  --dynamic-glass: rgba(255, 153, 0, 0.1);
+  --dynamic-glow: 0 0 30px rgba(255, 153, 0, 0.25);
+  
+  /* Sophisticated Professional SaaS Palette - Premium Look */
+  /* Background Colors */
+  --background: #ffffff;
+  --foreground: #0f172a;
+  
+  /* Primary Brand - Deep Slate/Navy (Sophisticated) */
+  --primary-slate: #334155;
+  --primary-slate-dark: #1e293b;
+  --primary-slate-light: #475569;
+  
+  /* Accent - Gold/Amber (Premium, not AI) */
+  --accent-gold: #f59e0b;
+  --accent-gold-dark: #d97706;
+  --accent-gold-light: #fbbf24;
+  
+  /* Success - Emerald */
+  --success-emerald: #10b981;
+  --success-emerald-dark: #059669;
+  
+  /* Secondary Accent - Coral (Warm, human) */
+  --accent-coral: #f97316;
+  
+  /* Neutral Colors */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-900: #111827;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--dynamic-bg);
+  color: var(--dynamic-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Gradient Text - Sophisticated Gold/Slate */
+.gradient-text {
+  background: linear-gradient(135deg, #1e293b 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glassmorphism Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Premium Button Hover Effect */
+.btn-premium {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-premium:hover::before {
+  left: 100%;
+}
+
+/* Animated Gradient Background - Gold/Slate Theme */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+  background: linear-gradient(270deg, #1e293b, #f59e0b, #10b981);
+  background-size: 600% 600%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+/* Glass Header Effect */
+.glass-header {
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Glass Text Effect */
+.glass-text {
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.9) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(255,255,255,0.3);
+}
+
+/* Force all input text to black */
+input, textarea, select, .input, .textarea {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+input::placeholder, textarea::placeholder, .input::placeholder, .textarea::placeholder {
+  color: #6b7280 !important;
+  -webkit-text-fill-color: #6b7280 !important;
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+  -webkit-text-fill-color: #000000 !important;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  background-color: white !important;
+}
+
+/* ============================================
+   DYNAMIC THEME RGB EFFECTS
+   ============================================ */
+
+/* RGB Border Effect */
+.rgb-border {
+  border: 2px solid transparent;
+  background: linear-gradient(var(--dynamic-bg), var(--dynamic-bg)) padding-box,
+              linear-gradient(135deg, var(--dynamic-primary), var(--dynamic-secondary), var(--dynamic-accent)) border-box;
+}
+
+/* Animated RGB Pulse Glow */
+@keyframes rgb-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px var(--dynamic-primary), 0 0 40px var(--dynamic-secondary); 
+  }
+  50% { 
+    box-shadow: 0 0 30px var(--dynamic-accent), 0 0 60px var(--dynamic-primary); 
+  }
+}
+
+.rgb-pulse {
+  animation: rgb-pulse 3s ease-in-out infinite;
+}
+
+/* RGB Text Glow Effect */
+@keyframes rgb-text {
+  0% { 
+    text-shadow: 0 0 10px var(--dynamic-primary);
+    color: var(--dynamic-primary);
+  }
+  25% { 
+    text-shadow: 0 0 20px var(--dynamic-secondary);
+    color: var(--dynamic-secondary);
+  }
+  50% { 
+    text-shadow: 0 0 30px var(--dynamic-accent);
+    color: var(--dynamic-accent);
+  }
+  75% { 
+    text-shadow: 0 0 20px var(--dynamic-secondary);
+    color: var(--dynamic-secondary);
+  }
+  100% { 
+    text-shadow: 0 0 10px var(--dynamic-primary);
+    color: var(--dynamic-primary);
+  }
+}
+
+.rgb-text {
+  animation: rgb-text 4s ease-in-out infinite;
+}
+
+/* Dynamic Glass Effect */
+.glass-dynamic {
+  background: var(--dynamic-glass) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Dynamic Glow Effect */
+.glow-dynamic {
+  box-shadow: var(--dynamic-glow);
+}
+
+/* Dynamic Gradient Text */
+.gradient-dynamic {
+  background: linear-gradient(135deg, var(--dynamic-primary), var(--dynamic-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animated Background Gradient */
+@keyframes gradient-rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-rainbow {
+  background: linear-gradient(-45deg, 
+    var(--dynamic-primary), 
+    var(--dynamic-secondary), 
+    var(--dynamic-accent), 
+    var(--dynamic-primary)
+  );
+  background-size: 400% 400%;
+  animation: gradient-rainbow 8s ease infinite;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ============================================
+   DYNAMIC TEXT COLORS - Changes with theme
+   ============================================ */
+
+/* Main text color that changes with theme */
+.theme-text-color {
+  color: var(--dynamic-text) !important;
+}
+
+/* Gray text variants that adjust to theme */
+.theme-text-muted {
+  color: var(--dynamic-text) !important;
+  opacity: 0.7;
+}
+
+.theme-text-subtle {
+  color: var(--dynamic-text) !important;
+  opacity: 0.5;
+}
+
+/* Headings that use theme accent color */
+.theme-heading {
+  color: var(--dynamic-text);
+}
+
+/* Links that use primary accent */
+.theme-link {
+  color: var(--dynamic-primary);
+}
+
+.theme-link:hover {
+  color: var(--dynamic-accent);
+}
+
+/* Border colors that match theme */
+.theme-border {
+  border-color: var(--dynamic-primary) !important;
+}
+
+.theme-border-subtle {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Override common gray text colors for dynamic theme - Force these to work! */
+.text-white, .text-gray-400, .text-gray-300, .text-gray-500, .text-gray-200, .text-gray-100, .text-gray-600, .text-gray-700, .text-gray-800, .text-gray-900 {
+  color: var(--dynamic-text) !important;
+}
+
+/* Make headings and paragraphs use dynamic text color */
+body, .min-h-screen, h1, h2, h3, h4, h5, h6, p, span, a, li, td, th, div {
+  color: var(--dynamic-text);
+}
+
+/* Force text color changes based on theme */
+body, .min-h-screen {
+  color: var(--dynamic-text, #ffffff) !important;
+}
+
+/* Override hover states */
+.hover\:text-white:hover { color: var(--dynamic-text) !important; }
+
+/* ============================================
+   GLASSMORPHISM EFFECTS - Premium SaaS Style
+   ============================================ */
+
+/* Base Glass Card */
+.glass-card {
+  background: var(--dynamic-glass) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Premium Glass Card with stronger effect */
+.glass-card-premium {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 100%
+  ) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Glass Button */
+.glass-btn {
+  background: var(--dynamic-glass) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 12px 24px;
+  color: var(--dynamic-text);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: var(--dynamic-primary);
+  box-shadow: var(--dynamic-glow);
+  transform: translateY(-2px);
+}
+
+/* Glass Input */
+.glass-input {
+  background: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: var(--dynamic-text);
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  border-color: var(--dynamic-primary);
+  box-shadow: 0 0 0 3px var(--dynamic-glass),
+              0 0 20px var(--dynamic-glow);
+  outline: none;
+}
+
+.glass-input::placeholder {
+  color: var(--dynamic-text);
+  opacity: 0.5;
+}
+
+/* Glass Navigation/Header */
+.glass-nav {
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Glass Modal */
+.glass-modal {
+  background: linear-gradient(135deg, 
+    rgba(30, 30, 30, 0.8) 0%, 
+    rgba(20, 20, 20, 0.9) 100%
+  ) !important;
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Glass Badge */
+.glass-badge {
+  background: var(--dynamic-glass) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dynamic-primary);
+}
+
+/* Glass Hover Effect */
+.glass-hover {
+  transition: all 0.3s ease;
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    var(--dynamic-glow);
+}
+
+/* Glass Floating Animation */
+@keyframes glass-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.glass-float {
+  animation: glass-float 6s ease-in-out infinite;
+}
+
+/* Glass Shine Effect */
+@keyframes glass-shine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.glass-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  animation: glass-shine 3s ease-in-out infinite;
+}
+
+/* Glass Border Glow */
+.glass-border-glow {
+  position: relative;
+}
+
+.glass-border-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, 
+    var(--dynamic-primary),
+    var(--dynamic-secondary),
+    var(--dynamic-accent)
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glass-border-glow:hover::before {
+  opacity: 1;
+}
+
+/* Glass Table */
+.glass-table {
+  background: var(--dynamic-glass) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.glass-table th {
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--dynamic-text);
+  font-weight: 600;
+  padding: 16px;
+}
+
+.glass-table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 16px;
+  color: var(--dynamic-text);
+}
+
+.glass-table tr:hover td {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Glass Dropdown */
+.glass-dropdown {
+  background: rgba(30, 30, 30, 0.95) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.glass-dropdown-item {
+  padding: 12px 16px;
+  color: var(--dynamic-text);
+  transition: all 0.2s ease;
+}
+
+.glass-dropdown-item:hover {
+  background: var(--dynamic-glass) !important;
+}
+
+/* ============================================
+   HOVER EFFECTS FOR HEADER & FOOTER LINKS
+   ============================================ */
+
+/* Header link hover - changes to theme primary color */
+header a:hover, header .hover\:link:hover {
+  color: var(--dynamic-primary) !important;
+}
+
+/* Footer links hover */
+footer a:hover {
+  color: var(--dynamic-primary) !important;
+}
+
+/* Nav links smooth hover transition */
+nav a, nav button, .nav-link {
+  transition: color 0.3s ease;
+}
+
+nav a:hover, .nav-link:hover {
+  color: var(--dynamic-primary) !important;
+}
+
+/* Underline animation on hover */
+.hover-underline {
+  position: relative;
+}
+
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: var(--dynamic-primary);
+  transition: width 0.3s ease;
+}
+
+.hover-underline:hover::after {
+  width: 100%;
+}
+
+/* Link with arrow animation */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.3s ease;
+}
+
+.link-arrow:hover {
+  gap: 8px;
+  color: var(--dynamic-primary);
+}
+
+.link-arrow svg {
+  transition: transform 0.3s ease;
+}
+
+.link-arrow:hover svg {
+  transform: translateX(4px);
+}
+
+/* Dynamic Theme Link Hover - For header/footer */
+.theme-link-hover {
+  color: var(--dynamic-text);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+.theme-link-hover:hover {
+  color: var(--dynamic-primary) !important;
+  opacity: 1;
+}
+
+/* Particle Animation */
+@keyframes particle {
+  0%, 100% { 
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+  10% { 
+    opacity: 1;
+    transform: translateY(-10px) scale(1);
+  }
+  90% { 
+    opacity: 1;
+    transform: translateY(-100px) scale(0.5);
+  }
+  100% { 
+    opacity: 0;
+    transform: translateY(-100px) scale(0);
+  }
+}
+
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--dynamic-primary);
+  animation: particle 4s ease-in-out infinite;
+}

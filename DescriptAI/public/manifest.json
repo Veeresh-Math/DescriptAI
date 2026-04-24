@@ -1,0 +1,47 @@
+{
+  "name": "DescriptAI - AI Product Description Generator",
+  "short_name": "DescriptAI",
+  "description": "Generate high-converting product descriptions in seconds using AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#FF9900",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Generate Descriptions",
+      "short_name": "Generate",
+      "url": "/generate",
+      "description": "Create AI-powered product descriptions"
+    },
+    {
+      "name": "Pricing",
+      "short_name": "Pricing",
+      "url": "/pricing",
+      "description": "View pricing plans"
+    }
+  ]
+}

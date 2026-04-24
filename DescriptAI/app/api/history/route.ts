@@ -1,0 +1,86 @@
+import { auth } from "@/lib/auth-server";
+import { NextResponse } from "next/server";
+import { db } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
+
+export async function POST(req: Request) {
+    try {
+        const { userId } = await auth();
+        console.log("[HISTORY_POST] Auth userId:", userId);
+        if (!userId) {
+            console.log("[HISTORY_POST] ERROR: No userId");
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const body = await req.json();
+        const { productName, features, tone, variants, imageUrls } = body;
+        console.log("[HISTORY_POST] Saving generation:", { productName, tone, variantsCount: variants?.length });
+
+        try {
+            const generation = await db.generation.create({
+                data: {
+                    userId,
+                    productName,
+                    features,
+                    tone,
+                    variants: JSON.stringify(variants), // Serialize for SQLite
+                    imageUrls: imageUrls ? JSON.stringify(imageUrls) : null,
+                },
+            });
+
+            console.log("[HISTORY_POST] SUCCESS: Saved generation ID:", generation.id);
+            return NextResponse.json(generation);
+        } catch (dbError) {
+            console.error("[HISTORY_POST] DB ERROR:", dbError);
+            // Return success even if DB save fails - don't block the user
+            return NextResponse.json({ 
+                warning: "Generation saved locally but history backup failed",
+                fallback: true 
+            });
+        }
+    } catch (error) {
+        console.error("[HISTORY_POST] ERROR:", error);
+        return NextResponse.json({ error: "Internal Error" }, { status: 500 });
+    }
+}
+
+
+export async function GET(_req: Request) {
+    try {
+        const { userId } = await auth();
+        console.log("[HISTORY_GET] Auth userId:", userId);
+        if (!userId) {
+            console.log("[HISTORY_GET] ERROR: No userId");
+            return new NextResponse("Unauthorized", { status: 401 });
+        }
+
+        console.log("[HISTORY_GET] Querying database for user:", userId);
+        const history = await db.generation.findMany({
+
+            where: {
+                userId,
+            },
+            orderBy: {
+                createdAt: "desc",
+            },
+        });
+
+        console.log("[HISTORY_GET] Found", history.length, "records");
+
+        // Parse JSON variants and imageUrls back to array
+        const parsedHistory = history.map((item: typeof history[number]) => ({
+            ...item,
+            variants: JSON.parse(item.variants),
+            imageUrls: item.imageUrls ? JSON.parse(item.imageUrls) : [],
+        }));
+
+        console.log("[HISTORY_GET] SUCCESS: Returning", parsedHistory.length, "items");
+        return NextResponse.json(parsedHistory);
+    } catch (error) {
+        console.error("[HISTORY_GET] ERROR:", error);
+        // Return empty array fallback when DB is down
+        return NextResponse.json([], { status: 200 });
+    }
+}
+
